@@ -1,11 +1,11 @@
-import {Button, Col, Form, Row} from 'react-bootstrap';
+import {Button, Col, Form, Row, Container} from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Signin = () => {
     const [form, setForm] = useState ({
-            email: '',
+            id: '',
             password: ''
         }
     )
@@ -36,26 +36,28 @@ const Signin = () => {
              })
     }
     return(
-        <>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group as={Row} className="mb-3" controlId="email">
-                    <Form.Label column sm="2">Email</Form.Label>
-                    <Col sm="6">
-                    <Form.Control name="email" onChange={handleChange}/>
-                    </Col>
-                </Form.Group>
+        <Container>
+            <div class="login">
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group as={Row} className="mb-3" controlId="id">
+                        <Form.Label column sm="2">아이디</Form.Label>
+                        <Col sm="6">
+                        <Form.Control name="id" onChange={handleChange}/>
+                        </Col>
+                    </Form.Group>
 
-                <Form.Group as={Row} className="mb-3" controlId="Password">
-                    <Form.Label column sm="2">Password</Form.Label>
-                    <Col sm="6">
-                    <Form.Control type="password" name="password" onChange={handleChange}/>
-                    </Col>
-                </Form.Group>
+                    <Form.Group as={Row} className="mb-3" controlId="Password">
+                        <Form.Label column sm="2">비밀번호</Form.Label>
+                        <Col sm="6">
+                        <Form.Control type="password" name="password" onChange={handleChange}/>
+                        </Col>
+                    </Form.Group>
 
-                <Button type="submit">로그인</Button> &emsp;
-                <Button type="button" onClick={() => {window.location.href='./signup'}}>회원가입</Button>
-            </Form>
-        </>
+                    <Button type="submit">로그인</Button> &emsp;
+                    <Button type="button" onClick={() => {window.location.href='./signup'}}>회원가입</Button>
+                </Form>
+            </div>
+        </Container>
     )
 }
 
