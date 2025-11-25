@@ -14,10 +14,10 @@ function App() {
         <Container style={{fontSize: '20px'}}>
           <Nav>
             <Nav.Link href="">경제</Nav.Link>
-            <Nav.Link href="">정치</Nav.Link>
+            <Nav.Link href="">과학</Nav.Link>
             <Nav.Link href="">사회</Nav.Link>
-            <Nav.Link href="">IT</Nav.Link>
-            <Nav.Link href="">연예</Nav.Link>
+            <Nav.Link href="">역사</Nav.Link>
+            <Nav.Link href="">환경</Nav.Link>
           </Nav>
           <Nav className='ms-auto'>
             <Nav.Link onClick={()=>{setTab(tab === 'Signin' ? 'Signin' : 'Signin')}}>로그인</Nav.Link>
