@@ -7,6 +7,7 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import Summary from './pages/Summary';
 import NewsCategory from './pages/NewsCategory';
+import Footer from './pages/Footer';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
 
         <Route path='/:category/Summary/:id' element={<Summary/>}></Route>
       </Routes>
+      <Footer/>
     </>
   );
 }
