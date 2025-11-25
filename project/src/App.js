@@ -5,6 +5,12 @@ import {Container, Nav, Navbar, Row, Col, Button} from 'react-bootstrap';
 import { Route, Routes, useNavigate} from 'react-router-dom'
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
+import Economy from './pages/Economy';
+import Science from './pages/Science';
+import Society from './pages/Society';
+import History from './pages/History';
+import Environment from './pages/Environment';
+
 
 function App() {
   const [tab, setTab] = useState(null);
@@ -12,6 +18,7 @@ function App() {
   let navigate = useNavigate();
   
   // 
+
   return (
     <>
       <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
@@ -23,6 +30,7 @@ function App() {
             <Nav.Link onClick={() => {navigate('/')}}>사회</Nav.Link>
             <Nav.Link onClick={() => {navigate('/')}}>역사</Nav.Link>
             <Nav.Link onClick={() => {navigate('/')}}>환경</Nav.Link>
+
           </Nav>
           <Nav className='ms-auto'>
             <Nav.Link onClick={()=> {
@@ -46,6 +54,7 @@ function App() {
         <Route path="/Signin" element={<Signin/>}></Route>
         <Route path="/Signup" element={<Signup/>}></Route>
       </Routes>
+
     </>
   );
 }
