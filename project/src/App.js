@@ -5,6 +5,11 @@ import {Container, Nav, Navbar, Row, Col, Button} from 'react-bootstrap';
 import { Route, Routes, useNavigate} from 'react-router-dom'
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
+import History from './pages/History';
+import Economy from './pages/Economy';
+import Environment from './pages/Environment';
+import Society from './pages/Society';
+import Science from './pages/Science';
 
 function App() {
   const [tab, setTab] = useState(null);
@@ -18,11 +23,11 @@ function App() {
         <Container style={{fontSize: '20px'}}>
           <Nav>
             <Nav.Link onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/')}}>경제</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/')}}>과학</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/')}}>사회</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/')}}>역사</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/')}}>환경</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/Economy')}}>경제</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/Science')}}>과학</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/Society')}}>사회</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/History')}}>역사</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/Environment')}}>환경</Nav.Link>
           </Nav>
           <Nav className='ms-auto'>
             <Nav.Link onClick={()=> {
@@ -42,9 +47,13 @@ function App() {
       <br/><br/><br/>
 
       <Routes>
-        
         <Route path="/Signin" element={<Signin/>}></Route>
         <Route path="/Signup" element={<Signup/>}></Route>
+        <Route path="/History" element={<History/>}></Route>
+        <Route path="/Economy" element={<Economy/>}></Route>
+        <Route path="/Environment" element={<Environment/>}></Route>
+        <Route path="/Society" element={<Society/>}></Route>
+        <Route path="/Science" element={<Science/>}></Route>
       </Routes>
     </>
   );
