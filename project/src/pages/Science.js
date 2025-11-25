@@ -1,14 +1,13 @@
-// src/pages/Science.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Row, Col, Container } from 'react-bootstrap';
 
-const Science = () => {
+const Science = ({category}) => {
   const [newsList, setNewsList] = useState([]);
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/news/science') // 백엔드 주소에 맞게 수정
+      .get('/api/article',{params:{category: category}})
       .then(res => setNewsList(res.data))
       .catch(err => console.error(err));
   }, []);

@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Row, Col, Container } from 'react-bootstrap';
 
-const Society = () => {
+const Society = ({category}) => {
   const [newsList, setNewsList] = useState([]);
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/news/society')
+      .get('/api/article',{params:{category: category}})
       .then(res => setNewsList(res.data))
       .catch(err => console.error(err));
   }, []);

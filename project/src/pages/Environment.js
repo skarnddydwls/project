@@ -1,14 +1,13 @@
-// src/pages/Science.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Row, Col, Container } from 'react-bootstrap';
 
-const Environment = () => {
+const Environment = ({category}) => {
   const [newsList, setNewsList] = useState([]);
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/news/environment') // 백엔드 주소에 맞게 수정
+      .get('/api/article',{params:{category: category}})
       .then(res => setNewsList(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -28,7 +27,7 @@ const Environment = () => {
                 <Col md={8}>
                   <Card.Body>
                     <Card.Title>{news.title}</Card.Title>
-                    <Card.Text style={{ fontSize: '14px', color: '#555' }}>
+                    <Card.Text style={{ fontSize: '14px', color: 'rgba(85, 85, 85, 1)' }}>
                       {news.summary}
                     </Card.Text>
                   </Card.Body>
