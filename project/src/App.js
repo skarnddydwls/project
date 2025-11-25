@@ -5,11 +5,8 @@ import {Container, Nav, Navbar, Row, Col, Button} from 'react-bootstrap';
 import { Route, Routes, useNavigate} from 'react-router-dom'
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
-import History from './pages/History';
-import Economy from './pages/Economy';
-import Environment from './pages/Environment';
-import Society from './pages/Society';
-import Science from './pages/Science';
+import Summary from './pages/Summary';
+import NewsCategory from './pages/NewsCategory';
 
 
 function App() {
@@ -24,11 +21,11 @@ function App() {
         <Container style={{fontSize: '20px'}}>
           <Nav>
             <Nav.Link onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/Economy'); setCategory('Economy')}}>경제</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/Science'); setCategory('Science')}}>과학</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/Society'); setCategory('Society')}}>사회</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/History'); setCategory('History')}}>역사</Nav.Link>
-            <Nav.Link onClick={() => {navigate('/Environment'); setCategory('Environment')}}>환경</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('경제')}}>경제</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('과학')}}>과학</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('사회')}}>사회</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('역사')}}>역사</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('환경')}}>환경</Nav.Link>
 
           </Nav>
           <Nav className='ms-auto'>
@@ -50,11 +47,9 @@ function App() {
       <Routes>
         <Route path="/Signin" element={<Signin/>}></Route>
         <Route path="/Signup" element={<Signup/>}></Route>
-        <Route path="/History" element={<History category={category}/>}></Route>
-        <Route path="/Economy" element={<Economy category={category}/>}></Route>
-        <Route path="/Environment" element={<Environment category={category}/>}></Route>
-        <Route path="/Society" element={<Society category={category}/>}></Route>
-        <Route path="/Science" element={<Science category={category}/>}></Route>
+        <Route path="/NewsCategory" element={<NewsCategory category={category}/>}></Route>
+
+        <Route path='/:category/Summary/:id' element={<Summary/>}></Route>
       </Routes>
     </>
   );
