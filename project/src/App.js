@@ -3,8 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import {Container, Nav, Navbar, Row, Col, Button} from 'react-bootstrap';
 import Signin from './pages/Signin';
-// import Signup from './pages/Signup';
-import Signup1 from './pages/Signup1';
+import Signup from './pages/Signup';
 
 function App() {
   const [tab, setTab] = useState(null);
@@ -21,8 +20,8 @@ function App() {
             <Nav.Link href="">연예</Nav.Link>
           </Nav>
           <Nav className='ms-auto'>
-            <Nav.Link onClick={()=>{setTab(tab === 'Signin' ? null : 'Signin')}}>로그인</Nav.Link>
-            <Nav.Link onClick={()=>{setTab(tab === 'Signup' ? null : 'Signup')}}>회원가입</Nav.Link>
+            <Nav.Link onClick={()=>{setTab(tab === 'Signin' ? 'Signin' : 'Signin')}}>로그인</Nav.Link>
+            <Nav.Link onClick={()=>{setTab(tab === 'Signup' ? 'Signup' : 'Signup')}}>회원가입</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -30,7 +29,7 @@ function App() {
 
       <Container>
         { tab === 'Signin' ? <Signin/> : null }
-        { tab === 'Signup' ? <Signup1/> : null }
+        { tab === 'Signup' ? <Signup/> : null }
       </Container>
     </>
   );

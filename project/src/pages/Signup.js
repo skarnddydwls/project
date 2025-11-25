@@ -108,7 +108,7 @@ const Signup = () => {
           <Form.Label column sm="2">
             PASSWORD
           </Form.Label>
-          <Col sm="10">
+          <Col sm="8">
             <Form.Control
               type="password"
               name="password"
@@ -118,8 +118,9 @@ const Signup = () => {
             />
           </Col>
         </Form.Group>
-
-        <Button type="submit">회원가입</Button>
+          <br/><br/>
+        <Button type="submit">회원가입</Button> &emsp;
+        <Button type="reset">다시입력</Button>
       </Form>
     </div>
   );
