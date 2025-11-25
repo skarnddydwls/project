@@ -20,7 +20,6 @@ const Signup = () => {
       [name]: value,
     });
 
-    // 아이디가 바뀌면 중복 확인 상태 초기화
     if (name === 'id') {
       setIdCheckMessage('');
       setIsIdChecked(false);
@@ -33,20 +32,19 @@ const Signup = () => {
       return;
     }
 
-    axios
-      .get('/react/id-check', { params: { id: form.id } })
-      .then((result) => {
-        if (result.data) {
-          setIdCheckMessage('사용 가능한 아이디 입니다.');
-          setIsIdChecked(true);
-        } else {
-          setIdCheckMessage('이미 사용 중인 아이디 입니다.');
-          setIsIdChecked(false);
-        }
-      })
-      .catch(() => {
-        alert('아이디 확인 중 오류가 발생했습니다.');
-      });
+    axios.get('/react/id-check', { params: { id: form.id } })
+         .then((result) => {
+            if (result.data) {
+              setIdCheckMessage('사용 가능한 아이디 입니다.');
+              setIsIdChecked(true);
+            } else {
+              setIdCheckMessage('이미 사용 중인 아이디 입니다.');
+              setIsIdChecked(false);
+            }
+          })
+          .catch(() => {
+            alert('아이디 확인 중 오류가 발생했습니다.');
+          });
   };
 
   const handleSubmit = (e) => {
