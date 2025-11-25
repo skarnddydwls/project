@@ -12,7 +12,7 @@ const History = () => {
       .then(res => setNewsList(res.data))
       .catch(err => console.error(err));
   }, []);
-
+  
   return (
     <Container>
       <h2 style={{ fontWeight: '700', marginBottom: '25px' }}>역사 뉴스</h2>

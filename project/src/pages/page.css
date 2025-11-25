@@ -1,0 +1,85 @@
+.newstitle{
+    font-size: 24px;
+    font-weight: bold;
+}
+.news-container {
+  margin-top: 30px;
+}
+
+/* 전체 레이아웃 */
+.news-main-col {
+  border-right: 1px solid #eee;
+  padding-right: 24px;
+}
+
+.news-recent-col {
+  width: 300px;          /* 오른쪽 폭 고정 느낌 */
+  max-width: 300px;
+  padding-left: 24px;
+}
+
+/* 섹션 제목 */
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* 기사 한 줄 */
+.news-row {
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.news-row:last-child {
+  border-bottom: none;
+}
+
+/* 기사 제목 */
+.newsTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+/* 썸네일 */
+.news-thumb {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* 오른쪽 최근 본 뉴스 박스 */
+.recent-box {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #eee;
+}
+
+.recent-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.recent-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.recent-item {
+  font-size: 13px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.recent-item:last-child {
+  margin-bottom: 0;
+}
+
+.recent-item:hover {
+  text-decoration: underline;
+}
