@@ -3,7 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import {Container, Nav, Navbar, Row, Col, Button} from 'react-bootstrap';
 import Signin from './pages/Signin';
-import Signup from './pages/Signup';
+// import Signup from './pages/Signup';
+import Signup1 from './pages/Signup1';
 
 function App() {
   const [tab, setTab] = useState(null);
@@ -29,7 +30,7 @@ function App() {
 
       <Container>
         { tab === 'Signin' ? <Signin/> : null }
-        { tab === 'Signup' ? <Signup/> : null }
+        { tab === 'Signup' ? <Signup1/> : null }
       </Container>
     </>
   );
