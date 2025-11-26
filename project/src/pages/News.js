@@ -1,12 +1,16 @@
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { use, useEffect, useState} from 'react';
 import axios from 'axios';
-
 
 const News = () => {
   const { category, id } = useParams();
+  const [news, setNews] = useState(null);
 
-  const dummyNews = [
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+    const dummyNews = [
     {
       article_id:1,
       category:`economy`,
@@ -25,8 +29,23 @@ const News = () => {
         이런 상황 때문에 회사들의 수익이 줄어들고, 결국 물건값이 더 오를 수 있다는 걱정이 나오고 있다.`
       }
   ];
+  
+  setNews(dummyNews.find(item => item.article_id == id));
 
-  const news = dummyNews.find(item => item.article_id == id);
+{/* 서버에서 받을 경우 */}
+  /*
+  useEffect(() => {
+    axios.get(`/api/article//${article_id}`)
+    .then((response) => {
+        setNews(response.data); 
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }, [id]);
+  if (!news) {
+    return <div>Loading...</div>;
+  }*/
 
   return(
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
