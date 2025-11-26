@@ -11,10 +11,11 @@ import Footer from './pages/Footer';
 
 
 function App() {
-  const [tab, setTab] = useState(null);
+  // const [tab, setTab] = useState(null);
   const [loginUser, setLoginUser] = useState(null);
   const [category, setCategory] = useState('');
   let navigate = useNavigate();
+
   
   return (
     <>
@@ -41,10 +42,10 @@ function App() {
               }}>{loginUser ? '로그아웃' : '로그인'}</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/Signup')}}>회원가입</Nav.Link>
             <Nav.Link onClick={()=>{
-              if(loginUser){
-
+              if(!loginUser) {
+                navigate('/Signup')
               }
-            }}>회원가입</Nav.Link>
+            }}>{}</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
