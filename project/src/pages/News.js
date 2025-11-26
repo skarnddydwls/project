@@ -1,12 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { use, useEffect, useState} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-const News = () => {
-  const {category, id} = useParams();
-  const [news, setNews] = useState(null);
-
-  const dummyNews = [
+const dummyNews = [
     {
       article_id:1,
       category:`economy`,
@@ -26,14 +24,43 @@ const News = () => {
     }
   ];
 
+const News = () => {
+  const {category, id} = useParams();
+  const [news, setNews] = useState(null);
+  const [showText, setShowText] = useState();
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setNews(dummyNews.find(item => item.article_id == id));
   }, [id]);
 
   if (!news) {
-    return ;
+    return "ㄱㄷㄱㄷ";
   }
+
+  return(
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
+
+      <h1>{news.title}</h1> 
+      <p style={{ color: '#666', fontSize: '14px' }}>
+        {news.date}  {news.category}
+      </p>
+
+      <Button variant="outline-success" onClick={() => {setShowText(news.simplified_content)}}>해석 보기</Button> &emsp;
+      <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
+      <Button variant="outline-success">본문 보기</Button>
+      
+      <section style={{ marginTop: '32px' }}>
+        <p style={{ whiteSpace: 'pre-line', lineHeight: 1.6 }}>
+          {showText}
+        </p>
+      </section>
+  </div>
+  )
+}
+
+export default News;
+
 
 {/* 서버에서 받을 경우 */}
   /*
@@ -49,30 +76,3 @@ const News = () => {
   if (!news) {
     return <div>Loading...</div>;
   }*/
-
-  return(
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
-
-      <h1>{news.title}</h1> 
-      <p style={{ color: '#666', fontSize: '14px' }}>
-        {news.date}  {news.category}
-      </p>
-
-      <section style={{ marginTop: '24px' }}>
-        <h2>요약</h2>
-        <p style={{ whiteSpace: 'pre-line', lineHeight: 1.6 }}>
-          {news.summary_content}
-        </p>
-      </section>
-
-      <section style={{ marginTop: '32px' }}>
-        <h2>해석 본문</h2>
-        <p style={{ whiteSpace: 'pre-line', lineHeight: 1.6 }}>
-          {news.simplified_content}
-        </p>
-      </section>
-  </div>
-  )
-}
-
-export default News;
