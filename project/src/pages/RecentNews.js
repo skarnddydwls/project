@@ -27,21 +27,21 @@ const RecentNews = () => {
     //      })
     // },[])
 
-    return(
-        <>
-            <Col md="auto" className="news-recent-col" style={{marginTop: '50px'}}>
-                <div className="recent-box">
-                <h4 className="recent-title">최근 본 뉴스</h4>
-                <ul className="recent-list">
-                    {recentNews.map((item) => (
-                    <li key={item.id} className="recent-item">
-                        {item.title}
-                    </li>
-                    ))}
-                </ul>
-                </div>
-            </Col>
-        </>
+    return(  
+        <div className="recent-box" style={{marginTop:'50px'}}>
+        <h4 className="recent-title">최근 본 뉴스</h4>
+        {recentNews.length === 0 ? (
+            <p className="recent-empty">최근 본 뉴스가 없습니다.</p>
+        ) : (
+            <ul className="recent-list">
+            {recentNews.map((item) => (
+                <li key={item.id} className="recent-item">
+                {item.title}
+                </li>
+            ))}
+            </ul>
+        )}
+        </div>
     )
 }
 
