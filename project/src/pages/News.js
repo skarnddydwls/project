@@ -1,16 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { use, useEffect, useState} from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 
-{/* 임시 코드 */}
+
 const News = () => {
   const { category, id } = useParams();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-    const dummyNews = [
+  const dummyNews = [
     {
       article_id:1,
       category:`economy`,
@@ -30,33 +26,7 @@ const News = () => {
       }
   ];
 
-
   const news = dummyNews.find(item => item.article_id == id);
-{/* 여기까지 */}
-
-
-{/* 서버에서 받을 경우 */}
-/* const News = () => {
-  const { category, id } = useParams();
-  const [news, setNews] = useState(null);
-  
-  useEffect(() => {
-    axios.get(`/api/news/${category}/${id}`)
-    .then((response) => {
-        setNews(response.data); 
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }, [id, category]);
-  if (!news) {
-    return <div>Loading...</div>;
-  }*/
-
-
-
-
-
 
   return(
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
