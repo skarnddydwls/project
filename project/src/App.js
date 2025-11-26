@@ -40,12 +40,12 @@ function App() {
                 navigate('/Signin');
               }
               }}>{loginUser ? '로그아웃' : '로그인'}</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/Signup')}}>회원가입</Nav.Link>
-            <Nav.Link onClick={()=>{
+              <Nav.Link onClick={()=>{
               if(!loginUser) {
                 navigate('/Signup')
               }
-            }}>{}</Nav.Link>
+            }}>{loginUser ? loginUser.id : "회원가입"}</Nav.Link>
+            {/* <Nav.Link onClick={()=>{navigate('/Signup')}}>회원가입</Nav.Link> */}
           </Nav>
         </Container>
       </Navbar>
