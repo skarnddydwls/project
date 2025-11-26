@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Row, Col, Container } from 'react-bootstrap';
 import '../pages/page.css';
 
+
 const Economy = ({ category }) => {
   const [newsList, setNewsList] = useState([]);
 
@@ -46,7 +47,7 @@ const Economy = ({ category }) => {
       simplified_content:null,
       summary_content:null,
       title: "기업 실적 반등 조짐…내년 경기 회복 기대감↑",
-      img: "https://img.newspim.com/news/2023/11/01/2311011126502320.jpg"
+      img: "https://www.chosun.com/resizer/v2/X4DHACB47JCTZAZGLFAFR2V2RQ.jpg?auth=aba326a31e71ef60b5229d0f20ae255168c41ca033c6b536e82949edb2618d1a&width=400&height=225&smart=true"
     }
   ];
 
@@ -111,7 +112,7 @@ const Economy = ({ category }) => {
             <ul className="recent-list">
               {recentNews.map((item) => (
                 <li key={item.id} className="recent-item">
-                  {item.title}
+                  <p href="">{item.title}</p>
                 </li>
               ))}
             </ul>

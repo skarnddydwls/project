@@ -10,8 +10,8 @@
     });
 
     const handleChange = (e) => {
-      const { name, value } = e.target;
-      setForm({ ...form, [name]: value });
+      const { id, password } = e.target;
+      setForm({ ...form, [id]: id ,[password]: password});
     };
 
     const handleSubmit = (e) => {
@@ -22,8 +22,8 @@
           if (result.data) {
             alert('로그인 되었습니다');
             const userInfo = {
-              name: result.data.name,
-              email: result.data.email,
+              id: result.data.id,
+              password: result.data.password,
             };
             sessionStorage.setItem('loginUser', JSON.stringify(userInfo));
             window.location.href = '/';

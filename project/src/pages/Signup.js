@@ -118,7 +118,7 @@ const Signup = () => {
         </Form.Group>
           <br/><br/>
         <Button type="submit">회원가입</Button> &emsp;
-        <Button type="reset">다시입력</Button>
+        <Button onClick={() => {}}>다시입력</Button>
       </Form>
     </div>
   );
