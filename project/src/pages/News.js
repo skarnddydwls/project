@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 
-const Summary = () => {
+const News = () => {
   const { category, id } = useParams();
 
   const dummyNews = [
@@ -53,4 +53,4 @@ const Summary = () => {
   )
 }
 
-export default Summary;
+export default News;

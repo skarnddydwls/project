@@ -53,7 +53,7 @@ const NewsCategory = ({category}) => {
         simplified_content:null,
         summary_content:null,
         title: "기업 실적 반등 조짐…내년 경기 회복 기대감↑",
-        img: "https://img.newspim.com/news/2023/11/01/2311011126502320.jpg"
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF24J9D2dpVJ97vJ63D0ZS5BoM2hJyOVz5gefsfF5SxPjeUT5ZIRcC7KpfBck2ks6Tlr8g2Vx_dRtUikBGUflgsNr5SENXZQzsDz_091TW&s=10"
         }
     ];
 
@@ -74,7 +74,7 @@ const NewsCategory = ({category}) => {
                 {dummyNews.map((news) => (
                 <Row key={news.id} className="news-row">
                     <Col md={9} xs={8}>
-                    <h3 onClick={()=> {navigate(`/${category}/Summary/${news.id}`)}} className="newsTitle">{news.title}</h3>
+                    <h3 onClick={()=> {navigate(`/${category}/News/${news.id}`)}} className="newsTitle">{news.title}</h3>
                     </Col>
                     <Col md={3} xs={4}>
                     <img

@@ -5,7 +5,7 @@ import {Container, Nav, Navbar, Row, Col, Button} from 'react-bootstrap';
 import { Route, Routes, useNavigate} from 'react-router-dom'
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
-import Summary from './pages/Summary';
+import News from './pages/News';
 import NewsCategory from './pages/NewsCategory';
 import Footer from './pages/Footer';
 
@@ -40,6 +40,11 @@ function App() {
               }
               }}>{loginUser ? '로그아웃' : '로그인'}</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/Signup')}}>회원가입</Nav.Link>
+            <Nav.Link onClick={()=>{
+              if(loginUser){
+
+              }
+            }}>회원가입</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -50,7 +55,7 @@ function App() {
         <Route path="/Signup" element={<Signup/>}></Route>
         <Route path="/NewsCategory" element={<NewsCategory category={category}/>}></Route>
 
-        <Route path='/:category/Summary/:id' element={<Summary/>}></Route>
+        <Route path='/:category/News/:id' element={<News/>}></Route>
       </Routes>
       <Footer/>
     </>
