@@ -66,7 +66,7 @@ const NewsCategory = ({category}) => {
     return (
         <Container className="news-container">
             <Row>
-            <Col className="news-main-col">
+            <Col >
                 <h2 className="section-title">{category}</h2>
 
                 {dummyNews.map((news) => (

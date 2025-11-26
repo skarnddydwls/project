@@ -58,7 +58,9 @@ function App() {
               <Route path='/:category/News/:id' element={<News/>}></Route>
             </Routes>
           </Col>
-          <RecentNews/>
+          {
+            !loginUser ? <RecentNews/> : null
+          }
         </Row>
       </Container>
       <Footer/>
