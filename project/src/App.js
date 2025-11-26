@@ -22,11 +22,11 @@ function App() {
       <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
         <Nav style={{marginLeft:"50px", alignItems:'center'}}>
           <Nav.Link style={{fontSize:'30px'}} onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('경제')}}>경제</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('과학')}}>과학</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('사회')}}>사회</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('역사')}}>역사</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory'); setCategory('환경')}}>환경</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/경제'); setCategory('경제')}}>경제</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/과학'); setCategory('과학')}}>과학</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/사회'); setCategory('사회')}}>사회</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/역사'); setCategory('역사')}}>역사</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/환경'); setCategory('환경')}}>환경</Nav.Link>
         </Nav>
         <Nav className='ms-auto' style={{marginRight:'100px'}}>
           <Nav.Link onClick={()=> {
@@ -53,7 +53,7 @@ function App() {
             <Routes>
               <Route path="/Signin" element={<Signin/>}></Route>
               <Route path="/Signup" element={<Signup/>}></Route>
-              <Route path="/NewsCategory" element={<NewsCategory category={category}/>}></Route>
+              <Route path="/NewsCategory/:category" element={<NewsCategory/>}></Route>
 
               <Route path='/:category/News/:id' element={<News/>}></Route>
             </Routes>
