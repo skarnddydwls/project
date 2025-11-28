@@ -1,16 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { use, useEffect, useState} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-{/* 임시 코드 */}
-const News = () => {
-  const { category, id } = useParams();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-    const dummyNews = [
+const dummyNews = [
     {
       article_id:1,
       category:`economy`,
@@ -27,36 +21,27 @@ const News = () => {
       summary_content:`환율이 많이 오르면서 유학 보낸 집들은 학비와 생활비가 더 비싸져서 걱정이 커지고 있다. A 씨처럼 미국에 두 아들을 보낸 부모들은 환율 때문에 몇 년 사이 비용이 크게 늘었다고 말하고 있다. 주변 부모들도 환율이 더 오르면 유학을 계속할지 고민해야겠다는 분위기다.
         또한 초콜릿 회사나 라면·식용유 회사처럼 원재료를 외국에서 사오는 업체들은 재료 값과 운송비가 올라 힘들어하고 있다. 섬유업계도 환율이 조금만 올라가도 큰 추가 비용이 생겨 부담이 크다.
         이런 상황 때문에 회사들의 수익이 줄어들고, 결국 물건값이 더 오를 수 있다는 걱정이 나오고 있다.`
-      }
+    }
   ];
 
-
-  const news = dummyNews.find(item => item.article_id == id);
-{/* 여기까지 */}
-
-
-{/* 서버에서 받을 경우 */}
-/* const News = () => {
-  const { category, id } = useParams();
+const News = () => {
+  const {category, id} = useParams();
   const [news, setNews] = useState(null);
-  
+  const [showText, setShowText] = useState();
+  const [readingState, setReadingState] = useState('simplified');
+
   useEffect(() => {
-    axios.get(`/api/news/${category}/${id}`)
-    .then((response) => {
-        setNews(response.data); 
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }, [id, category]);
+    window.scrollTo(0, 0);
+    const found = dummyNews.find(item => item.article_id == id);
+    setNews(found);
+    if(found) {
+      setShowText(found.simplified_content);
+    }
+  }, [id]);
+
   if (!news) {
-    return <div>Loading...</div>;
-  }*/
-
-
-
-
-
+    return;
+  }
 
   return(
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
@@ -66,17 +51,21 @@ const News = () => {
         {news.date}  {news.category}
       </p>
 
-      <section style={{ marginTop: '24px' }}>
-        <h2>요약</h2>
-        <p style={{ whiteSpace: 'pre-line', lineHeight: 1.6 }}>
-          {news.summary_content}
-        </p>
-      </section>
-
+      <Button variant="outline-success" onClick={() => {
+        if(readingState == 'simplified'){
+          setReadingState('content');
+          setShowText(news.content);
+        } else if(readingState == 'content'){
+          setReadingState('simplified');
+          setShowText(news.simplified_content)
+        }
+        }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
+      <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
+      {/* <Button variant="outline-success">본문 보기</Button> */}
+      
       <section style={{ marginTop: '32px' }}>
-        <h2>해석 본문</h2>
         <p style={{ whiteSpace: 'pre-line', lineHeight: 1.6 }}>
-          {news.simplified_content}
+          {showText}
         </p>
       </section>
   </div>
@@ -84,3 +73,19 @@ const News = () => {
 }
 
 export default News;
+
+
+{/* 서버에서 받을 경우 */}
+  /*
+  useEffect(() => {
+    axios.get(`/api/article//${article_id}`)
+    .then((response) => {
+        setNews(response.data); 
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }, [id]);
+  if (!news) {
+    return <div>Loading...</div>;
+  }*/

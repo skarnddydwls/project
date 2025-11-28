@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Row, Col, Container } from 'react-bootstrap';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import '../css/page.css';
 
-const NewsCategory = ({category}) => {
+
+const NewsCategory = () => {
+    const {category} = useParams();
     const [newsList, setNewsList] = useState([]);
     const [recentNews, setRecentNews] = useState([
         { id: 101, title: "초등학생도 이해하는 기준금리란?" },
@@ -71,7 +73,7 @@ const NewsCategory = ({category}) => {
 
                 {dummyNews.map((news) => (
                 <Row key={news.id} className="news-row">
-                    <Col md={9} xs={8}>
+                    <Col md={6} xs={3}>
                     <h3 onClick={()=> {navigate(`/${category}/News/${news.id}`)}} className="newsTitle">{news.title}</h3>
                     </Col>
                     <Col md={3} xs={4}>
@@ -81,6 +83,7 @@ const NewsCategory = ({category}) => {
                         className="news-thumb"
                     />
                     </Col>
+
                 </Row>
                 ))}
             </Col>
