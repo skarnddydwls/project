@@ -118,3 +118,27 @@
   text-overflow: ellipsis;
   vertical-align: middle;
 }
+
+/* News.js 스크랩 버튼 */
+.scrap-btn {
+  float: right;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 8px;      /* 버튼들 사이 간격 */
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.scrap-btn img {
+  display: block;
+}
+
+.scrap-btn:focus {
+  outline: none;
+}
+
+.scrap-btn:hover img {
+  transform: translateY(-1px) scale(1.05);
+}
