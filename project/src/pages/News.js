@@ -1,9 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { use, useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Search from './Search';
+import fillScrap from '../img/fill-scrap.svg';
+import blankScrap from '../img/blank-scrap.svg';
+
 
 const dummyNews = [
     {
@@ -28,8 +31,13 @@ const dummyNews = [
 const News = () => {
   const {category, id} = useParams();
   const [news, setNews] = useState(null);
-  const [showText, setShowText] = useState();
-  const [readingState, setReadingState] = useState('simplified');
+const [showText, setShowText] = useState();
+const [readingState, setReadingState] = useState('simplified');
+
+// 스크랩 여부 (아이콘 토글용)
+const [isScraped, setIsScraped] = useState(false);
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,8 +48,31 @@ const News = () => {
     }
   }, [id]);
 
+  // 스크랩 버튼 눌렀을 때 호출되는 함수
+  const handleScrap = async () => {
+    try {
+      const userId = localStorage.getItem('userId'); // 로그인 시 저장해둔 값이라고 가정
+
+      if (!userId) {
+        alert('로그인 후 이용 가능합니다.');
+        return;
+      }
+
+      await axios.post('mypage/scraped', {
+        userId: userId,           // your_article.user_id
+        articleId: news.article_id // your_article.article_id
+      });
+
+      setIsScraped(true);
+      alert('스크랩 완료!');
+    } catch (err) {
+      console.error(err);
+      alert('스크랩 중 오류가 발생했습니다.');
+    }
+  };
+
   if (!news) {
-    return;
+    return null;
   }
 
   return(
@@ -53,16 +84,24 @@ const News = () => {
       </p>
 
       <Button variant="outline-success" onClick={() => {
-        if(readingState == 'simplified'){
+        if(readingState === 'simplified'){
           setReadingState('content');
           setShowText(news.content);
-        } else if(readingState == 'content'){
+        } else if(readingState === 'content'){
           setReadingState('simplified');
           setShowText(news.simplified_content)
         }
         }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
       <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
-      
+
+      {/* <Button variant="outline-success">본문 보기</Button> */}
+      <button onClick={handleScrap} className="scrap-btn">
+        <img
+          src={isScraped ? fillScrap : blankScrap}
+          alt="scrap"
+          style={{ width: '28px', cursor: 'pointer' }}
+        />
+      </button>
       <section style={{ marginTop: '32px' }}>
          <Search content={showText} />
       </section>
