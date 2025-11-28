@@ -67,8 +67,8 @@
 /* 공통 박스 스타일 */
 .recent-box,
 .scrap-box {
-  background: #fafafa;
-  border: 1px solid #fafafa;;
+  background: #FFFFFF;
+  border: 1px solid #FFFFFF;
   border-radius: 6px;
   padding: 14px 16px;
   margin-bottom: 20px;
@@ -90,8 +90,11 @@
   margin: 0;
 }
 
+/* 각 아이템 한 줄 레이아웃 */
 .recent-item,
 .scrap-item {
+  display: flex;          /* 한 줄에: 제목 + 버튼 */
+  align-items: center;
   margin-bottom: 8px;
   cursor: pointer;
 }
@@ -106,27 +109,27 @@
   text-decoration: underline;
 }
 
-.btn-scrap {
-  float: right;
-  margin-left: 10px;
-}
-
-.recent-item-title { /* 스크랩뉴스 반응형 */
-  display: inline-block;
-  max-width: 180px;    /* 사이드바 width에 따라 조절 가능 */
+/* 제목: 남는 공간 다 쓰면서 ... 처리 */
+.recent-item-title,
+.scrap-item-title {
+  flex: 1;                /* 남는 공간 채움 */
+  min-width: 0;           /* 줄어들 수 있게 해야 ellipsis 동작 */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  vertical-align: middle;
 }
 
-/* News.js 스크랩 버튼 */
+/* 예전 부트스트랩 버튼용 (혹시 다른 곳에서 쓰면 최소 영향만) */
+.btn-scrap {
+  margin-left: 10px;
+}
+
+/* News.js 스크랩 버튼 (기사 상단 노란 북마크) */
 .scrap-btn {
-  float: right;
   background: none;
   border: none;
   padding: 0;
-  margin-left: 8px;      /* 버튼들 사이 간격 */
+  margin-left: 8px;
   display: inline-flex;
   align-items: center;
   cursor: pointer;
@@ -142,4 +145,32 @@
 
 .scrap-btn:hover img {
   transform: translateY(-1px) scale(1.05);
+  transition: transform 0.12s ease-out;
+}
+
+/* Scrap.js에서 쓰는 X 아이콘 버튼 */
+.scrap-delete-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;         /* 버튼은 줄어들지 않게 → 줄바꿈 방지 */
+}
+
+.scrap-delete-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.scrap-delete-btn:hover .scrap-delete-icon {
+  transform: scale(1.1);
+  transition: 0.1s;
+}
+
+.scrap-delete-btn:focus {
+  outline: none;
 }
