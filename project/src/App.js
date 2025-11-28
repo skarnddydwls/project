@@ -26,8 +26,8 @@ function App() {
           <Nav.Link onClick={() => {navigate('/NewsCategory/경제'); setCategory('경제')}}>경제</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/과학'); setCategory('과학')}}>과학</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/사회'); setCategory('사회')}}>사회</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory/역사'); setCategory('역사')}}>역사</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory/환경'); setCategory('환경')}}>환경</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/세계'); setCategory('세계')}}>세계</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/문화'); setCategory('문화')}}>문화</Nav.Link>
         </Nav>
         <Nav className='ms-auto' style={{marginRight:'100px'}}>
           <Nav.Link onClick={()=> {

@@ -7,7 +7,6 @@ import '../css/page.css';
 const Scrap = () => {
   const navigate = useNavigate();
 
-  // 더미 데이터 (category는 실제 있는 것만 사용: 경제, 사회, 과학, 역사, 환경 등)
   const [scrapList, setScrapList] = useState([
     {
       id: 201,
@@ -21,12 +20,11 @@ const Scrap = () => {
     },
     {
       id: 203,
-      category: '환경',
-      title: '환경 보호 정책이 일상에 미치는 영향'
+      category: '문화',
+      title: '문화제 보호 정책이 일상에 미치는 영향'
     }
   ]);
 
-  // 실제 스크랩 목록 불러오기
   useEffect(() => {
     axios
       .get('/api/mypage/scraped')
@@ -43,8 +41,6 @@ const Scrap = () => {
   }, []);
 
   const handleClickTitle = (article) => {
-    // App.js에서 /:category/News/:id 라우트 쓰고 있으니까 이 패턴 유지
-    // category 필드가 백엔드 응답에도 있어야 함
     navigate(`/${article.category}/News/${article.id}`);
   };
 
@@ -61,13 +57,9 @@ const Scrap = () => {
               key={article.id}
               className="recent-item"
               onClick={() => handleClickTitle(article)}
-            > {article.title.length > 14
-               ? article.title.slice(0, 14) + "..."
-               : article.title}<button className="btn btn-secondary btn-sm btn-scrap">X</button>
-             
+            > <span className="recent-item-title">{article.title}</span><button className="btn btn-secondary btn-sm btn-scrap">X</button>
             </li>
           ))}
-          
         </ul>
       )}
     </div>
