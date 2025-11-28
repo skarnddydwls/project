@@ -4,6 +4,7 @@ import { Card, Row, Col, Container } from 'react-bootstrap';
 import {useNavigate, useParams} from 'react-router-dom'
 import '../css/page.css';
 
+
 const NewsCategory = () => {
     const {category} = useParams();
     const [newsList, setNewsList] = useState([]);
@@ -72,7 +73,7 @@ const NewsCategory = () => {
 
                 {dummyNews.map((news) => (
                 <Row key={news.id} className="news-row">
-                    <Col md={9} xs={8}>
+                    <Col md={6} xs={3}>
                     <h3 onClick={()=> {navigate(`/${category}/News/${news.id}`)}} className="newsTitle">{news.title}</h3>
                     </Col>
                     <Col md={3} xs={4}>
@@ -82,6 +83,7 @@ const NewsCategory = () => {
                         className="news-thumb"
                     />
                     </Col>
+
                 </Row>
                 ))}
             </Col>

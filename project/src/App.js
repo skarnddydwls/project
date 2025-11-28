@@ -9,6 +9,7 @@ import News from './pages/News';
 import NewsCategory from './pages/NewsCategory';
 import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
+import Scrap from './pages/Scrap';
 
 
 function App() {
@@ -54,13 +55,21 @@ function App() {
               <Route path="/Signin" element={<Signin/>}></Route>
               <Route path="/Signup" element={<Signup/>}></Route>
               <Route path="/NewsCategory/:category" element={<NewsCategory/>}></Route>
-
               <Route path='/:category/News/:id' element={<News/>}></Route>
             </Routes>
           </Col>
-          {
-            !loginUser ? <RecentNews/> : null
-          }
+
+          <Col md={3} className="news-recent-col">
+        {/* 스크랩한 뉴스 */}
+        { !loginUser ? <RecentNews/> : null }
+        
+
+        <hr />
+
+        {/* 최근 본 뉴스 */}
+        { !loginUser ? <Scrap /> : null }
+      </Col>
+          
         </Row>
       </Container>
       <Footer/>

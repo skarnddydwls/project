@@ -1,31 +1,35 @@
+/* ----------------------------- */
+/* 뉴스카테고리 왼쪽 뉴스 리스트 */
+/* ----------------------------- */
+
 .newstitle{
     font-size: 24px;
     font-weight: bold;
 }
+
 .news-container {
   margin-top: 30px;
 }
 
-/* 전체 레이아웃 */
 .news-main-col {
   border-right: 1px solid #eee;
   padding-right: 24px;
 }
 
 .news-recent-col {
-  width: 300px;          /* 오른쪽 폭 고정 느낌 */
+  width: 300px; 
   max-width: 300px;
   padding-left: 24px;
 }
 
-/* 섹션 제목 */
+/* 카테고리 제목 */
 .section-title {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 16px;
 }
 
-/* 기사 한 줄 */
+/* 기사 리스트 */
 .news-row {
   padding: 16px 0;
   border-bottom: 1px solid #eee;
@@ -35,11 +39,16 @@
   border-bottom: none;
 }
 
-/* 기사 제목 */
+/* 뉴스 제목 */
 .newsTitle {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.newsTitle:hover {
+  color: #2c6bed;
 }
 
 /* 썸네일 */
@@ -50,37 +59,56 @@
   border-radius: 4px;
 }
 
-/* 오른쪽 최근 본 뉴스 박스 */
-.recent-box {
+
+
+/* ----------------------------- */
+/* 오른쪽 RecentNews + Scrap */
+/* ----------------------------- */
+
+/* 공통 박스 스타일 */
+.recent-box,
+.scrap-box {
   background: #fafafa;
-  border-radius: 4px;
-  padding: 16px;
-  border: 1px solid #eee;
+  border: 1px solid #fafafa;;
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
 }
 
-.recent-title {
-  font-size: 30px;
-  font-weight: 600;
-  margin-bottom: 8px;
+/* 제목 */
+.recent-title,
+.scrap-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
-.recent-list {
-  font-size:30px;
+/* 리스트 */
+.recent-list,
+.scrap-list {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
   margin: 0;
 }
 
-.recent-item {
-  font-size: 13px;
-  margin-bottom: 6px;
+.recent-item,
+.scrap-item {
+  margin-bottom: 8px;
   cursor: pointer;
 }
 
-.recent-item:last-child {
+.recent-item:last-child,
+.scrap-item:last-child {
   margin-bottom: 0;
 }
 
-.recent-item:hover {
+.recent-item:hover,
+.scrap-item:hover {
   text-decoration: underline;
 }
+
+.btn-scrap {
+  float: right;
+  margin-left: 10px;
+}
+/* 만약 수정하셨을 경우 전체 받아주시고 추가하신 부분 추가해주세요 */
