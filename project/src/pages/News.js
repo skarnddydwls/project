@@ -28,14 +28,19 @@ const News = () => {
   const {category, id} = useParams();
   const [news, setNews] = useState(null);
   const [showText, setShowText] = useState();
+  const [readingState, setReadingState] = useState('simplified');
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setNews(dummyNews.find(item => item.article_id == id));
+    const found = dummyNews.find(item => item.article_id == id);
+    setNews(found);
+    if(found) {
+      setShowText(found.simplified_content);
+    }
   }, [id]);
 
   if (!news) {
-    return "ㄱㄷㄱㄷ";
+    return;
   }
 
   return(
@@ -46,9 +51,17 @@ const News = () => {
         {news.date}  {news.category}
       </p>
 
-      <Button variant="outline-success" onClick={() => {setShowText(news.simplified_content)}}>해석 보기</Button> &emsp;
+      <Button variant="outline-success" onClick={() => {
+        if(readingState == 'simplified'){
+          setReadingState('content');
+          setShowText(news.content);
+        } else if(readingState == 'content'){
+          setReadingState('simplified');
+          setShowText(news.simplified_content)
+        }
+        }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
       <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
-      <Button variant="outline-success">본문 보기</Button>
+      {/* <Button variant="outline-success">본문 보기</Button> */}
       
       <section style={{ marginTop: '32px' }}>
         <p style={{ whiteSpace: 'pre-line', lineHeight: 1.6 }}>
