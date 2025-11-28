@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../css/page.css';
 import xIcon from '../img/x-icon.svg';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 
 const Scrap = () => {
   const navigate = useNavigate();
@@ -30,37 +31,39 @@ const Scrap = () => {
       .get('/api/mypage/scraped')
       .then((res) => {
         if (res && res.data) {
-          // 백엔드에서 { id, category, title, ... } 배열 준다고 가정
           setScrapList(res.data);
         }
       })
       .catch((err) => {
         console.error('스크랩 목록 조회 실패:', err);
-        // 에러 나면 더미 데이터 유지
       });
   }, []);
 
   const handleDelete = async (e, article) => {
-  e.stopPropagation(); // 제목 클릭 이벤트 막기
+    e.stopPropagation(); // 제목 클릭 이벤트 막기
 
-  try {
-    const userId = localStorage.getItem("userId");
+    try {
+      const userId = localStorage.getItem("userId");
 
-    await axios.delete(`/mypage/scraped/${article.id}`, {
-      data: { userId }
-    });
+      await axios.delete(`/mypage/scraped/${article.id}`, {
+        data: { userId }
+      });
 
-    // 목록에서 제거
-    setScrapList(prev => prev.filter(item => item.id !== article.id));
-  } catch (err) {
-    console.error("삭제 실패:", err);
-    alert("스크랩 해제에 실패했습니다.");
-  }
-};
+      setScrapList(prev => prev.filter(item => item.id !== article.id));
+    } catch (err) {
+      console.error("삭제 실패:", err);
+      alert("스크랩 해제에 실패했습니다.");
+    }
+  };
 
   const handleClickTitle = (article) => {
     navigate(`/${article.category}/News/${article.id}`);
   };
+
+  const deleteItem = (id) => {
+  setScrapList(scrapList.filter(list => list.id !== id));
+  }
+
 
   return (
     <div className="recent-box" style={{ marginBottom: '5000px' }}>
@@ -74,14 +77,16 @@ const Scrap = () => {
             <li
               key={article.id}
               className="recent-item"
-              onClick={() => handleClickTitle(article)}
+              // onClick={() => handleClickTitle(article)}
             > <span className="recent-item-title">{article.title}</span>
-            <button 
+            <Button 
               className="scrap-delete-btn"
-              onClick={(e) => handleDelete(e, article)}
+              onClick={()=>{
+              deleteItem(article.id)
+            }}
             >
               <img src={xIcon} alt="delete" className="scrap-delete-icon" />
-            </button>
+            </Button>
             </li>
           ))}
         </ul>
