@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import '../css/page.css';
+import xIcon from '../img/x-icon.svg';
 
 const Scrap = () => {
   const navigate = useNavigate();
@@ -40,6 +40,24 @@ const Scrap = () => {
       });
   }, []);
 
+  const handleDelete = async (e, article) => {
+  e.stopPropagation(); // 제목 클릭 이벤트 막기
+
+  try {
+    const userId = localStorage.getItem("userId");
+
+    await axios.delete(`/mypage/scraped/${article.id}`, {
+      data: { userId }
+    });
+
+    // 목록에서 제거
+    setScrapList(prev => prev.filter(item => item.id !== article.id));
+  } catch (err) {
+    console.error("삭제 실패:", err);
+    alert("스크랩 해제에 실패했습니다.");
+  }
+};
+
   const handleClickTitle = (article) => {
     navigate(`/${article.category}/News/${article.id}`);
   };
@@ -54,10 +72,16 @@ const Scrap = () => {
         <ul className="recent-list">
           {scrapList.map((article) => (
             <li
-              key={article.id} /* 스크랩뉴스 반응형 */
+              key={article.id}
               className="recent-item"
               onClick={() => handleClickTitle(article)}
-            > <span className="recent-item-title">{article.title}</span><button className="btn btn-secondary btn-sm btn-scrap">X</button>{/* 스크랩뉴스 반응형 여기까지*/}
+            > <span className="recent-item-title">{article.title}</span>
+            <button 
+              className="scrap-delete-btn"
+              onClick={(e) => handleDelete(e, article)}
+            >
+              <img src={xIcon} alt="delete" className="scrap-delete-icon" />
+            </button>
             </li>
           ))}
         </ul>
