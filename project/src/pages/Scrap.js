@@ -61,9 +61,7 @@ const Scrap = () => {
               key={article.id}
               className="recent-item"
               onClick={() => handleClickTitle(article)}
-            > {article.title.length > 14
-               ? article.title.slice(0, 14) + "..."
-               : article.title}<button className="btn btn-secondary btn-sm btn-scrap">X</button>
+            > <span className="recent-item-title">{article.title}</span><button className="btn btn-secondary btn-sm btn-scrap">X</button>
              
             </li>
           ))}

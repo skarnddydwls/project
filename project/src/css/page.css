@@ -17,9 +17,7 @@
 }
 
 .news-recent-col {
-  width: 300px; 
-  max-width: 300px;
-  padding-left: 24px;
+  width: clamp(240px, 25%, 320px);
 }
 
 /* 카테고리 제목 */
@@ -111,4 +109,12 @@
   float: right;
   margin-left: 10px;
 }
-/* 만약 수정하셨을 경우 전체 받아주시고 추가하신 부분 추가해주세요 */
+
+.recent-item-title {
+  display: inline-block;
+  max-width: 180px;    /* 사이드바 width에 따라 조절 가능 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
