@@ -58,12 +58,11 @@ const Scrap = () => {
         <ul className="recent-list">
           {scrapList.map((article) => (
             <li
-              key={article.id}
+              key={article.id} /* 스크랩뉴스 반응형 */
               className="recent-item"
               onClick={() => handleClickTitle(article)}
-            > {article.title.length > 14
-               ? article.title.slice(0, 14) + "..."
-               : article.title}<button className="btn btn-secondary btn-sm btn-scrap">X</button>
+
+            > <span className="recent-item-title">{article.title}</span><button className="btn btn-secondary btn-sm btn-scrap">X</button>{/* 스크랩뉴스 반응형 여기까지*/}
              
             </li>
           ))}
