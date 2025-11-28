@@ -50,7 +50,7 @@ const Search = ({content}) => {
             </p>
 
             {/* 2. 말풍선 (툴팁) */}
-      {showTooltip && (
+        {showTooltip && (
         <div
           onClick={handleSearchClick}
           onMouseUp={(e) => e.stopPropagation()}
