@@ -30,19 +30,22 @@ const Scrap = () => {
       .get('/api/mypage/scraped')
       .then((res) => {
         if (res && res.data) {
-          // 백엔드에서 { id, category, title, ... } 배열 준다고 가정
           setScrapList(res.data);
         }
       })
       .catch((err) => {
         console.error('스크랩 목록 조회 실패:', err);
-        // 에러 나면 더미 데이터 유지
       });
   }, []);
 
   const handleClickTitle = (article) => {
     navigate(`/${article.category}/News/${article.id}`);
   };
+
+  const deleteItem = (id) => {
+  setScrapList(scrapList.filter(list => list.id !== id));
+  }
+
 
   return (
     <div className="recent-box" style={{ marginBottom: '5000px' }}>
@@ -54,10 +57,12 @@ const Scrap = () => {
         <ul className="recent-list">
           {scrapList.map((article) => (
             <li
-              key={article.id} /* 스크랩뉴스 반응형 */
+              key={article.id} 
               className="recent-item"
-              onClick={() => handleClickTitle(article)}
-            > <span className="recent-item-title">{article.title}</span><button className="btn btn-secondary btn-sm btn-scrap">X</button>{/* 스크랩뉴스 반응형 여기까지*/}
+              // onClick={() => handleClickTitle(article)}
+            > <span className="recent-item-title">{article.title}</span><Button className="btn btn-secondary btn-sm btn-scrap" onClick={()=>{
+              deleteItem(article.id)
+            }}>X</Button>
             </li>
           ))}
         </ul>
