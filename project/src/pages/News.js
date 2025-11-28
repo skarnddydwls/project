@@ -99,7 +99,7 @@ const [isScraped, setIsScraped] = useState(false);
         <img
           src={isScraped ? fillScrap : blankScrap}
           alt="scrap"
-          className='scrap-icon'
+          style={{ width: '28px', cursor: 'pointer' }}
         />
       </button>
       <section style={{ marginTop: '32px' }}>
