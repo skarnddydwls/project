@@ -37,6 +37,7 @@ const NewsCategory = () => {
         title: "연말 앞두고 초콜릿·케이크… 디저트 가격 경쟁!",
         img: "https://cdn.mediatoday.co.kr/news/photo/202511/330317_471899_445.jpg"
         },
+
         {
         article_id:null,
         id: 2,
@@ -50,6 +51,7 @@ const NewsCategory = () => {
         title: "원·달러 1500원 막자…정부 ‘환율 방어’ 총력",
         img: "https://kita.net/editordata/20251124/4DCEBE4014D1448C97E60456FBEC592E"
         },
+        
         {
         article_id:null,
         id: 3,
@@ -83,7 +85,6 @@ const NewsCategory = () => {
                         className="news-thumb"
                     />
                     </Col>
-
                 </Row>
                 ))}
             </Col>

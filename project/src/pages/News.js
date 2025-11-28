@@ -3,6 +3,7 @@ import { use, useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Search from './Search';
 
 const dummyNews = [
     {
@@ -61,12 +62,9 @@ const News = () => {
         }
         }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
       <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
-      {/* <Button variant="outline-success">본문 보기</Button> */}
       
       <section style={{ marginTop: '32px' }}>
-        <p style={{ whiteSpace: 'pre-line', lineHeight: 1.6 }}>
-          {showText}
-        </p>
+         <Search content={showText} />
       </section>
   </div>
   )
