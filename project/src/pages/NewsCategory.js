@@ -5,7 +5,8 @@ import {useNavigate, useParams} from 'react-router-dom'
 import '../css/page.css';
 
 
-const NewsCategory = ({category}) => {
+const NewsCategory = () => {
+    const {category} = useParams();
     const [newsList, setNewsList] = useState([]);
     const [recentNews, setRecentNews] = useState([
         { id: 101, title: "초등학생도 이해하는 기준금리란?" },
