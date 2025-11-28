@@ -16,7 +16,8 @@
   padding-right: 24px;
 }
 
-.news-recent-col {
+
+.news-recent-col { /* 스크랩뉴스 반응형 */
   width: clamp(240px, 25%, 320px);
 }
 
@@ -110,11 +111,35 @@
   margin-left: 10px;
 }
 
-.recent-item-title {
+.recent-item-title { /* 스크랩뉴스 반응형 */
   display: inline-block;
   max-width: 180px;    /* 사이드바 width에 따라 조절 가능 */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
+}
+
+/* News.js 스크랩 버튼 */
+.scrap-btn {
+  float: right;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 8px;      /* 버튼들 사이 간격 */
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.scrap-btn img {
+  display: block;
+}
+
+.scrap-btn:focus {
+  outline: none;
+}
+
+.scrap-btn:hover img {
+  transform: translateY(-1px) scale(1.05);
 }
