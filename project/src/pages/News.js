@@ -41,7 +41,7 @@ const [isScraped, setIsScraped] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const found = dummyNews.find(item => item.article_id == id);
+    const found = dummyNews.find(item => item.article_id === id);
     setNews(found);
     if(found) {
       setShowText(found.simplified_content);
@@ -57,11 +57,21 @@ const [isScraped, setIsScraped] = useState(false);
         alert('로그인 후 이용 가능합니다.');
         return;
       }
-
-      await axios.post('mypage/scraped', {
+      // 이미 스크랩한 상태 → 스크랩 해제
+    if (isScraped) {
+      await axios.delete(`mypage/scraped/${news.article_id}`, {
+        data: { userId }
+      });
+      setIsScraped(false);
+      alert('스크랩 해제되었습니다.');
+      return;
+    }
+      // 스크랩되어 있지 않다면 → 스크랩 추가
+      await axios.put('mypage/scraped', {                // 나중에 목록 수정 요
         userId: userId,           // your_article.user_id
         articleId: news.article_id // your_article.article_id
       });
+      
 
       setIsScraped(true);
       alert('스크랩 완료!');
