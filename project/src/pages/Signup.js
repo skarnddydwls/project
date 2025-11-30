@@ -83,7 +83,7 @@ const Signup = () => {
             />
           </Col>
           <Col sm="2">
-            <Button type="button" onClick={checkId}>
+            <Button type="button" style={{fontSize:'13px'}} onClick={checkId}>
               중복확인
             </Button>
           </Col>
