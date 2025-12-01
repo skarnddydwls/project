@@ -22,21 +22,34 @@ const dummyNews = [
   ];
 
 const News = () => {
-const {category, id} = useParams();
-const [news, setNews] = useState(null);
-const [showText, setShowText] = useState();
-const [readingState, setReadingState] = useState('simplified');
+  const {id} = useParams();
+  const [news, setNews] = useState(null);
+  const [showText, setShowText] = useState();
+  const [readingState, setReadingState] = useState('simplified');
+  const [isScraped, setIsScraped] = useState(false);
 
-// 스크랩 여부 (아이콘 토글용)
-const [isScraped, setIsScraped] = useState(false);
   useEffect(() => {
-    window.scrollTo(0, 0);
-    const found = dummyNews.find(item => String(item.article_id) === id);
-    setNews(found);
-    if(found) {
-      setShowText(found.simplified_content);
-    }
-  }, [id]);
+    axios.get(`/api/article/id/${id}`)
+         .then((response) => {
+            setNews(response.data); 
+         })
+         .catch((error) => {
+          console.log(error);
+         });
+    }, [id]);
+
+  if (!news) {
+    return <div>Loading...</div>;
+  }
+  
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   const found = dummyNews.find(item => String(item.article_id) === id);
+  //   setNews(found);
+  //   if(found) {
+  //     setShowText(found.simplified_content);
+  //   }
+  // }, [id]);
 
   // 스크랩 버튼 눌렀을 때 호출되는 함수
   const handleScrap = async () => {
@@ -48,20 +61,19 @@ const [isScraped, setIsScraped] = useState(false);
         return;
       }
       // 이미 스크랩한 상태 → 스크랩 해제
-    if (isScraped) {
-      await axios.delete(`mypage/scraped/${news.article_id}`, {
-        data: { userId }
-      });
-      setIsScraped(false);
-      alert('스크랩 해제되었습니다.');
-      return;
-    }
+      if (isScraped) {
+        await axios.delete(`mypage/scraped/${news.article_id}`, {
+          data: { userId }
+        });
+        setIsScraped(false);
+        alert('스크랩 해제되었습니다.');
+        return;
+      }
       // 스크랩되어 있지 않다면 → 스크랩 추가
       await axios.put('mypage/scraped', {                // 나중에 목록 수정 요
         userId: userId,           // your_article.user_id
         articleId: news.article_id // your_article.article_id
       });
-      
 
       setIsScraped(true);
       alert('스크랩 완료!');
@@ -110,19 +122,3 @@ const [isScraped, setIsScraped] = useState(false);
 }
 
 export default News;
-
-
-{/* 서버에서 받을 경우 */}
-  /*
-  useEffect(() => {
-    axios.get(`/api/article//${article_id}`)
-    .then((response) => {
-        setNews(response.data); 
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }, [id]);
-  if (!news) {
-    return <div>Loading...</div>;
-  }*/

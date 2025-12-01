@@ -32,7 +32,7 @@ const Signup = () => {
       return;
     }
 
-    axios.get('/react/id-check', { params: { id: form.id } })
+    axios.get('/api/users/exists', { params: { id: form.id } })
          .then((result) => {
             if (result.data) {
               setIdCheckMessage('사용 가능한 아이디 입니다.');
@@ -56,7 +56,7 @@ const Signup = () => {
     }
 
     axios
-      .post('/react/signup', form)
+      .post('/api/users', form)
       .then(() => {
         alert('회원가입 성공');
         window.location.href = '/';
@@ -83,7 +83,7 @@ const Signup = () => {
             />
           </Col>
           <Col sm="2">
-            <Button type="button" style={{fontSize:'13px'}} onClick={checkId}>
+            <Button type="button" onClick={checkId}>
               중복확인
             </Button>
           </Col>

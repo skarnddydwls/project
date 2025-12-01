@@ -18,10 +18,10 @@ const NewsCategory = () => {
 
     useEffect(() => {
         axios
-        .get('/api/article',{params:{category: category}})
+        .get(`/api/article/${category}`)
         .then(res => setNewsList(res.data))
         .catch(err => console.error(err));
-    }, []);
+    }, [category]);
 
     const dummyNews = [
         {

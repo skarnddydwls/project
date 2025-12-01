@@ -17,7 +17,7 @@
     const handleSubmit = (e) => {
       e.preventDefault(); // 서버로 가는거 막아줌
       axios
-        .post('/react/login', form)
+        .post('/api/login', form)
         .then((result) => {
           if (result.data) {
             alert('로그인 되었습니다');
