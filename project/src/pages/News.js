@@ -74,7 +74,6 @@ const News = () => {
         userId: userId,           // your_article.user_id
         articleId: news.article_id // your_article.article_id
       });
-
       setIsScraped(true);
       alert('스크랩 완료!');
     } catch (err) {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../css/page.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import xIcon from '../img/x-icon.svg';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 
@@ -25,6 +26,31 @@ const Scrap = () => {
       title: '문화제 보호 정책이 일상에 미치는 영향'
     }
   ]);
+  const scrapBtn = async (e, article) => {
+    e.stopPropagation(); // li 클릭 이벤트 막기
+
+    try {
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        alert('로그인 후 이용 가능합니다.');
+        return;
+      }
+
+      await axios.delete(`/mypage/scraped/${article.id}`, {
+        data: { userId }
+      });
+
+      // 화면에서 목록에서도 제거
+      setScrapList(prev =>
+        prev.filter(item => item.id !== article.id)
+      );
+
+      alert('스크랩 해제되었습니다.');
+    } catch (err) {
+      console.error(err);
+      alert('스크랩 해제 중 오류가 발생했습니다.');
+    }
+  };
 
   useEffect(() => {
     axios
@@ -38,6 +64,7 @@ const Scrap = () => {
         console.error('스크랩 목록 조회 실패:', err);
       });
   }, []);
+    
 
   const handleDelete = async (e, article) => {
     e.stopPropagation(); // 제목 클릭 이벤트 막기
