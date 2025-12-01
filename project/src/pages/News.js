@@ -7,6 +7,8 @@ import Search from './Search';
 import fillScrap from '../img/fill-scrap.svg';
 import blankScrap from '../img/blank-scrap.svg';
 
+
+
 const News = () => {
   const {id} = useParams();
   const [news, setNews] = useState(null);
