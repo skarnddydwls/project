@@ -26,6 +26,7 @@ const Scrap = () => {
       title: '문화제 보호 정책이 일상에 미치는 영향'
     }
   ]);
+
   const scrapBtn = async (e, article) => {
     e.stopPropagation(); // li 클릭 이벤트 막기
 
@@ -90,7 +91,6 @@ const Scrap = () => {
   const deleteItem = (id) => {
   setScrapList(scrapList.filter(list => list.id !== id));
   }
-
 
   return (
     <div className="recent-box" style={{ marginBottom: '5000px' }}>
