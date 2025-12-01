@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Search from './Search';
+import fillScrap from '../img/fill-scrap.svg';
+import blankScrap from '../img/blank-scrap.svg';
 
 const News = () => {
   const {id} = useParams();
@@ -12,23 +14,14 @@ const News = () => {
   const [readingState, setReadingState] = useState('simplified');
   const [isScraped, setIsScraped] = useState(false);
 
-  // useEffect(() => {
-  //   axios.get(`/api/article/id/${id}`)
-  //        .then((response) => {
-  //           setNews(response.data); 
-  //        })
-  //        .catch((error) => {
-  //         console.log(error);
-  //        });
-  //   }, [id]);
-
   useEffect(() => {
-    window.scrollTo(0, 0);
-    const found = dummyNews.find(item => String(item.article_id) === id);
-    setNews(found);
-    if(found) {
-      setShowText(found.simplified_content);
-    }
+    axios.get(`/api/article/id/${id}`)
+         .then((response) => {
+            setNews(response.data); 
+         })
+         .catch((error) => {
+          console.log(error);
+         });
   }, [id]);
 
   if (!news) {
@@ -37,7 +30,7 @@ const News = () => {
 
   const handleScrap = async () => {
     try {
-      const userId = localStorage.getItem('userId'); // 로그인 시 저장해둔 값이라고 가정
+      const userId = localStorage.getItem('userId'); 
 
       if (!userId) {
         alert('로그인 후 이용 가능합니다.');
@@ -53,9 +46,9 @@ const News = () => {
         return;
       }
       // 스크랩되어 있지 않다면 → 스크랩 추가
-      await axios.put('mypage/scraped', {                // 나중에 목록 수정 요
-        userId: userId,           // your_article.user_id
-        articleId: news.article_id // your_article.article_id
+      await axios.put('mypage/scraped', {                
+        userId: userId,           
+        articleId: news.article_id 
       });
       setIsScraped(true);
       alert('스크랩 완료!');
@@ -77,25 +70,28 @@ const News = () => {
         {news.date}  {news.category}
       </p>
 
-      <Button variant="outline-success" onClick={() => {
-        if(readingState === 'simplified'){
-          setReadingState('content');
-          setShowText(news.content);
-        } else if(readingState === 'content'){
-          setReadingState('simplified');
-          setShowText(news.simplified_content)
-        }
-        }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
-      <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
+      <div className='news-btn-row' style={{ marginTop: '16px' }}>
+        <Button variant="outline-success" onClick={() => {
+          if(readingState === 'simplified'){
+            setReadingState('content');
+            setShowText(news.content);
+          } else if(readingState === 'content'){
+            setReadingState('simplified');
+            setShowText(news.simplified_content)
+          }
+          }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
+        <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
 
-      {/* <Button variant="outline-success">본문 보기</Button> */}
-      {/* <button onClick={handleScrap} className="scrap-btn">
-        <img
-          src={isScraped ? fillScrap : blankScrap}
-          alt="scrap"
-          className='scrap-icon'
-        />
-      </button> */}
+        {/* <Button variant="outline-success">본문 보기</Button> */}
+        <button onClick={handleScrap} className="scrap-btn">
+          <img
+            src={isScraped ? fillScrap : blankScrap}
+            alt="scrap"
+            className='scrap-icon'
+          />
+        </button>
+      </div>
+
       <section style={{ marginTop: '32px' }}>
          <Search content={showText} />
       </section>
