@@ -90,26 +90,27 @@ const [isScraped, setIsScraped] = useState(false);
       <p style={{ color: '#666', fontSize: '14px' }}>
         {news.date}  {news.category}
       </p>
+      <div className='news-btn-row' style={{ marginTop: '16px' }}>
+        <Button variant="outline-success" onClick={() => {
+          if(readingState === 'simplified'){
+            setReadingState('content');
+            setShowText(news.content);
+          } else if(readingState === 'content'){
+            setReadingState('simplified');
+            setShowText(news.simplified_content)
+          }
+          }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
+        <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
 
-      <Button variant="outline-success" onClick={() => {
-        if(readingState === 'simplified'){
-          setReadingState('content');
-          setShowText(news.content);
-        } else if(readingState === 'content'){
-          setReadingState('simplified');
-          setShowText(news.simplified_content)
-        }
-        }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
-      <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
-
-      {/* <Button variant="outline-success">본문 보기</Button> */}
-      <button onClick={handleScrap} className="scrap-btn">
-        <img
-          src={isScraped ? fillScrap : blankScrap}
-          alt="scrap"
-          className='scrap-icon'
-        />
-      </button>
+        {/* <Button variant="outline-success">본문 보기</Button> */}
+        <button onClick={handleScrap} className="scrap-btn">
+          <img
+            src={isScraped ? fillScrap : blankScrap}
+            alt="scrap"
+            className='scrap-icon'
+          />
+        </button>
+      </div>
       <section style={{ marginTop: '32px' }}>
          <Search content={showText} />
       </section>
