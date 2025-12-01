@@ -4,8 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import Search from './Search';
-import fillScrap from '../img/fill-scrap.svg';
-import blankScrap from '../img/blank-scrap.svg';
 
 
 const dummyNews = [
