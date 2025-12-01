@@ -66,6 +66,7 @@ const Scrap = () => {
   }, []);
     
 
+  const handleDelete = async (e, article) => {
     e.stopPropagation(); // 제목 클릭 이벤트 막기
 
     try {
