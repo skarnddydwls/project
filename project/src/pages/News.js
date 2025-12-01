@@ -27,15 +27,15 @@ const News = () => {
   if (!news) {
     return <div>Loading...</div>;
   }
-
+  
   const handleScrap = async () => {
     try {
       const userId = localStorage.getItem('userId'); 
-
       if (!userId) {
         alert('로그인 후 이용 가능합니다.');
         return;
       }
+
       // 이미 스크랩한 상태 → 스크랩 해제
       if (isScraped) {
         await axios.delete(`mypage/scraped/${news.article_id}`, {
@@ -45,12 +45,14 @@ const News = () => {
         alert('스크랩 해제되었습니다.');
         return;
       }
+
       // 스크랩되어 있지 않다면 → 스크랩 추가
       await axios.put('mypage/scraped', {                
         userId: userId,           
         articleId: news.article_id 
       });
       setIsScraped(true);
+
       alert('스크랩 완료!');
     } catch (err) {
       console.error(err);
@@ -82,7 +84,6 @@ const News = () => {
           }}>{readingState === 'simplified' ? '본문 보기' : '해석 보기'}</Button> &emsp;
         <Button variant="outline-success" onClick={() => {setShowText(news.summary_content)}}>요약 보기</Button> &emsp;
 
-        {/* <Button variant="outline-success">본문 보기</Button> */}
         <button onClick={handleScrap} className="scrap-btn">
           <img
             src={isScraped ? fillScrap : blankScrap}

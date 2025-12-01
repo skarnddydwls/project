@@ -104,7 +104,7 @@ const Scrap = () => {
             <li
               key={article.id}
               className="recent-item"
-              // onClick={() => handleClickTitle(article)}
+              onClick={() => handleClickTitle(article)}
             > <span className="recent-item-title">{article.title}</span>
             <Button 
               className="scrap-delete-btn"
