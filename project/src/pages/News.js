@@ -12,15 +12,24 @@ const News = () => {
   const [readingState, setReadingState] = useState('simplified');
   const [isScraped, setIsScraped] = useState(false);
 
+  // useEffect(() => {
+  //   axios.get(`/api/article/id/${id}`)
+  //        .then((response) => {
+  //           setNews(response.data); 
+  //        })
+  //        .catch((error) => {
+  //         console.log(error);
+  //        });
+  //   }, [id]);
+
   useEffect(() => {
-    axios.get(`/api/article/id/${id}`)
-         .then((response) => {
-            setNews(response.data); 
-         })
-         .catch((error) => {
-          console.log(error);
-         });
-    }, [id]);
+    window.scrollTo(0, 0);
+    const found = dummyNews.find(item => String(item.article_id) === id);
+    setNews(found);
+    if(found) {
+      setShowText(found.simplified_content);
+    }
+  }, [id]);
 
   if (!news) {
     return <div>Loading...</div>;
