@@ -29,7 +29,6 @@ const [readingState, setReadingState] = useState('simplified');
 
 // 스크랩 여부 (아이콘 토글용)
 const [isScraped, setIsScraped] = useState(false);
-
   useEffect(() => {
     window.scrollTo(0, 0);
     const found = dummyNews.find(item => String(item.article_id) === id);
