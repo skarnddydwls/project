@@ -29,19 +29,17 @@ const dummyNews = [
   ];
 
 const News = () => {
-  const {category, id} = useParams();
-  const [news, setNews] = useState(null);
+const {category, id} = useParams();
+const [news, setNews] = useState(null);
 const [showText, setShowText] = useState();
 const [readingState, setReadingState] = useState('simplified');
 
 // 스크랩 여부 (아이콘 토글용)
 const [isScraped, setIsScraped] = useState(false);
 
-
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    const found = dummyNews.find(item => item.article_id === id);
+    const found = dummyNews.find(item => String(item.article_id) === id);
     setNews(found);
     if(found) {
       setShowText(found.simplified_content);
@@ -109,7 +107,7 @@ const [isScraped, setIsScraped] = useState(false);
         <img
           src={isScraped ? fillScrap : blankScrap}
           alt="scrap"
-          style={{ width: '28px', cursor: 'pointer' }}
+          className='scrap-icon'
         />
       </button>
       <section style={{ marginTop: '32px' }}>

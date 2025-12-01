@@ -36,7 +36,7 @@ const RecentNews = () => {
             <ul className="recent-list">
             {recentNews.map((item) => (
                 <li key={item.id} className="recent-item">
-                    <span className="recent-item-title">{item.title}</span>
+                <span className="recent-item-title">{item.title}</span>
                 </li>
             ))}
             </ul>
