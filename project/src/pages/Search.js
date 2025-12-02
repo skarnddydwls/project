@@ -71,8 +71,6 @@ const Search = ({content}) => {
         } else {
             setShowTooltip(false);
         }
-
-        
     };
 
     // 검색 버튼 클릭 시
@@ -94,7 +92,6 @@ const Search = ({content}) => {
 
     return(
         <div onMouseUp={handleMouseUp} style={{position: 'relative'}}> 
-
             {/* 실제 글자 보여주는 부분 */}
             <p style={{whiteSpace: 'pre-line', lineHeight: 1.8, fontSize: '1.1rem'}}>
                 {content}
@@ -130,7 +127,6 @@ const Search = ({content}) => {
           }}></div>
         </div>
       )}
-
         {/* 3. 검색 결과 모달창 */}
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
             <Modal.Header closeButton>
