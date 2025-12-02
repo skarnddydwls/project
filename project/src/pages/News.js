@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import Search from './Search';
+// import Search from './Search';
 import fillScrap from '../img/fill-scrap.svg';
 import blankScrap from '../img/blank-scrap.svg';
+import TextDrag from "../gamePages/TextDrag.js";
 
 
 
@@ -16,14 +17,37 @@ const News = () => {
   const [readingState, setReadingState] = useState('simplified');
   const [isScraped, setIsScraped] = useState(false);
 
+  // useEffect(() => {
+  //   axios.get(`/api/article/id/${id}`)
+  //        .then((response) => {
+  //           setNews(response.data); 
+  //           setShowText(response.data.simplified_content);
+  //        })
+  //        .catch((error) => {
+  //         console.log(error);
+  //        });
+  // }, [id]);
+
   useEffect(() => {
-    axios.get(`/api/article/id/${id}`)
-         .then((response) => {
-            setNews(response.data); 
-         })
-         .catch((error) => {
-          console.log(error);
-         });
+    // 1. 임시 더미데이터
+    const dummyNews = {
+      article_id: 999,
+      title: "더미 기사 제목입니다",
+      date: "2025-12-02",
+      category: "경제",
+      content: "This is dummy original content. The quick brown fox jumps over the lazy dog.",
+      simplified_content: "이것은 더미 해석본입니다. 갈색 여우가 게으른 개를 뛰어넘는다는 뜻이에요.",
+      summary_content: "더미 요약: 여우가 개를 뛰어넘는다는 내용입니다.",
+      debugExamples: [
+        { word: "inflation", sentence: "The inflation rate increased last month." },
+        { word: "economy", sentence: "The economy is showing signs of recovery." }
+      ],
+    };
+
+    // 2. 바로 더미로 상태 세팅
+    setNews(dummyNews);
+    setShowText(dummyNews.simplified_content); // 처음에는 해석본 보여주기
+
   }, [id]);
 
   if (!news) {
@@ -62,9 +86,6 @@ const News = () => {
     }
   };
 
-  if (!news) {
-    return null;
-  }
 
   return(
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
@@ -96,7 +117,12 @@ const News = () => {
       </div>
 
       <section style={{ marginTop: '32px' }}>
-         <Search content={showText} />
+        {/*<Search content={showText} />*/}
+        <TextDrag
+          text={showText}
+          articleId={news.article_id}
+          section={readingState}
+        />
       </section>
   </div>
   )
