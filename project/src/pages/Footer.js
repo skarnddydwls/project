@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BulletHellGame from './BulletHellGame';
+
 
 const Footer = () => {
   return (
@@ -13,7 +13,7 @@ const Footer = () => {
             <p style={{ margin: 0 }}>© 2025 뉴스모아. All rights reserved.</p>
           </Col>
         </Row>
-        <BulletHellGame />
+        
       </Container>
     </footer>
   );
