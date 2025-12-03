@@ -10,11 +10,9 @@ import NewsCategory from './pages/NewsCategory';
 import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
 import Scrap from './pages/Scrap';
-import BulletHellGame from './gamePages/BulletHellGame';
 
 function App() {
-  // const [tab, setTab] = useState(null);
-  const [loginUser, setLoginUser] = useState(null);
+  const [loginUser, setLoginUser] = useState(sessionStorage.getItem('loginUser'));
   const [category, setCategory] = useState('');
   let navigate = useNavigate();
   
@@ -28,7 +26,6 @@ function App() {
           <Nav.Link onClick={() => {navigate('/NewsCategory/사회'); setCategory('사회')}}>사회</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/세계'); setCategory('세계')}}>세계</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/문화'); setCategory('문화')}}>문화</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/game')}}>게임</Nav.Link>{/*임시 코드*/}
         </Nav>
         <Nav className='ms-auto' style={{marginRight:'100px'}}>
           <Nav.Link onClick={()=> {
@@ -45,7 +42,6 @@ function App() {
               navigate('/Signup')
             }
           }}>{loginUser ? loginUser.id : "회원가입"}</Nav.Link>
-          {/* <Nav.Link onClick={()=>{navigate('/Signup')}}>회원가입</Nav.Link> */}
         </Nav>
       </Navbar>
       <Container>
@@ -57,19 +53,17 @@ function App() {
               <Route path="/Signup" element={<Signup/>}></Route>
               <Route path="/NewsCategory/:category" element={<NewsCategory/>}></Route>
               <Route path='/:category/News/:id' element={<News/>}></Route>
-              <Route path="/game" element={<BulletHellGame />}></Route>{/*임시 코드*/}
             </Routes>
           </Col>
 
           <Col md={3} className="news-recent-col">
           {/* 스크랩한 뉴스 */}
-          { !loginUser ? <RecentNews/> : null }
-          
+          { loginUser ? <RecentNews/> : null }
 
           <hr />
 
           {/* 최근 본 뉴스 */}
-          { !loginUser ? <Scrap /> : null }
+          { loginUser ? <Scrap /> : null }
           </Col>
           
         </Row>

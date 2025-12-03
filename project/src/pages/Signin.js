@@ -10,14 +10,17 @@
     });
 
     const handleChange = (e) => {
-      const { id, password } = e.target;
-      setForm({ ...form, [id]: id ,[password]: password});
+      const { name, value } = e.target;
+      setForm({
+         ...form, 
+         [name]: value
+        });
     };
 
     const handleSubmit = (e) => {
       e.preventDefault(); // 서버로 가는거 막아줌
       axios
-        .post('/api/login', form)
+        .post('/api/login', form, {withCredentials: true})
         .then((result) => {
           if (result.data) {
             alert('로그인 되었습니다');
@@ -49,6 +52,7 @@
               <Form.Control
                 type="text"
                 name="id"
+                value={form.id}
                 onChange={handleChange}
                 placeholder="아이디를 입력하세요"
               />
@@ -64,6 +68,7 @@
               <Form.Control
                 type="password"
                 name="password"
+                value={form.password}
                 onChange={handleChange}
                 placeholder="비밀번호를 입력하세요"
               />
