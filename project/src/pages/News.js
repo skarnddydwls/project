@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import Search from './Search';
+// import Search from './Search';
 import fillScrap from '../img/fill-scrap.svg';
 import blankScrap from '../img/blank-scrap.svg';
+import TextDrag from "./TextDrag.js";
+
+
 
 const dummyNews = [
   {
@@ -82,9 +85,6 @@ const News = () => {
     }
   };
 
-  if (!news) {
-    return null;
-  }
 
   return(
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
@@ -116,7 +116,12 @@ const News = () => {
       </div>
 
       <section style={{ marginTop: '32px' }}>
-         <Search content={showText} />
+        {/*<Search content={showText} />*/}
+        <TextDrag
+          text={showText}
+          articleId={news.article_id}
+          section={readingState}
+        />
       </section>
   </div>
   )
