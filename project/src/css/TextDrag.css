@@ -26,17 +26,20 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transition: transform 0.12s ease, box-shadow 0.12s ease,
     background-color 0.12s ease;
+    
+  transform: translateY(-25px);
+  
 }
 
 .text-drag-start:hover {
   background-color: #2f6ae0;
-  transform: translateY(-1px);
+  transform: translateY(-24px);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .text-drag-start:active {
   background-color: #2558b8;
-  transform: translateY(0);
+  transform: translateY(-25px);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
 }
 
@@ -70,4 +73,13 @@
 .text-drag-error {
   font-size: 13px;
   color: #e54848;
+}
+
+.drag-selected {
+  background: #a8a8a8;
+}
+.recant-word-delete:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  transition: 0.1s;
 }

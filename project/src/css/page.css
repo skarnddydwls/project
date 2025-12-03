@@ -19,6 +19,8 @@
 
 .news-recent-col { /* 스크랩뉴스 반응형 */
   width: clamp(240px, 25%, 320px);
+  position: sticky;
+  top: 100px;
 }
 
 /* 카테고리 제목 */
@@ -172,9 +174,11 @@
   width: 18px;
   height: 18px;
   display: block;
+  transform: scale(1.1);
+  transition: 0.1s;
 }
 
-.scrap-delete-btn:hover .scrap-delete-icon {
+.scrap-delete-btn:hover {
   transform: scale(1.1);
   transition: 0.1s;
 }

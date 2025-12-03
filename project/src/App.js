@@ -11,6 +11,7 @@ import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
 import Scrap from './pages/Scrap';
 import BulletHellGame from './gamePages/BulletHellGame';
+import RecentWords from './recentWords/RecentWords';
 
 function App() {
   // const [tab, setTab] = useState(null);
@@ -70,6 +71,10 @@ function App() {
 
           {/* 최근 본 뉴스 */}
           { !loginUser ? <Scrap /> : null }
+
+          <hr />
+          { !loginUser ? <RecentWords /> : null }
+          
           </Col>
           
         </Row>

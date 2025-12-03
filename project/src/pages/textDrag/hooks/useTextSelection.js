@@ -13,7 +13,35 @@ export const useTextSelection = (text) => {
     visible: false,
   });
 
+
+  // 🔹 기존 하이라이트 지우기
+  const clearHighlights = () => {
+    if (!textRef.current) return;
+    const spans = textRef.current.querySelectorAll(".drag-selected");
+    spans.forEach((span) => {
+      const parent = span.parentNode;
+      // span 안의 텍스트를 다시 부모로 빼내기
+      while (span.firstChild) {
+        parent.insertBefore(span.firstChild, span);
+      }
+      parent.removeChild(span);
+      parent.normalize(); // 텍스트 노드 합치기
+    });
+  };
+
+  // 🔹 새 하이라이트 적용
+  const highlightSelection = (range) => {
+    const span = document.createElement("span");
+    span.className = "drag-selected";
+    try {
+      range.surroundContents(span);
+    } catch (e) {
+      console.warn("하이라이트 실패", e);
+    }
+  };
+
   const clearSelection = () => {
+    clearHighlights(); // ✅ 선택 지울 때 하이라이트도 같이 제거
     setSelectedWord("");
     setSelectedSentence("");
     setTriggerPos((prev) => ({ ...prev, visible: false }));
@@ -116,9 +144,9 @@ export const useTextSelection = (text) => {
         visible: true,
       });
     }
-
     setSelectedWord(word);
     setSelectedSentence(sentence);
+    highlightSelection(range);
   };
 
   return {
