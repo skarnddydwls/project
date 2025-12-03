@@ -1,84 +1,75 @@
-/* ============================================================
-   TextDrag 전체 컨테이너
-   - 드래그 텍스트 영역과 말풍선을 감싸는 최상위 박스
-   - 말풍선의 absolute 기준점이 되도록 position: relative 설정
-   ============================================================ */
+/* wrapper는 기준이 되는 컨테이너라서 relative 필수 */
 .text-drag-wrapper {
   position: relative;
-  margin-bottom: 16px;
 }
 
-/* ============================================================
-   말풍선 박스 (드래그한 텍스트 위에 뜨는 UI)
-   - 선택한 텍스트의 위치(top, left)에 absolute로 배치됨
-   - transform으로 위치 기준점을 조정하여 텍스트를 가리지 않게 함
-   ============================================================ */
-.text-drag-bubble-floating {
-  position: absolute;      /* wrapper 기준으로 위치 지정 */
-  z-index: 20;             /* 본문보다 위에 표시 */
-  max-width: 320px;
-  min-width: 320px;
-
-  /* 박스 스타일 */
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px 12px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-  font-size: 13px;
-
-  /* --------------------------
-     transform 위치 보정
-     - translate(-50%, -100%) : 
-       → left 기준 50% 왼쪽(중앙 정렬)
-       → top 기준 100% 위로 (말풍선 전체 높이만큼 위로 이동)
-     - translateY(-8px) :
-       → 텍스트와 말풍선 사이 여백 8px 추가
-     --------------------------- */
-  transform: translate(-50%, -100%) translateY(-8px);
-}
-
-/* ============================================================
-   말풍선 상단 헤더 (단어 및 닫기 버튼 영역)
-   ============================================================ */
-.text-drag-bubble-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 4px;
-}
-
-/* ============================================================
-   말풍선 닫기 버튼(X)
-   ============================================================ */
-.text-drag-close {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 0;
-}
-
-/* ============================================================
-   실제 기사 텍스트 영역
-   - 드래그가 일어나는 p 태그
-   ============================================================ */
+/* 실제 기사 텍스트 */
 .text-drag-content {
-  white-space: pre-wrap;   /* 줄바꿈 유지 */
+  white-space: pre-wrap;
   line-height: 1.6;
   cursor: text;
 }
 
-/* ============================================================
-   로딩 상태 텍스트 스타일
-   ============================================================ */
-.text-drag-loading {
-  font-style: italic;
+/* 작은 🔍 버튼 */
+.text-drag-start {
+  position: absolute;
+  z-index: 21;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background-color: #3a7afe;
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    background-color 0.12s ease;
 }
 
-/* ============================================================
-   에러 메시지 스타일
-   ============================================================ */
+.text-drag-start:hover {
+  background-color: #2f6ae0;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.text-drag-start:active {
+  background-color: #2558b8;
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+/* 320px 말풍선 */
+.text-drag-bubble-floating {
+  position: absolute;
+  z-index: 20;
+  width: 320px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+
+  transform: translate(-50%, -100%) translateY(-8px);
+}
+
+/* 상태 텍스트들 */
+.text-drag-loading {
+  font-size: 13px;
+  color: #666;
+}
+
+.text-drag-result {
+  font-size: 13px;
+  color: #111;
+}
+
 .text-drag-error {
-  color: #d9534f;
+  font-size: 13px;
+  color: #e54848;
 }

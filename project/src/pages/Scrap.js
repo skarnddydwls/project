@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/page.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import xIcon from '../img/x-icon.svg';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
 
 const Scrap = () => {
   const navigate = useNavigate();
