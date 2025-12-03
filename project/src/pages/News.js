@@ -6,7 +6,7 @@ import axios from 'axios';
 // import Search from './Search';
 import fillScrap from '../img/fill-scrap.svg';
 import blankScrap from '../img/blank-scrap.svg';
-import TextDrag from "./TextDrag.js";
+import TextDrag from "./textDrag/TextDrag.js";
 
 
 
