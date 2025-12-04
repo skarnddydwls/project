@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
@@ -22,34 +22,48 @@ const News = () => {
       console.log(`News.parse: ${JSON.parse(storedUser).id}`)
       return JSON.parse(storedUser).id
     } catch (e) {
-      return "News 씨발";
+      return storedUser;
     }
   }
 
-  useEffect(() => {
-    console.log(id)
+  const scrapState = useCallback(() => {
     const userId = getUserId();
-    axios.get(`/api/article/id/${id}`)
-         .then((response) => {
-            setNews(response.data); 
-            setShowText(response.data.simplified_content);
-         })
-         .catch((error) => {
-          console.log(error);
-         });
+    if (!userId) return;
 
-    if(userId) {
-      axios.get(`/api/mypage/scraped`, { withCredentials: true })
+    axios.get(`/api/mypage/scraped`, { withCredentials: true })
            .then((res) => {
             const myScrapList = res.data;
-            const isExist = myScrapList.some(item => item.articleId == id);
+            const isExist = myScrapList.some(item => String(item.articleId) == String(id));
             setIsScraped(isExist);
            })
            .catch(() => {
             console.log("씨발 실패했다,,")
            })
+  }, [id])
+
+  useEffect(() => {
+    axios.get(`/api/article/id/${id}`)
+         .then((response) => {
+            setNews(response.data); 
+            setShowText(response.data.simplified);
+         })
+         .catch((error) => {
+          console.log(error);
+         });
+
+    scrapState();
+
+    const handleUpdate = () => {
+      scrapState();
+    };
+
+    window.addEventListener('scrapUpdated', handleUpdate);
+
+    // 청소 부분
+    return () => {
+      window.removeEventListener('scrapUpdated', handleUpdate)
     }
-  }, [id]);
+  }, [id, scrapState]);
 
   if (!news) {
     return <div>Loading...</div>;
@@ -58,30 +72,34 @@ const News = () => {
   const handleScrap = async () => {
     try {
       const userId = getUserId();
-      console.log(`userId: ${userId}`) // undefined 
+      console.log(`userId: ${userId}`)
 
       if (!userId) {
         alert('로그인 후 이용 가능합니다.');
         return;
       }
 
-      // 이미 스크랩한 상태 → 스크랩 해제
-      if (isScraped) {
-        await axios.delete(`/api/mypage/scraped?article_id=${id}`, {
-          data: { userId: userId }
-        });
-        setIsScraped(false);
-        alert('스크랩 해제되었습니다.');
-        return;
+      const nextState = !isScraped;
+      setIsScraped(nextState);
+
+      try {
+        if(isScraped) {
+          await axios.delete(`/api/mypage/scraped?article_id=${id}`, {
+            data: { userId: userId }
+          });
+        } else {
+          await axios.put(`/api/mypage/scraped?article_id=${id}`, {                
+            userId: userId  // put은 두 번째 인자가 바로 바디라서 delete와 다르게 이렇게 보내야 됨
+          });
+        }
+
+        window.dispatchEvent(new Event('scrapUpdated'));
+
+        setTimeout(() => alert(nextState ? "스크랩 완료" : "스크랩 해제"), 100);
+      } catch {
+        setIsScraped(isScraped);
       }
 
-      // 스크랩되어 있지 않다면 → 스크랩 추가
-      await axios.put(`/api/mypage/scraped?article_id=${id}`, {                
-        userId: userId  // put은 두 번째 인자가 바로 바디라서 delete와 다르게 이렇게 보내야 됨
-      });
-      setIsScraped(true);
-
-      alert('스크랩 완료!');
     } catch (err) {
       console.error(err);
       alert('스크랩 중 오류가 발생했습니다.');

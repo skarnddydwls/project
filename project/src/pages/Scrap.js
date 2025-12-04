@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../css/page.css';
@@ -12,7 +12,7 @@ const Scrap = () => {
   const storedUser = sessionStorage.getItem('loginUser');
   const userId = storedUser ? JSON.parse(storedUser).id : null;
 
-  useEffect(() => {
+  const fetchScrapList = useCallback(() => {
     axios
       .get('/api/mypage/scraped')
       .then((res) => {
@@ -23,16 +23,35 @@ const Scrap = () => {
       .catch((err) => {
         console.error('스크랩 목록 조회 실패:', err);
       });
-  }, []);
+  },[])
+
+  useEffect(() => {
+    fetchScrapList();
+
+    const handleUpdate = () => {
+      fetchScrapList();
+    };
+    window.addEventListener('scrapUpdated', handleUpdate);
+
+    return () => {
+      window.removeEventListener('scrapUpdated', handleUpdate);
+    }
+  }, [fetchScrapList]);
 
   const handleDelete = async (e, articleId) => {
-    e.stopPropagation(); // 제목 클릭 이벤트 막기
+    e.stopPropagation(); // 제목 클릭 이벤트 막기 (부모 클릭 방지)
 
     try {
       await axios.delete(`/api/mypage/scraped?article_id=${articleId}`, {
         data: { userId: userId }
       });
-      setScrapList(prev => prev.filter(item => item.articleId !== articleId));
+
+      setScrapList(prev => prev.filter((item) => 
+        String(item.articleId) !== String(articleId)
+      ));
+
+      window.dispatchEvent(new Event('scrapUpdated'));
+
     } catch (err) {
       
     }

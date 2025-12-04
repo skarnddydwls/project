@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const RecentNews = () => {
-
+    const navigate = useNavigate();
+    const location = useLocation();
     const [recentNews, setRecentNews] = useState([]);
 
     useEffect(() => {
-        axios.get(`/api/mypage/recent`)
+        axios.get(`/api/mypage/recent`, { withCredentials: true }) // { withCredentials: true }
          .then(result => {
             if(result){
                 setRecentNews(result.data);
@@ -14,13 +16,23 @@ const RecentNews = () => {
                 alert("오류 발생");
             }
          })
-    
          .catch((error) => {
-            setRecentNews([
-                console.log(`${error}났다 씨발,,,`)
-            ])
+            console.log(`${error} 발생`)
+            setRecentNews([])
          })
-    },[])
+    },[location.pathname]);
+
+    const handleClickTitle = (e, article) => {
+        e.preventDefault(); 
+
+        if(!article.category || !article.articleId) {
+            alert("오류오류!!", article);
+            return;
+        }
+
+        console.log(`/${article.category}/News/${article.articleId} 로 갈게요 뿅!`)
+        navigate(`/${article.category}/News/${article.articleId}`);
+    };
 
     return(  
         <div className="recent-box" style={{marginTop:'50px'}}>
@@ -30,8 +42,8 @@ const RecentNews = () => {
         ) : (
             <ul className="recent-list">
             {recentNews.map((item) => (
-                <li key={item.id} className="recent-item">
-                <span className="recent-item-title">{item.title}</span>
+                <li key={item.articleId} className="recent-item">
+                <span style={{cursor: 'pointer'}} className="recent-item-title" onClick={(e) => handleClickTitle(e, item)}>{item.title}</span>
                 </li>
             ))}
             </ul>
