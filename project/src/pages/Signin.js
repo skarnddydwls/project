@@ -10,23 +10,28 @@
     });
 
     const handleChange = (e) => {
-      const { id, password } = e.target;
-      setForm({ ...form, [id]: id ,[password]: password});
+      const { name, value } = e.target;
+      setForm({
+         ...form, 
+         [name]: value
+        });
     };
 
     const handleSubmit = (e) => {
       e.preventDefault(); // 서버로 가는거 막아줌
       axios
-        .post('/api/login', form)
+        .post('/api/login', form, {withCredentials: true})
         .then((result) => {
-          if (result.data) {
+          if (result.data === '로그인 성공') {
             alert('로그인 되었습니다');
+            // sessionStorage.setItem('loginUser', form.id);
             const userInfo = {
-              id: result.data.id,
-              password: result.data.password,
+              id: form.id,
+              password: form.password,
             };
             sessionStorage.setItem('loginUser', JSON.stringify(userInfo));
-            window.location.href = '/';
+            console.log("Signin: "+sessionStorage.getItem('loginUser'));
+            window.location.href = '/'; 
           } else {
             alert('이메일 또는 비밀번호가 일치하지 않습니다');
           }
@@ -49,6 +54,7 @@
               <Form.Control
                 type="text"
                 name="id"
+                value={form.id}
                 onChange={handleChange}
                 placeholder="아이디를 입력하세요"
               />
@@ -64,6 +70,7 @@
               <Form.Control
                 type="password"
                 name="password"
+                value={form.password}
                 onChange={handleChange}
                 placeholder="비밀번호를 입력하세요"
               />

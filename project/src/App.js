@@ -11,15 +11,17 @@ import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
 import Scrap from './pages/Scrap';
 import RecentWords from './recentWords/RecentWords';
+// import RecentWords from './recentWord//RecentWords';
+
 
 function App() {
-  // const [tab, setTab] = useState(null);
-  const [loginUser, setLoginUser] = useState(null);
+  const [loginUser, setLoginUser] = useState(sessionStorage.getItem('loginUser'));
   const [category, setCategory] = useState('');
   let navigate = useNavigate();
   
   return (
     <>
+      {console.log("App: "+sessionStorage.getItem('loginUser'))}
       <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
         <Nav style={{marginLeft:"50px", alignItems:'center'}}>
           <Nav.Link style={{fontSize:'30px'}} onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
@@ -44,7 +46,6 @@ function App() {
               navigate('/Signup')
             }
           }}>{loginUser ? loginUser.id : "회원가입"}</Nav.Link>
-          {/* <Nav.Link onClick={()=>{navigate('/Signup')}}>회원가입</Nav.Link> */}
         </Nav>
       </Navbar>
       <Container>
@@ -61,19 +62,17 @@ function App() {
 
           <Col md={3} className="news-recent-col">
           {/* 스크랩한 뉴스 */}
-          { !loginUser ? <RecentNews/> : null }
-          
+          { loginUser ? <RecentNews/> : null }
 
           <hr />
 
           {/* 최근 본 뉴스 */}
-          { !loginUser ? <Scrap /> : null }
+          { loginUser ? <Scrap /> : null }
+          </Col>
 
           <hr />
-          { !loginUser ? <RecentWords /> : null }
-          
-          </Col>
-          
+          {/* 최근 본 단어 뜻 */}
+          { loginUser ? <RecentWords /> : null }
         </Row>
       </Container>
       <Footer/>

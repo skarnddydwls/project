@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../css/page.css';
@@ -8,50 +8,9 @@ import { Button} from 'react-bootstrap';
 
 const Scrap = () => {
   const navigate = useNavigate();
-
-  const [scrapList, setScrapList] = useState([
-    {
-      id: 201,
-      category: '경제',
-      title: '원·달러 환율 급등, 우리 생활에 미치는 영향은?'
-    },
-    {
-      id: 202,
-      category: '사회',
-      title: '청년층 주거 안정 대책, 어떤 내용이 담겼나'
-    },
-    {
-      id: 203,
-      category: '문화',
-      title: '문화제 보호 정책이 일상에 미치는 영향'
-    }
-  ]);
-
-  const scrapBtn = async (e, article) => {
-    e.stopPropagation(); // li 클릭 이벤트 막기
-
-    try {
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        alert('로그인 후 이용 가능합니다.');
-        return;
-      }
-
-      await axios.delete(`/mypage/scraped/${article.id}`, {
-        data: { userId }
-      });
-
-      // 화면에서 목록에서도 제거
-      setScrapList(prev =>
-        prev.filter(item => item.id !== article.id)
-      );
-
-      alert('스크랩 해제되었습니다.');
-    } catch (err) {
-      console.error(err);
-      alert('스크랩 해제 중 오류가 발생했습니다.');
-    }
-  };
+  const [scrapList, setScrapList] = useState([]);
+  const storedUser = sessionStorage.getItem('loginUser');
+  const userId = storedUser ? JSON.parse(storedUser).id : null;
 
   useEffect(() => {
     axios
@@ -65,32 +24,23 @@ const Scrap = () => {
         console.error('스크랩 목록 조회 실패:', err);
       });
   }, []);
-    
 
-  const handleDelete = async (e, article) => {
+  const handleDelete = async (e, articleId) => {
     e.stopPropagation(); // 제목 클릭 이벤트 막기
 
     try {
-      const userId = localStorage.getItem("userId");
-
-      await axios.delete(`/mypage/scraped/${article.id}`, {
-        data: { userId }
+      await axios.delete(`/api/mypage/scraped?article_id=${articleId}`, {
+        data: { userId: userId }
       });
-
-      setScrapList(prev => prev.filter(item => item.id !== article.id));
+      setScrapList(prev => prev.filter(item => item.articleId !== articleId));
     } catch (err) {
-      console.error("삭제 실패:", err);
-      alert("스크랩 해제에 실패했습니다.");
+      
     }
   };
 
-  const handleClickTitle = (article) => {
-    navigate(`/${article.category}/News/${article.id}`);
+  const handleClickTitle = (e, article) => { // 넘겨주는건 e를 같이 넘겨줬는데 안 받아서 그럼
+    navigate(`/${article.category}/News/${article.articleId}`);
   };
-
-  const deleteItem = (id) => {
-  setScrapList(scrapList.filter(list => list.id !== id));
-  }
 
   return (
     <div className="recent-box">
@@ -102,14 +52,15 @@ const Scrap = () => {
         <ul className="recent-list">
           {scrapList.map((article) => (
             <li
-              key={article.id}
+              key={article.articleId}
               className="recent-item"
-              onClick={() => handleClickTitle(article)}
+              onClick={(e) => handleClickTitle(e, article)}
             > <span className="recent-item-title">{article.title}</span>
+
             <Button 
               className="scrap-delete-btn"
-              onClick={()=>{
-              deleteItem(article.id)
+              onClick={(e)=>{
+              handleDelete(e, article.articleId)
             }}
             >
               <img src={xIcon} alt="delete" className="scrap-delete-icon" />
