@@ -1,0 +1,84 @@
+/* ----------------------------- */
+/* 최근 본 단어 뜻 박스 */
+/* ----------------------------- */
+
+.recent-words-box {
+  /* 기존 recent-box와 같이 쓰는 용도 */
+  margin-bottom: 20px;
+}
+
+/* 제목 덮어쓰기/보완용 (원래 recent-title도 같이 씀) */
+.recent-words-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* 리스트 하나 */
+.recent-words-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 각 아이템 (기존 .recent-item이랑 같이 써도 됨) */
+.recent-words-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.recent-words-item:last-child {
+  border-bottom: none;
+}
+
+/* 윗줄: 단어 + X 버튼 가로 정렬 */
+.recent-words-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 단어 (클릭 가능) */
+.recent-words-word {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-words-word:hover {
+  text-decoration: underline;
+}
+
+/* 말풍선 영역 */
+.recent-words-bubble {
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* 로딩/에러/요약 텍스트 */
+.recent-words-loading {
+  color: #666;
+}
+
+.recent-words-error {
+  color: #e54848;
+}
+
+.recent-words-summary {
+  color: #222;
+}
+
+/* 빈 상태 텍스트 (기존 recent-empty 없으면) */
+.recent-words-empty {
+  font-size: 13px;
+  color: #777;
+  padding: 4px 0;
+}

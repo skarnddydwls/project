@@ -43,7 +43,7 @@ const Scrap = () => {
   };
 
   return (
-    <div className="recent-box" style={{ marginBottom: '500px' }}>
+    <div className="recent-box">
       <h4 className="recent-title">스크랩한 뉴스</h4>
 
       {scrapList.length === 0 ? (
