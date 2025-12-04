@@ -10,7 +10,6 @@ import NewsCategory from './pages/NewsCategory';
 import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
 import Scrap from './pages/Scrap';
-import BulletHellGame from './gamePages/BulletHellGame';
 import RecentWords from './recentWords/RecentWords';
 
 function App() {
@@ -29,7 +28,6 @@ function App() {
           <Nav.Link onClick={() => {navigate('/NewsCategory/사회'); setCategory('사회')}}>사회</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/세계'); setCategory('세계')}}>세계</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/문화'); setCategory('문화')}}>문화</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/game')}}>게임</Nav.Link>{/*임시 코드*/}
         </Nav>
         <Nav className='ms-auto' style={{marginRight:'100px'}}>
           <Nav.Link onClick={()=> {
@@ -58,7 +56,6 @@ function App() {
               <Route path="/Signup" element={<Signup/>}></Route>
               <Route path="/NewsCategory/:category" element={<NewsCategory/>}></Route>
               <Route path='/:category/News/:id' element={<News/>}></Route>
-              <Route path="/game" element={<BulletHellGame />}></Route>{/*임시 코드*/}
             </Routes>
           </Col>
 
