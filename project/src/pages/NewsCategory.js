@@ -15,6 +15,8 @@ const NewsCategory = () => {
         .get(`/api/article/${category}`)
         .then(res => setNewsList(res.data))
         .catch(err => console.error(err));
+
+        console.log(`newsCategory: ${sessionStorage.getItem('loginUser')}`)
     }, [category]);
 
         return (

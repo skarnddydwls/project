@@ -18,6 +18,7 @@ function App() {
   
   return (
     <>
+      {console.log("App: "+sessionStorage.getItem('loginUser'))}
       <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
         <Nav style={{marginLeft:"50px", alignItems:'center'}}>
           <Nav.Link style={{fontSize:'30px'}} onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>

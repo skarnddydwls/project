@@ -22,14 +22,16 @@
       axios
         .post('/api/login', form, {withCredentials: true})
         .then((result) => {
-          if (result.data) {
+          if (result.data === '로그인 성공') {
             alert('로그인 되었습니다');
+            // sessionStorage.setItem('loginUser', form.id);
             const userInfo = {
-              id: result.data.id,
-              password: result.data.password,
+              id: form.id,
+              password: form.password,
             };
             sessionStorage.setItem('loginUser', JSON.stringify(userInfo));
-            window.location.href = '/';
+            console.log("Signin: "+sessionStorage.getItem('loginUser'));
+            window.location.href = '/'; 
           } else {
             alert('이메일 또는 비밀번호가 일치하지 않습니다');
           }

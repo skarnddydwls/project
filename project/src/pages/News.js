@@ -14,19 +14,21 @@ const News = () => {
   const [readingState, setReadingState] = useState('simplified');
   const [isScraped, setIsScraped] = useState(false);
   
-
   const getUserId = () => {
     const storedUser = sessionStorage.getItem('loginUser');
-    if(!storedUser) return null;
+    console.log(`News: ${storedUser}`);
+    if(!storedUser) return "storedUser가 없음";
     try {
+      console.log(`News.parse: ${JSON.parse(storedUser).id}`)
       return JSON.parse(storedUser).id
     } catch (e) {
-      return null;
+      return "News 씨발";
     }
   }
 
   useEffect(() => {
     console.log(id)
+    const userId = getUserId();
     axios.get(`/api/article/id/${id}`)
          .then((response) => {
             setNews(response.data); 
@@ -56,7 +58,7 @@ const News = () => {
   const handleScrap = async () => {
     try {
       const userId = getUserId();
-      console.log(`userId: ${userId}`)
+      console.log(`userId: ${userId}`) // undefined 
 
       if (!userId) {
         alert('로그인 후 이용 가능합니다.');
