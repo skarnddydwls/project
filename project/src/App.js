@@ -11,7 +11,7 @@ import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
 import Scrap from './pages/Scrap';
 import RecentWords from './recentWords/RecentWords';
-// import RecentWords from './recentWord//RecentWords';
+
 
 
 function App() {
