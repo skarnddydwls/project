@@ -8,29 +8,31 @@ const RecentNews = () => {
     const [recentNews, setRecentNews] = useState([]);
 
     useEffect(() => {
-        axios.get(`/api/mypage/recent`, { withCredentials: true }) // { withCredentials: true }
-         .then(result => {
-            if(result){
-                setRecentNews(result.data);
-            } else {
-                alert("오류 발생");
-            }
-         })
-         .catch((error) => {
-            console.log(`${error} 발생`)
-            setRecentNews([])
-         })
+        const timer = setTimeout(()=>{
+            axios.get(`/api/mypage/recent`, { withCredentials: true }) // { withCredentials: true }
+                .then(result => {
+                    if(result){
+                        setRecentNews(result.data);
+                    } else {
+                        alert("오류 발생");
+                    }
+                })
+                .catch((error) => {
+                    console.log(`${error} 발생`)
+                    setRecentNews([])
+                })
+            }, 500);
+
+        return () => clearTimeout(timer);
     },[location.pathname]);
 
     const handleClickTitle = (e, article) => {
         e.preventDefault(); 
 
         if(!article.category || !article.articleId) {
-            alert("오류오류!!", article);
+            alert(article);
             return;
         }
-
-        console.log(`/${article.category}/News/${article.articleId} 로 갈게요 뿅!`)
         navigate(`/${article.category}/News/${article.articleId}`);
     };
 
