@@ -7,7 +7,7 @@ export const useWordSummary = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const requestSummary = async ({ word, sentence, articleId, section }) => {
+  const requestSummary = async ({ word, sentence}) => {
     if (!word && !sentence) return;
 
     setBubbleText("");
@@ -16,12 +16,7 @@ export const useWordSummary = () => {
 
     try {
       const res = await axios.get("/util/word-meaning", {
-        params: {
-          word,
-          sentence,
-          articleId,
-          section,
-        },
+        params: { word, sentence },
       });
 
       const summary = res.data.summary || res.data.result || "";
