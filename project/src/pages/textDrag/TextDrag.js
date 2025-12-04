@@ -1,5 +1,5 @@
 // src/pages/TextDrag.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import "../../css/TextDrag.css";
 import { useTextSelection } from "./hooks/useTextSelection";
 import { useWordSummary } from "./hooks/useWordSummary";
@@ -27,11 +27,11 @@ const TextDrag = ({ text = "", articleId, section }) => {
 
   const [showBubble, setShowBubble] = useState(false);
 
-  const clearAll = () => {
+  const clearAll = useCallback(() => {
     clearSelection();
     clearSummary();
     setShowBubble(false);
-  };
+  }, [clearSelection, clearSummary]);
 
   const handleSummary = () => {
     setShowBubble(true);
@@ -60,7 +60,7 @@ const TextDrag = ({ text = "", articleId, section }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [triggerPos.visible, showBubble]);
+  }, [triggerPos.visible, showBubble, clearAll]);
 
   return (
     <div
