@@ -1,43 +1,21 @@
-// src/pages/RecentWords.js
-import React, { useState } from "react";
+// src/recentWords/RecentWords.js
+import { useState } from "react";
 import "../../css/RecentWords.css";
 import { useRecentWords } from "./hooks/useRecentWords";
 import RecentWordItem from "./components/RecentWordItem";
-import { useWordSummary } from "../textDrag/hooks/useWordSummary";
+import RecentWordItem2 from "./components/RecentWordItem2";
 
 const RecentWords = () => {
   const { wordList, deleteByTimestamp } = useRecentWords();
-
-  // 요약 API 훅 불러오기 // 수정됨
-  const {
-    bubbleText,
-    isLoading,
-    errorMessage,
-    requestSummary,
-    clearSummary,
-  } = useWordSummary(); // 수정됨
-
   const [activeTs, setActiveTs] = useState(null);
 
-  const handleClickWord = async (word, timestamp) => {
-    // 같은 것을 눌렀다면 닫기
-    if (activeTs === timestamp) {
-      setActiveTs(null);
-      clearSummary(); // 수정됨
-      return;
-    }
-
-    setActiveTs(timestamp);
-    clearSummary(); // 수정됨
- 
-    // 요약 API 호출 // 수정됨
-    requestSummary({ word, sentence: "" }); 
+  const handleClickWord = (timestamp) => {
+    setActiveTs((prev) => (prev === timestamp ? null : timestamp));
   };
 
   const handleDelete = (timestamp) => {
     if (activeTs === timestamp) {
       setActiveTs(null);
-      clearSummary(); // 수정됨
     }
     deleteByTimestamp(timestamp);
   };
@@ -54,13 +32,17 @@ const RecentWords = () => {
             <RecentWordItem
               key={item.timestamp}
               word={item.word}
+              summary={item.summary}
               timestamp={item.timestamp}
               isActive={activeTs === item.timestamp}
-              isLoading={isLoading && activeTs === item.timestamp}
-              summary={activeTs === item.timestamp ? bubbleText : ""}
-              error={activeTs === item.timestamp ? errorMessage : ""}
               onClickWord={handleClickWord}
               onDelete={handleDelete}
+            />
+          ))}
+          {wordList.map((item) => (
+            <RecentWordItem2
+              summary={item.summary}
+              isActive={activeTs === item.timestamp}
             />
           ))}
         </ul>

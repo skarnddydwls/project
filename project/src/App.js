@@ -68,11 +68,12 @@ function App() {
 
           {/* 최근 본 뉴스 */}
           { loginUser ? <Scrap /> : null }
-          </Col>
+          
 
           <hr />
           {/* 최근 본 단어 뜻 */}
-          { loginUser ? <RecentWords /> : null }
+          { !loginUser ? <RecentWords /> : null }
+          </Col>
         </Row>
       </Container>
       <Footer/>
