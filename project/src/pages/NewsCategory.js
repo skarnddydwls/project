@@ -32,7 +32,7 @@ const NewsCategory = () => {
                     </Col>
                     <Col md={3} xs={4}>
                     <img
-                        src={news.img}
+                        src={"https://mimgnews.pstatic.net/image/origin/008/2025/12/05/5288022.jpg?type=nf220_150"}
                         alt={news.title}
                         className="news-thumb"
                     />

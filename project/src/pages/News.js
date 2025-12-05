@@ -72,7 +72,6 @@ const News = () => {
   const handleScrap = async () => {
     try {
       const userId = getUserId();
-      console.log(`userId: ${userId}`)
 
       if (!userId) {
         alert('로그인 후 이용 가능합니다.');

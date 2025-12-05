@@ -10,6 +10,7 @@ import NewsCategory from './pages/NewsCategory';
 import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
 import Scrap from './pages/Scrap';
+import RecentWords from './recentWords/RecentWords';
 
 function App() {
   const [loginUser, setLoginUser] = useState(sessionStorage.getItem('loginUser'));
@@ -65,6 +66,10 @@ function App() {
 
           {/* 최근 본 뉴스 */}
           { loginUser ? <Scrap /> : null }
+
+          <hr />
+          
+          { loginUser ? <RecentWords/> : null}
           </Col>
           
         </Row>
