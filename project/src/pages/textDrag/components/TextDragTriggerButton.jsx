@@ -1,4 +1,3 @@
-// src/pages/components/TextDragTriggerButton.jsx
 const TextDragTriggerButton = ({ top, left, onClick }) => {
   return (
     <button

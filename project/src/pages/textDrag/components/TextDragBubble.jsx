@@ -1,4 +1,3 @@
-// src/pages/components/TextDragBubble.jsx
 const TextDragBubble = ({ top, left, isLoading, bubbleText, errorMessage }) => {
   // 아무 상태도 없으면 굳이 안 그려도 됨
   if (!isLoading && !bubbleText && !errorMessage) return null;

@@ -1,6 +1,4 @@
-// src/pages/recentWords/components/RecentWordItem.jsx
-import React from "react";
-import xIcon from "../../img/x-icon.svg"; // 경로는 프로젝트 구조에 맞게 필요하면 수정
+import xIcon from "../../../img/x-icon.svg"; // 경로는 프로젝트 구조에 맞게 필요하면 수정
 
 const RecentWordItem = ({
   word,

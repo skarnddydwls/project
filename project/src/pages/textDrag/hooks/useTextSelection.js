@@ -1,4 +1,3 @@
-// src/pages/hooks/useTextSelection.js
 import { useState, useRef } from "react";
 
 export const useTextSelection = (text) => {

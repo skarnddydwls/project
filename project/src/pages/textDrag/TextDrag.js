@@ -1,4 +1,3 @@
-// src/pages/TextDrag.js
 import React, { useEffect, useCallback, useState } from "react";
 import "../../css/TextDrag.css";
 import { useTextSelection } from "./hooks/useTextSelection";

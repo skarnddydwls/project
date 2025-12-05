@@ -1,4 +1,3 @@
-// src/pages/recentWords/hooks/useRecentWords.js
 import { useEffect, useState } from "react";
 
 const RECENT_WORDS_KEY = "recent_word_meanings";
