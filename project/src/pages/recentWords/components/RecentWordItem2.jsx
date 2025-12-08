@@ -1,5 +1,4 @@
 import "../../../css/RecentWords.css";
-import xIcon from "../../../img/x-icon.svg"; // 수정됨
 
 const RecentWordItem2 = ({
   summary,
@@ -8,7 +7,7 @@ const RecentWordItem2 = ({
   return (
     <div className="recent-item recent-words-item">
     {isActive && (
-        <div className="recent-word-bubble"> {/* 수정됨 */}
+        <div className="recent-word-bubble">
           <p className="recent-word-summary">
             <strong>요약:</strong>{" "}
             {summary && summary.trim()

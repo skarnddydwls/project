@@ -1,5 +1,5 @@
 import "../../../css/RecentWords.css";
-import xIcon from "../../../img/x-icon.svg"; // 수정됨
+import xIcon from "../../../img/x-icon.svg";
 
 const RecentWordItem = ({
   word,
@@ -15,7 +15,7 @@ const RecentWordItem = ({
       <div className="recent-word-header-row">
         <span
           className="recent-word-button"
-          onClick={() => onClickWord(word, timestamp)} // 수정됨
+          onClick={() => onClickWord(word, timestamp)}
         >
           {word}
         </span>
@@ -23,7 +23,7 @@ const RecentWordItem = ({
         <button
           type="button"
           className="scrap-delete-btn"
-          onClick={() => onDelete(timestamp)} // 수정됨
+          onClick={() => onDelete(timestamp)}
         >
           <img src={xIcon} alt="삭제" className="scrap-delete-icon" />
         </button>

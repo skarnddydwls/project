@@ -1,13 +1,13 @@
 // src/pages/textDrag/TextDrag.js
-import React, { useEffect, useState, useCallback } from "react"; // 수정됨
+import { useEffect, useState, useCallback } from "react";
 import "../../css/TextDrag.css";
 import { useTextSelection } from "./hooks/useTextSelection";
 import { useWordSummary } from "./hooks/useWordSummary";
 import TextDragTriggerButton from "./components/TextDragTriggerButton";
 import TextDragBubble from "./components/TextDragBubble";
 
-const RECENT_WORDS_KEY = "recent_word_meanings";      // 수정됨
-const RECENT_WORDS_EVENT = "recent_words_updated";    // 수정됨
+const RECENT_WORDS_KEY = "recent_word_meanings";
+const RECENT_WORDS_EVENT = "recent_words_updated"; 
 
 const TextDrag = ({ text = "", articleId, section }) => {
   const {
@@ -28,16 +28,16 @@ const TextDrag = ({ text = "", articleId, section }) => {
     clearSummary,
   } = useWordSummary();
 
-  const [showBubble, setShowBubble] = useState(false); // 수정됨
+  const [showBubble, setShowBubble] = useState(false);
 
-  // 말풍선/선택 모두 한 번에 닫는 함수 // 수정됨
+  // 말풍선/선택 모두 한 번에 닫는 함수
   const clearAll = useCallback(() => {
     clearSelection();
     clearSummary();
     setShowBubble(false);
-  }, [clearSelection, clearSummary]); // 수정됨
+  }, [clearSelection, clearSummary]);
 
-  // 🔍 버튼 눌렀을 때 요약 요청 // 수정됨
+  // 🔍 버튼 눌렀을 때 요약 요청
   const handleClickTrigger = () => {
     if (!selectedWord && !selectedSentence) return;
 
@@ -50,7 +50,7 @@ const TextDrag = ({ text = "", articleId, section }) => {
     });
   };
 
-  // 말풍선/돋보기 밖을 클릭하면 모두 닫기 // 수정됨
+  // 말풍선/돋보기 밖을 클릭하면 모두 닫기
   useEffect(() => {
     if (!triggerPos.visible && !showBubble) return;
 
@@ -68,9 +68,9 @@ const TextDrag = ({ text = "", articleId, section }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [triggerPos.visible, showBubble, clearAll]); // 수정됨
+  }, [triggerPos.visible, showBubble, clearAll]);
 
-  // 요약 완료되면 localStorage에 저장 + RecentWords 새로고침 이벤트 발행 // 수정됨
+  // 요약 완료되면 localStorage에 저장 + RecentWords 새로고침 이벤트 발행
   useEffect(() => {
     if (!bubbleText || !selectedWord) return;
 
@@ -87,7 +87,7 @@ const TextDrag = ({ text = "", articleId, section }) => {
       const raw = localStorage.getItem(RECENT_WORDS_KEY);
       const prev = raw ? JSON.parse(raw) : [];
 
-      // 같은 단어+문장+기사+섹션은 하나만 유지 // 수정됨
+      // 같은 단어+문장+기사+섹션은 하나만 유지
       const filtered = prev.filter(
         (item) =>
           !(
@@ -101,12 +101,12 @@ const TextDrag = ({ text = "", articleId, section }) => {
       const updated = [newItem, ...filtered].slice(0, 50);
       localStorage.setItem(RECENT_WORDS_KEY, JSON.stringify(updated));
 
-      // RecentWords 훅에게 "업데이트됨" 알림 // 수정됨
+      // RecentWords 훅에게 "업데이트됨" 알림
       window.dispatchEvent(new Event(RECENT_WORDS_EVENT));
     } catch (e) {
       console.error("최근 단어 저장 실패:", e);
     }
-  }, [bubbleText, selectedWord, selectedSentence, articleId, section]); // 수정됨
+  }, [bubbleText, selectedWord, selectedSentence, articleId, section]);
 
   return (
     <div

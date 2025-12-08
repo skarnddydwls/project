@@ -7,6 +7,7 @@ const RecentNews = () => {
     const location = useLocation();
     const [recentNews, setRecentNews] = useState([]);
 
+    
     useEffect(() => {
         const timer = setTimeout(()=>{
             axios.get(`/api/mypage/recent`, { withCredentials: true }) // { withCredentials: true }

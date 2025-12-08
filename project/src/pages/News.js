@@ -33,7 +33,7 @@ const News = () => {
     axios.get(`/api/mypage/scraped`, { withCredentials: true })
            .then((res) => {
             const myScrapList = res.data;
-            const isExist = myScrapList.some(item => String(item.articleId) == String(id));
+            const isExist = myScrapList.some(item => String(item.articleId) === String(id));
             setIsScraped(isExist);
            })
            .catch(() => {
