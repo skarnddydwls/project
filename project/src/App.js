@@ -67,7 +67,7 @@ function App() {
               <hr/>
               <Scrap/>
               <hr/>
-              <RecentNews/>
+              <RecentWords/>
             </>
               ) : null }
           </Col>
