@@ -1,4 +1,3 @@
-// src/pages/hooks/useTextSelection.js
 import { useState, useRef } from "react";
 
 export const useTextSelection = (text) => {
@@ -13,6 +12,7 @@ export const useTextSelection = (text) => {
     visible: false,
   });
 
+
   // 🔹 기존 하이라이트 지우기
   const clearHighlights = () => {
     if (!textRef.current) return;
@@ -26,14 +26,6 @@ export const useTextSelection = (text) => {
       parent.removeChild(span);
       parent.normalize(); // 텍스트 노드 합치기
     });
-    
-  };
-
-  const clearSelection = () => {
-    clearHighlights(); // ✅ 선택 지울 때 하이라이트도 같이 제거
-    setSelectedWord("");
-    setSelectedSentence("");
-    setTriggerPos((prev) => ({ ...prev, visible: false }));
   };
 
   // 🔹 새 하이라이트 적용
@@ -47,7 +39,12 @@ export const useTextSelection = (text) => {
     }
   };
 
-
+  const clearSelection = () => {
+    clearHighlights(); // ✅ 선택 지울 때 하이라이트도 같이 제거
+    setSelectedWord("");
+    setSelectedSentence("");
+    setTriggerPos((prev) => ({ ...prev, visible: false }));
+  };
 
   const handleMouseUp = () => {
     const selection = window.getSelection();

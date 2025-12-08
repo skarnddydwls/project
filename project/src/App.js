@@ -10,7 +10,8 @@ import NewsCategory from './pages/NewsCategory';
 import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
 import Scrap from './pages/Scrap';
-import RecentWords from './recentWords/RecentWords';
+import RecentWords from './pages/recentWords/RecentWords';
+
 
 function App() {
   const [loginUser, setLoginUser] = useState(sessionStorage.getItem('loginUser'));
@@ -60,18 +61,16 @@ function App() {
 
           <Col md={3} className="news-recent-col">
           {/* 스크랩한 뉴스 */}
-          { loginUser ? <RecentNews/> : null }
-
-          <hr />
-
-          {/* 최근 본 뉴스 */}
-          { loginUser ? <Scrap /> : null }
-
-          <hr />
-          
-          { loginUser ? <RecentWords/> : null}
+          { loginUser ? (
+            <>
+              <RecentNews/>
+              <hr/>
+              <Scrap/>
+              <hr/>
+              <RecentNews/>
+            </>
+              ) : null }
           </Col>
-          
         </Row>
       </Container>
       <Footer/>

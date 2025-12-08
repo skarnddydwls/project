@@ -1,28 +1,43 @@
-/* ----------------------------- */
-/* 최근 본 단어 뜻 박스 */
-/* ----------------------------- */
+/* ----------------------------------------- */
+/* 최근 본 단어 뜻 전체 박스 */
+/* ----------------------------------------- */
 
 .recent-words-box {
-  /* 기존 recent-box와 같이 쓰는 용도 */
-  margin-bottom: 20px;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
-/* 제목 덮어쓰기/보완용 (원래 recent-title도 같이 씀) */
+/* 제목 */
 .recent-words-title {
   font-size: 18px;
   font-weight: 700;
+  margin-bottom: 12px;
 }
 
-/* 리스트 하나 */
+/* 비어 있을 때 */
+.recent-words-empty {
+  font-size: 14px;
+  color: #777;
+  margin-top: 4px;
+}
+
+/* 리스트 공통 */
 .recent-words-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* 각 아이템 (기존 .recent-item이랑 같이 써도 됨) */
+/* ----------------------------------------- */
+/* 단어 한 줄 */
+/* ----------------------------------------- */
+
 .recent-words-item {
-  padding: 8px 0;
+  padding: 6px 0;
   border-bottom: 1px solid #eee;
 }
 
@@ -30,55 +45,85 @@
   border-bottom: none;
 }
 
-/* 윗줄: 단어 + X 버튼 가로 정렬 */
-.recent-words-row {
+/* 단어 버튼 + 삭제 버튼을 한 줄로 */
+.recent-word-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* 단어 (클릭 가능) */
-.recent-words-word {
-  flex: 1;
-  min-width: 0;
-  font-size: 14px;
+/* 단어 버튼 */
+.recent-word-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #2c6bed;
 }
 
-.recent-words-word:hover {
+.recent-word-button:hover {
   text-decoration: underline;
 }
 
-/* 말풍선 영역 */
-.recent-words-bubble {
-  margin-top: 6px;
-  padding: 8px 10px;
-  border-radius: 6px;
-  background-color: #ffffff;
-  border: 1px solid #e3e3e3;
-  font-size: 13px;
+/* 삭제 버튼 (Scrap 스타일과 통일) */
+.scrap-delete-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.scrap-delete-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  transition: transform 0.1s ease-in-out;
+}
+
+.scrap-delete-btn:hover .scrap-delete-icon {
+  transform: scale(1.1);
+}
+
+/* ----------------------------------------- */
+/* 아래로 펼쳐지는 말풍선 */
+/* ----------------------------------------- */
+
+.recent-word-bubble {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 8px;
+  font-size: 14px;
+  animation: fadeInBubble 0.15s ease-out;
+}
+
+@keyframes fadeInBubble {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* “요약:” label */
+.recent-word-summary strong {
+  font-weight: 700;
+  color: #333;
+}
+
+.recent-word-summary {
+  margin: 0;
+  color: #555;
   line-height: 1.4;
-}
-
-/* 로딩/에러/요약 텍스트 */
-.recent-words-loading {
-  color: #666;
-}
-
-.recent-words-error {
-  color: #e54848;
-}
-
-.recent-words-summary {
-  color: #222;
-}
-
-/* 빈 상태 텍스트 (기존 recent-empty 없으면) */
-.recent-words-empty {
-  font-size: 13px;
-  color: #777;
-  padding: 4px 0;
 }

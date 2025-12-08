@@ -1,10 +1,13 @@
-// src/pages/TextDrag.js
-import React, { useEffect, useState } from "react";
+// src/pages/textDrag/TextDrag.js
+import React, { useEffect, useState, useCallback } from "react"; // 수정됨
 import "../../css/TextDrag.css";
 import { useTextSelection } from "./hooks/useTextSelection";
 import { useWordSummary } from "./hooks/useWordSummary";
 import TextDragTriggerButton from "./components/TextDragTriggerButton";
 import TextDragBubble from "./components/TextDragBubble";
+
+const RECENT_WORDS_KEY = "recent_word_meanings";      // 수정됨
+const RECENT_WORDS_EVENT = "recent_words_updated";    // 수정됨
 
 const TextDrag = ({ text = "", articleId, section }) => {
   const {
@@ -25,15 +28,19 @@ const TextDrag = ({ text = "", articleId, section }) => {
     clearSummary,
   } = useWordSummary();
 
-  const [showBubble, setShowBubble] = useState(false);
+  const [showBubble, setShowBubble] = useState(false); // 수정됨
 
-  const clearAll = () => {
+  // 말풍선/선택 모두 한 번에 닫는 함수 // 수정됨
+  const clearAll = useCallback(() => {
     clearSelection();
     clearSummary();
     setShowBubble(false);
-  };
+  }, [clearSelection, clearSummary]); // 수정됨
 
-  const handleSummary = () => {
+  // 🔍 버튼 눌렀을 때 요약 요청 // 수정됨
+  const handleClickTrigger = () => {
+    if (!selectedWord && !selectedSentence) return;
+
     setShowBubble(true);
     requestSummary({
       word: selectedWord,
@@ -43,6 +50,7 @@ const TextDrag = ({ text = "", articleId, section }) => {
     });
   };
 
+  // 말풍선/돋보기 밖을 클릭하면 모두 닫기 // 수정됨
   useEffect(() => {
     if (!triggerPos.visible && !showBubble) return;
 
@@ -60,7 +68,45 @@ const TextDrag = ({ text = "", articleId, section }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [triggerPos.visible, showBubble]);
+  }, [triggerPos.visible, showBubble, clearAll]); // 수정됨
+
+  // 요약 완료되면 localStorage에 저장 + RecentWords 새로고침 이벤트 발행 // 수정됨
+  useEffect(() => {
+    if (!bubbleText || !selectedWord) return;
+
+    const newItem = {
+      word: selectedWord,
+      sentence: selectedSentence || "",
+      summary: bubbleText,
+      articleId,
+      section,
+      timestamp: Date.now(),
+    };
+
+    try {
+      const raw = localStorage.getItem(RECENT_WORDS_KEY);
+      const prev = raw ? JSON.parse(raw) : [];
+
+      // 같은 단어+문장+기사+섹션은 하나만 유지 // 수정됨
+      const filtered = prev.filter(
+        (item) =>
+          !(
+            item.word === newItem.word &&
+            item.sentence === newItem.sentence &&
+            item.articleId === newItem.articleId &&
+            item.section === newItem.section
+          )
+      );
+
+      const updated = [newItem, ...filtered].slice(0, 50);
+      localStorage.setItem(RECENT_WORDS_KEY, JSON.stringify(updated));
+
+      // RecentWords 훅에게 "업데이트됨" 알림 // 수정됨
+      window.dispatchEvent(new Event(RECENT_WORDS_EVENT));
+    } catch (e) {
+      console.error("최근 단어 저장 실패:", e);
+    }
+  }, [bubbleText, selectedWord, selectedSentence, articleId, section]); // 수정됨
 
   return (
     <div
@@ -68,16 +114,16 @@ const TextDrag = ({ text = "", articleId, section }) => {
       ref={wrapperRef}
       onMouseUp={handleMouseUp}
     >
-      {/* 🔍 작은 돋보기 버튼 (선택했을 때만, 말풍선 열리기 전까지 노출) */}
+      {/* 🔍 작은 돋보기 버튼: 선택했을 때만, 말풍선 열리기 전까지 */} 
       {triggerPos.visible && !showBubble && (
         <TextDragTriggerButton
           top={triggerPos.top}
           left={triggerPos.left}
-          onClick={handleSummary}
+          onClick={handleClickTrigger}
         />
       )}
 
-      {/* 320px 말풍선: 버튼 눌렀을 때만 등장 */}
+      {/* 320px 말풍선: 버튼 눌렀을 때만 */} 
       {showBubble && (
         <TextDragBubble
           top={triggerPos.top}

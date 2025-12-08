@@ -1,4 +1,3 @@
-// src/pages/hooks/useWordSummary.js
 import { useState } from "react";
 import axios from "axios";
 
