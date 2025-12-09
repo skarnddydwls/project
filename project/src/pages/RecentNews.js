@@ -36,9 +36,21 @@ const RecentNews = () => {
         navigate(`/${article.category}/News/${article.articleId}`);
     };
 
+    const handleViewAll = () => {
+        navigate('/scrap', {state: {targetTab: 'recent'}})
+    }
+
     return(  
         <div className="recent-box" style={{marginTop:'50px'}}>
-        <h4 className="recent-title">최근 본 뉴스</h4>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <h4 className="recent-title" style={{ margin: 0 }}>최근 본 뉴스</h4>
+                <span 
+                    onClick={handleViewAll} 
+                    style={{ fontSize: '13px', color: '#242222ff', cursor: 'pointer' }}
+                >
+                    전체보기 &gt;
+                </span>
+            </div>
         {recentNews.length === 0 ? (
             <p className="recent-empty">최근 본 뉴스가 없습니다.</p>
         ) : (

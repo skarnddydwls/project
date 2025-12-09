@@ -11,6 +11,7 @@ import Footer from './pages/Footer';
 import RecentNews from './pages/RecentNews';
 import Scrap from './pages/Scrap';
 import RecentWords from './pages/recentWords/RecentWords';
+import ScrapPage from './pages/ScrapPage';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
               <Route path="/Signup" element={<Signup/>}></Route>
               <Route path="/NewsCategory/:category" element={<NewsCategory/>}></Route>
               <Route path='/:category/News/:id' element={<News/>}></Route>
+              <Route path='/scrap' element={<ScrapPage/>}></Route>
             </Routes>
           </Col>
 
