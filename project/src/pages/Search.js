@@ -23,7 +23,7 @@ const Search = () => {
         setLoading(true);
         setError(null);
 
-        axios.get(`/api/article/search/`, { params: { keyword :  keyword }})
+        axios.get(`/api/article/search`, { params: { keyword :  keyword }})
          .then((res) => {
             const { articles } = res.data;
             setResults(articles || []);

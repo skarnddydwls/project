@@ -22,9 +22,8 @@ const NewsCategory = () => {
         return (
         <Container className="news-container">
             <Row>
-            <Col >
+            <Col>
                 <h2 className="section-title">{category}</h2>
-
                 {newsList.map((news) => (
                 <Row key={news.id} className="news-row">
                     <Col md={6} xs={3}>
@@ -32,7 +31,7 @@ const NewsCategory = () => {
                     </Col>
                     <Col md={3} xs={4}>
                     <img
-                        src={"https://mimgnews.pstatic.net/image/origin/008/2025/12/05/5288022.jpg?type=nf220_150"}
+                        src={news.img}
                         alt={news.title}
                         className="news-thumb"
                     />

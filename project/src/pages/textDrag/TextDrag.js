@@ -112,7 +112,15 @@ const TextDrag = ({ text = "", articleId, section }) => {
     <div
       className="text-drag-wrapper"
       ref={wrapperRef}
-      onMouseUp={handleMouseUp}
+      onMouseUp={(e) => {
+        // 🔍 버튼이나 말풍선 위에서 mouseup이면 selection 유지
+        if (
+          e.target.closest(".text-drag-start") ||
+          e.target.closest(".text-drag-bubble-floating")
+        ) {
+          return;
+        }
+        handleMouseUp(e);}}
     >
       {/* 🔍 작은 돋보기 버튼: 선택했을 때만, 말풍선 열리기 전까지 */} 
       {triggerPos.visible && !showBubble && (
