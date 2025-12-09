@@ -46,6 +46,7 @@ const News = () => {
          .then((response) => {
             setNews(response.data); 
             setShowText(response.data.simplified);
+            window.dispatchEvent(new Event('articleViewed'));
          })
          .catch((error) => {
           console.log(error);

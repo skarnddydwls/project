@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -7,10 +7,8 @@ const RecentNews = () => {
     const location = useLocation();
     const [recentNews, setRecentNews] = useState([]);
 
-    
-    useEffect(() => {
-        const timer = setTimeout(()=>{
-            axios.get(`/api/mypage/recent`, { withCredentials: true }) // { withCredentials: true }
+    const fetchRecentNews = useCallback(()=>{
+        axios.get(`/api/mypage/recent`, { withCredentials: true }) // { withCredentials: true }
                 .then(result => {
                     if(result){
                         setRecentNews(result.data);
@@ -22,10 +20,23 @@ const RecentNews = () => {
                     console.log(`${error} 발생`)
                     setRecentNews([])
                 })
-            }, 500);
+    }, [])
+    
+    useEffect(() => {
 
-        return () => clearTimeout(timer);
-    },[location.pathname]);
+        fetchRecentNews();
+
+        const handleView = () => {
+            fetchRecentNews();
+        };
+
+        window.addEventListener('articleViewed', handleView);
+
+        return () => {
+            window.removeEventListener('articleViewed', handleView);
+        }
+
+    },[location.pathname, fetchRecentNews]);
 
     const handleClickTitle = (e, article) => {
         e.preventDefault(); 
