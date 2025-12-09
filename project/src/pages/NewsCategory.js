@@ -25,7 +25,7 @@ const NewsCategory = () => {
         return (
         <Container className="news-container">
             <Row>
-            <Col >
+            <Col>
                 <h2 className="section-title">{category}</h2>
 
                 {newsList.slice(0,limit).map((news) => (

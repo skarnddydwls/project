@@ -19,6 +19,7 @@ import Admin from './pages/Admin';
 function App() {
   const [loginUser, setLoginUser] = useState(sessionStorage.getItem('loginUser'));
   const Userid = loginUser ? JSON.parse(loginUser).id : " ";
+  const [category, setCategory] = useState('');
   let navigate = useNavigate();
 
   const [keyword, setKeyword] = useState("");
@@ -37,11 +38,11 @@ function App() {
       <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
         <Nav style={{marginLeft:"50px", alignItems:'center'}}>
           <Nav.Link style={{fontSize:'30px'}} onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory/경제');}}>경제</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory/과학');}}>과학</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory/사회');}}>사회</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory/세계');}}>세계</Nav.Link>
-          <Nav.Link onClick={() => {navigate('/NewsCategory/문화');}}>문화</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/경제'); setCategory('경제')}}>경제</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/과학'); setCategory('과학')}}>과학</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/사회'); setCategory('사회')}}>사회</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/세계'); setCategory('세계')}}>세계</Nav.Link>
+          <Nav.Link onClick={() => {navigate('/NewsCategory/문화'); setCategory('문화')}}>문화</Nav.Link>
         </Nav>
         <Nav className="nav-search ms-auto">
           <Form inline onSubmit={handleSearch}>

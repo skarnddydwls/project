@@ -3,6 +3,7 @@
 /* ----------------------------- */
 
 .newstitle{
+  
     font-size: 24px;
     font-weight: bold;
 }
@@ -53,6 +54,12 @@
 
 .newsTitle:hover {
   color: #2c6bed;
+}
+
+.newsDate {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
 }
 
 /* 썸네일 */

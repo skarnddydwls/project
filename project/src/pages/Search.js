@@ -23,10 +23,9 @@ const Search = () => {
         setLoading(true);
         setError(null);
 
-        axios.get(`/api/article/search/`, { params: { keyword :  keyword }})
+        axios.get(`/api/article/search`, { params: { keyword :  keyword }})
          .then((res) => {
-            const { articles } = res.data;
-            setResults(articles || []);
+            setResults(res.data || []);
          })
          .catch((error) => {
             console.error("검색 오류:", error);
@@ -66,13 +65,10 @@ return (
                         style={{ cursor: 'pointer' }}
                         onClick={() => handleClickArticle(article)}>    
                 <Col xs={9}>
-                    <h5 className="newsTitle">{article.title}</h5>
-                    {article.summary && (
-                        <p className="news-summary">{article.summary}</p>
-                    )}
+                    <h5 className="newsTitle">{article.title}</h5><br/>
+                    <h5 className="newsDate">{article.date}</h5>
                 </Col>
-                <Col xs={3}>    
-                    <h2 className="section-title">{ keyword }</h2>
+                <Col xs={3}>
                     {article.img && (
                         <img
                             src={article.img}
