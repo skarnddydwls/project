@@ -23,15 +23,10 @@ const RecentNews = () => {
     }, [])
     
     useEffect(() => {
-
-        fetchRecentNews();
-
         const handleView = () => {
             fetchRecentNews();
         };
-
         window.addEventListener('articleViewed', handleView);
-
         return () => {
             window.removeEventListener('articleViewed', handleView);
         }

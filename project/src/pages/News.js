@@ -57,8 +57,7 @@ const News = () => {
     };
 
     window.addEventListener('scrapUpdated', handleUpdate);
-
-    // 청소 부분
+    
     return () => {
       window.removeEventListener('scrapUpdated', handleUpdate)
     }
