@@ -16,10 +16,8 @@ const News = () => {
   
   const getUserId = () => {
     const storedUser = sessionStorage.getItem('loginUser');
-    console.log(`News: ${storedUser}`);
     if(!storedUser) return "storedUser가 없음";
     try {
-      console.log(`News.parse: ${JSON.parse(storedUser).id}`)
       return JSON.parse(storedUser).id
     } catch (e) {
       return storedUser;

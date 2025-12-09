@@ -24,8 +24,16 @@
       e.preventDefault(); // 서버로 가는거 막아줌
 
       if(form.id == 'admin' && form.password == '1234'){
-        localStorage.setItem('admin', form.id);
-        return navigate('/admin');
+        const pw = prompt("암호를 입력하세요")
+        if(pw === '123456789'){
+          return navigate('/admin');
+        } else if(pw === ''){
+          alert("비밀번호를 입력하세요")
+        } else {
+          alert("땡!!")
+          return;
+        }
+        
       }
       axios
         .post('/api/login', form, {withCredentials: true})
