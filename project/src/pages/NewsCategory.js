@@ -18,7 +18,7 @@ const NewsCategory = () => {
 
         console.log(`newsCategory: ${sessionStorage.getItem('loginUser')}`)
     }, [category]);
-
+    
         return (
         <Container className="news-container">
             <Row>

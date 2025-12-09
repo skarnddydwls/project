@@ -13,6 +13,7 @@ import Scrap from './pages/Scrap';
 import RecentWords from './pages/recentWords/RecentWords';
 import ScrapPage from './pages/ScrapPage';
 import Search from './pages/Search';
+import MainPage from './pages/MainPage';
 
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
           <Col md={9}>
             <br/>  
             <Routes>
+              <Route path="/" element={<MainPage/>}></Route>
               <Route path="/Signin" element={<Signin/>}></Route>
               <Route path="/Signup" element={<Signup/>}></Route>
               <Route path="/NewsCategory/:category" element={<NewsCategory/>}></Route>

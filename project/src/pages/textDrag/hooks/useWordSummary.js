@@ -23,6 +23,7 @@ export const useWordSummary = () => {
         setIsLoading(false);
     }
   };
+  
 
   const clearSummary = () => {
     setBubbleText("");
