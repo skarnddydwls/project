@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import {useNavigate, useParams} from 'react-router-dom'
 import '../css/page.css';
 
