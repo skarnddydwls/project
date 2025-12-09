@@ -10,8 +10,7 @@ const NewsCategory = () => {
     const {category} = useParams();
     const [newsList, setNewsList] = useState([]);
     const [limit, setLimit] = useState(5);
-
-
+    
     let navigate = useNavigate();
 
     useEffect(() => {

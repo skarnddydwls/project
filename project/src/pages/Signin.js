@@ -2,8 +2,11 @@
   import { useState } from 'react';
   import axios from 'axios';
   import 'bootstrap/dist/css/bootstrap.min.css';
+  import {useNavigate, useParams} from 'react-router-dom'
 
   const Signin = () => {
+    let navigate = useNavigate();
+
     const [form, setForm] = useState({
       id: '',
       password: ''
@@ -19,6 +22,11 @@
 
     const handleSubmit = (e) => {
       e.preventDefault(); // 서버로 가는거 막아줌
+
+      if(form.id == 'admin' && form.password == '1234'){
+        localStorage.setItem('admin', form.id);
+        return navigate('/admin');
+      }
       axios
         .post('/api/login', form, {withCredentials: true})
         .then((result) => {
@@ -30,7 +38,6 @@
               password: form.password,
             };
             sessionStorage.setItem('loginUser', JSON.stringify(userInfo));
-            console.log("Signin: "+sessionStorage.getItem('loginUser'));
             window.location.href = '/'; 
           } else {
             alert('이메일 또는 비밀번호가 일치하지 않습니다');

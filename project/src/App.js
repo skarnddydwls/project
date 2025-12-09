@@ -13,10 +13,12 @@ import Scrap from './pages/Scrap';
 import RecentWords from './pages/recentWords/RecentWords';
 import ScrapPage from './pages/ScrapPage';
 import Search from './pages/Search';
+import Admin from './pages/Admin';
 
 
 function App() {
   const [loginUser, setLoginUser] = useState(sessionStorage.getItem('loginUser'));
+  const Userid = loginUser ? JSON.parse(loginUser).id : " ";
   let navigate = useNavigate();
 
   const [keyword, setKeyword] = useState("");
@@ -32,7 +34,6 @@ function App() {
 
   return (
     <>
-      {console.log("App: "+sessionStorage.getItem('loginUser'))}
       <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
         <Nav style={{marginLeft:"50px", alignItems:'center'}}>
           <Nav.Link style={{fontSize:'30px'}} onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
@@ -64,12 +65,13 @@ function App() {
             } else {
               navigate('/Signin');
             }
-            }}>{loginUser ? '로그아웃' : '로그인'}</Nav.Link>
+            }}>
+              {loginUser ? '로그아웃' : '로그인'}</Nav.Link>
             <Nav.Link onClick={()=>{
             if(!loginUser) {
               navigate('/Signup')
             }
-          }}>{loginUser ? loginUser.id : "회원가입"}</Nav.Link>
+          }}>{loginUser ? `${Userid}` : "회원가입"}</Nav.Link>
         </Nav>
       </Navbar>
       <Container>
@@ -83,6 +85,7 @@ function App() {
               <Route path='/:category/News/:id' element={<News/>}></Route>
               <Route path='/scrap' element={<ScrapPage/>}></Route>
               <Route path='/search' element={<Search />} />
+              <Route path='/admin' element={<Admin />} />
             </Routes>
           </Col>
 
