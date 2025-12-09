@@ -37,8 +37,8 @@ const News = () => {
             setIsScraped(isExist);
            })
            .catch(() => {
-            console.log("씨발 실패했다,,")
-           })
+
+          })
   }, [id])
 
   useEffect(() => {

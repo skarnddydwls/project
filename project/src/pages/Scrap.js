@@ -61,9 +61,21 @@ const Scrap = () => {
     navigate(`/${article.category}/News/${article.articleId}`);
   };
 
+  const handleViewAll = () => {
+        navigate('/scrap', {state: {targetTab: 'scrap'}})
+  };
+
   return (
     <div className="recent-box">
-      <h4 className="recent-title">스크랩한 뉴스</h4>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+          <h4 className="recent-title" style={{ margin: 0 }}>스크랩한 뉴스</h4>
+          <span 
+              onClick={handleViewAll} 
+              style={{ fontSize: '13px', color: '#242222ff', cursor: 'pointer' }}
+          >
+              전체보기 &gt;
+          </span>
+      </div>
 
       {scrapList.length === 0 ? (
         <p className="recent-empty">스크랩한 기사가 없습니다.</p>
