@@ -7,9 +7,10 @@
     font-weight: bold;
 }
 .nav-search{
-    float: right;
-    max-width: 400px;
-    min-width: 200px;
-    margin-right: 20px;
-
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;         /* 화면의 30% 정도 */
+  max-width: 500px;   /* 너무 커지지 않게 */
+  min-width: 220px;   /* 너무 작아지지 않게 */
 }

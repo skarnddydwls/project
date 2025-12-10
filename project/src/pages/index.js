@@ -1,0 +1,10 @@
+export { default as Signin } from "./Signin";
+export { default as Signup } from "./Signup";
+export { default as News } from "./News";
+export { default as NewsCategory } from "./NewsCategory";
+export { default as Footer } from "./Footer";
+export { default as RecentNews } from "./RecentNews";
+export { default as Scrap } from "./Scrap";
+export { default as ScrapPage } from "./ScrapPage";
+export { default as Search } from "./Search";
+export { default as MainPage } from "./MainPage";

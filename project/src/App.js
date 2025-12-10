@@ -3,17 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import {Container, Nav, Navbar, Row, Col, Button, Form, InputGroup} from 'react-bootstrap';
 import { Route, Routes, useNavigate} from 'react-router-dom'
-import Signin from './pages/Signin';
-import Signup from './pages/Signup';
-import News from './pages/News';
-import NewsCategory from './pages/NewsCategory';
-import Footer from './pages/Footer';
-import RecentNews from './pages/RecentNews';
-import Scrap from './pages/Scrap';
+import { useMediaQuery } from 'react-responsive';
+import { Signin, Signup, News, NewsCategory, Footer, RecentNews, Scrap, ScrapPage, Search, MainPage } 
+  from './pages';
 import RecentWords from './pages/recentWords/RecentWords';
-import ScrapPage from './pages/ScrapPage';
-import Search from './pages/Search';
-import MainPage from './pages/MainPage';
+
+
+
 
 
 function App() {
@@ -36,7 +32,7 @@ function App() {
     <>
       {console.log("App: "+sessionStorage.getItem('loginUser'))}
       <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
-        <Nav style={{marginLeft:"50px", alignItems:'center'}}>
+        <Nav className='me-auto' style={{marginLeft:"50px", alignItems:'center'}}>
           <Nav.Link style={{fontSize:'30px'}} onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/경제'); setCategory('경제')}}>경제</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/과학'); setCategory('과학')}}>과학</Nav.Link>
@@ -44,8 +40,7 @@ function App() {
           <Nav.Link onClick={() => {navigate('/NewsCategory/세계'); setCategory('세계')}}>세계</Nav.Link>
           <Nav.Link onClick={() => {navigate('/NewsCategory/문화'); setCategory('문화')}}>문화</Nav.Link>
         </Nav>
-        <Nav className="nav-search ms-auto">
-          <Form inline onSubmit={handleSearch}>
+          <Form inline onSubmit={handleSearch} className="nav-search">
             <InputGroup>
               <Form.Control
                 placeholder="Search"
@@ -55,7 +50,6 @@ function App() {
               <Button type="submit" variant="secondary">🔍</Button>
             </InputGroup>
           </Form>
-        </Nav>
         <Nav className='ms-auto' style={{marginRight:'100px'}}>
           
           <Nav.Link onClick={()=> {
