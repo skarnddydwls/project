@@ -8,3 +8,5 @@ export { default as Scrap } from "./Scrap";
 export { default as ScrapPage } from "./ScrapPage";
 export { default as Search } from "./Search";
 export { default as MainPage } from "./MainPage";
+export { default as RecentWords } from "./recentWords/RecentWords";
+export { default as Navigation} from "./Navigation/Navigaiton"
