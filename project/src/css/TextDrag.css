@@ -83,3 +83,27 @@
   transform: scale(1.1);
   transition: 0.1s;
 }
+
+.link-out{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 14px;          /* 버튼 크기 */
+  border-radius: 999px;       /* 완전 동그란 느낌 (pill) */
+  border: 2px solid #000;     /* 검은색 줄 */
+  background-color: #fff;     /* 안쪽 흰색 */
+  color: #000;                /* 글자색 */
+
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition: background-color 0.15s ease, 
+              color 0.15s ease,
+              transform 0.1s ease;
+}
+
+.link-out:active {
+  transform: translateY(1px);
+}
