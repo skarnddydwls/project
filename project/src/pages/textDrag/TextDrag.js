@@ -9,7 +9,7 @@ import TextDragBubble from "./components/TextDragBubble";
 const RECENT_WORDS_KEY = "recent_word_meanings";
 const RECENT_WORDS_EVENT = "recent_words_updated"; 
 
-const TextDrag = ({ text = "", articleId, section }) => {
+const TextDrag = ({ text = "", articleId, section, news}) => {
   const {
     wrapperRef,
     textRef,
@@ -145,6 +145,8 @@ const TextDrag = ({ text = "", articleId, section }) => {
       {/* 실제 기사 텍스트 */}
       <p ref={textRef} className="text-drag-content">
         {text}
+        <br/><br/><br/>
+        출처: <a href={news.url} target="_blank">{news.url}</a>
       </p>
     </div>
   );

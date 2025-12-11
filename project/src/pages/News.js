@@ -138,6 +138,7 @@ const News = () => {
           text={showText}
           articleId={news.articleId}
           section={readingState}
+          news={news}
         />
       </section>
   </div>
