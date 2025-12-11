@@ -2,10 +2,8 @@ import "../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useMediaQuery } from "react-responsive";
 
-
 import { useNavigation } from "./hooks/useNavigation";
 
-// 3가지 반응형 전용 네비게이션
 import DesNavigation from "./components/DesNavigation";
 import MobNavigation from "./components/MobNavigation";
 import TabNavigation from "./components/TabNavigation";

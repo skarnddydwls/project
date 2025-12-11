@@ -26,7 +26,6 @@ export const useNavigation = () => {
 
       const btnWidth = btn.offsetWidth;
 
-      // 80px: 오른쪽 여백 + 더보기 드롭다운 자리
       if (totalWidth + btnWidth < containerWidth - 80) {
         totalWidth += btnWidth;
         count++;
@@ -42,7 +41,6 @@ export const useNavigation = () => {
     }
   };
 
-  // 로그인/검색 관련
   const [loginUser, setLoginUser] = useState(
     sessionStorage.getItem("loginUser")
   );
