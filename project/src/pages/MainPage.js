@@ -1,5 +1,3 @@
-// src/pages/MainPage.js
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Row, Col } from "react-bootstrap";
@@ -7,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { getOriginalImageUrl } from "./utils/getOriginalImageUrl";
 import "../css/MainPage.css";
 
-// 🔸 더미데이터 5개 (컴포넌트 밖 → ESLint 경고 안 뜸)
 const dummyList = [
   {
     articleId: 1,
@@ -70,13 +67,13 @@ export default function MainPage() {
       });
   }, []);
 
-  // 🔸 10초마다 자동 순환 (마우스 오버 시 일시정지)
+  // 10초마다 자동 순환 (마우스 오버 시 일시정지)
   useEffect(() => {
     if (recommendList.length === 0 || isPaused) return;
 
     const intervalId = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % recommendList.length);
-    }, 10000); // 10초
+    }, 5000); // 10초
 
     return () => clearInterval(intervalId);
   }, [recommendList, isPaused]);
@@ -86,7 +83,6 @@ export default function MainPage() {
   }
 
   const current = recommendList[currentIndex];
-  const rest = recommendList.filter((_, idx) => idx !== currentIndex);
 
   const handleClickArticle = (article) => {
     if (!article.category || !article.articleId) return;
@@ -104,6 +100,7 @@ export default function MainPage() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
+          <br/><br/><br/>
           <div className="main-hero-image-wrapper">
             <img
               src={getOriginalImageUrl(current.img)}
@@ -117,7 +114,8 @@ export default function MainPage() {
 
       {/* 오른쪽: 나머지 리스트 */}
       <Col md={6} className="main-right-col">
-        {rest.map((news) => (
+      <br/><br/><br/>
+        {recommendList.map((news) => (
           <div
             key={news.articleId}
             className="main-small-item"
