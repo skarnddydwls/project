@@ -146,7 +146,7 @@ const TextDrag = ({ text = "", articleId, section, news}) => {
       <p ref={textRef} className="text-drag-content">
         {text}
         <br/><br/><br/>
-        출처: <a href={news.url} target="_blank">{news.url}</a>
+        출처: [네이버 뉴스] &emsp;<a href={news.url} target="_blank">{news.title}</a>
       </p>
     </div>
   );
