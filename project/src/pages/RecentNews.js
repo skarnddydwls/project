@@ -62,7 +62,7 @@ const RecentNews = () => {
             <p className="recent-empty">최근 본 뉴스가 없습니다.</p>
         ) : (
             <ul className="recent-list">
-            {recentNews.map((item) => (
+            {recentNews.slice(0,5).map((item) => (
                 <li key={item.articleId} className="recent-item">
                 <span style={{cursor: 'pointer'}} className="recent-item-title" onClick={(e) => handleClickTitle(e, item)}>{item.title}</span>
                 </li>

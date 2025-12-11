@@ -81,7 +81,7 @@ const Scrap = () => {
         <p className="recent-empty">스크랩한 기사가 없습니다.</p>
       ) : (
         <ul className="recent-list">
-          {scrapList.map((article) => (
+          {scrapList.slice(0,5).map((article) => (
             <li
               key={article.articleId}
               className="recent-item"
