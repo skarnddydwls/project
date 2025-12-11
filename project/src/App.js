@@ -85,8 +85,8 @@ function App() {
               <Route path="/NewsCategory/:category" element={<NewsCategory/>}></Route>
               <Route path='/:category/News/:id' element={<News/>}></Route>
               <Route path='/scrap' element={<ScrapPage/>}></Route>
-              <Route path='/search' element={<Search />} />
-              <Route path='/admin' element={<Admin />} />
+              <Route path='/search' element={<Search />}/>
+              <Route path='/admin' element={<Admin />}/>
             </Routes>
           </Col>
 

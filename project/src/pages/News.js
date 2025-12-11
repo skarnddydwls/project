@@ -22,7 +22,7 @@ const News = () => {
     } catch (e) {
       return storedUser;
     }
-  }
+  } 
 
   const scrapState = useCallback(() => {
     const userId = getUserId();
