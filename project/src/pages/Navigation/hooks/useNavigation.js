@@ -1,7 +1,18 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+// src/pages/Navigation/hooks/useNavigation.js
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useNavigation = () => {
+  const navigate = useNavigate();
+
+  // 카테고리 목록
+  const categories = ["경제", "과학", "사회", "세계", "문화"];
+
+  // 더보기 계산용 ref & 상태
+  const containerRef = useRef(null);
+  const buttonRefs = useRef([]);
+  const [visibleCount, setVisibleCount] = useState(categories.length);
+
   const calculateVisible = () => {
     if (!containerRef.current) return;
 
@@ -14,34 +25,59 @@ export const useNavigation = () => {
       if (!btn) continue;
 
       const btnWidth = btn.offsetWidth;
+
+      // 80px: 오른쪽 여백 + 더보기 드롭다운 자리
       if (totalWidth + btnWidth < containerWidth - 80) {
-        // 80px: 더보기 드롭다운 여유 공간
         totalWidth += btnWidth;
         count++;
-      } else break;
+      } else {
+        break;
+      }
     }
 
-    setVisibleCount(count);
+    if (count === 0) {
+      setVisibleCount(1);
+    } else {
+      setVisibleCount(count);
+    }
   };
-  
 
-  const [loginUser, setLoginUser] = useState(sessionStorage.getItem('loginUser'));
-  const navigate = useNavigate();
+  // 로그인/검색 관련
+  const [loginUser, setLoginUser] = useState(
+    sessionStorage.getItem("loginUser")
+  );
   const [keyword, setKeyword] = useState("");
 
-  // 클릭 시 실행할 함수 (텍스트 전달됨)
   const handleSearch = (e) => {
     if (e) e.preventDefault();
 
     const trimmed = keyword.trim();
     if (!trimmed) return;
-    
+
     navigate(`/search?keyword=${encodeURIComponent(trimmed)}`);
   };
-  return{
-    setKeyword, keyword,
-    setLoginUser, loginUser,
-    handleSearch,
-    calculateVisible
+
+  const handleClickCategory = (name) => {
+    navigate(`/NewsCategory/${encodeURIComponent(name)}`);
   };
-}; 
+
+  return {
+    // 네비 공통
+    navigate,
+
+    // 카테고리/더보기 관련
+    categories,
+    containerRef,
+    buttonRefs,
+    visibleCount,
+    calculateVisible,
+    handleClickCategory,
+
+    // 로그인/검색 관련
+    loginUser,
+    setLoginUser,
+    keyword,
+    setKeyword,
+    handleSearch,
+  };
+};

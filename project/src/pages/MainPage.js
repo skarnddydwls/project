@@ -42,14 +42,14 @@ const MainPage = () => {
                     className="main-hero-card"
                     onClick={() => navigate(`/${first.category}/News/${first.articleId}`)}
                     >
-                    <h2 className="main-hero-title">{first.title}</h2>
-                    <div className="main-hero-image-wrapper">
-                        <img
-                        src={getOriginalImageUrl(first.img)}
-                        alt={first.title}
-                        className="main-hero-image"
-                        />
-                    </div>
+                        <h2 className="main-hero-title">{first.title}</h2>
+                        <div className="main-hero-image-wrapper">
+                            <img
+                            src={getOriginalImageUrl(first.img)}
+                            alt={first.title}
+                            className="main-hero-image"
+                            />
+                        </div>
                     </div>
                 </Col>
 
