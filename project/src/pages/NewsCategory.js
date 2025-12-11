@@ -21,7 +21,7 @@ const NewsCategory = () => {
         })
         .catch(err => console.error(err));
     }, [category]);
-
+    
         return (
         <Container className="news-container">
             <Row>

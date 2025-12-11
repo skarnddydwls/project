@@ -122,5 +122,5 @@
       width: '80%',
     },
   };
-
+  
   export default Signin;

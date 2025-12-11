@@ -9,24 +9,21 @@ export const useWordSummary = () => {
   const requestSummary = async ({ word, sentence}) => {
     if (!word && !sentence) return;
 
-    setBubbleText("");
-    setErrorMessage("");
     setIsLoading(true);
 
     try {
       const res = await axios.get("/util/word-meaning", {
         params: { word, sentence },
       });
-
-      const summary = res.data.summary || res.data.result || "";
-      setBubbleText(summary);
+      setBubbleText(res.data);
     } catch (err) {
       console.error(err);
       setErrorMessage("요약을 불러오는 데 실패했습니다.");
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
   };
+  
 
   const clearSummary = () => {
     setBubbleText("");
