@@ -106,7 +106,7 @@ const News = () => {
 
 
   return(
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
+    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
 
       <h1>{news.title}</h1> 
       <p style={{ color: '#666', fontSize: '14px' }}>

@@ -1,18 +1,20 @@
-// src/recentWords/RecentWords.js
 import { useState } from "react";
 import "../../css/RecentWords.css";
 import { useRecentWords } from "./hooks/useRecentWords";
 import RecentWordItem from "./components/RecentWordItem";
-import RecentWordItem2 from "./components/RecentWordItem2";
 
 const RecentWords = () => {
   const { wordList, deleteByTimestamp } = useRecentWords();
+
+  // 현재 열려 있는 단어의 timestamp
   const [activeTs, setActiveTs] = useState(null);
 
+  // 단어 클릭 → 해당 timestamp 토글
   const handleClickWord = (timestamp) => {
     setActiveTs((prev) => (prev === timestamp ? null : timestamp));
   };
 
+  // 삭제 시 열려 있던 항목이면 닫기
   const handleDelete = (timestamp) => {
     if (activeTs === timestamp) {
       setActiveTs(null);
@@ -37,12 +39,6 @@ const RecentWords = () => {
               isActive={activeTs === item.timestamp}
               onClickWord={handleClickWord}
               onDelete={handleDelete}
-            />
-          ))}
-          {wordList.map((item) => (
-            <RecentWordItem2
-              summary={item.summary}
-              isActive={activeTs === item.timestamp}
             />
           ))}
         </ul>

@@ -2,16 +2,6 @@
 /* 뉴스카테고리 왼쪽 뉴스 리스트 */
 /* ----------------------------- */
 
-.newstitle{
-  
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.news-container {
-  margin-top: 30px;
-}
-
 .news-main-col {
   border-right: 1px solid #eee;
   padding-right: 24px;
@@ -33,8 +23,8 @@
 
 /* 기사 리스트 */
 .news-row {
-  padding: 16px 0;
-  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  border-bottom: 1px solid #b4b4b4;
 }
 .news-btn-row {
   display: flex;
@@ -46,6 +36,7 @@
 
 /* 뉴스 제목 */
 .newsTitle {
+  margin-top: 16px;
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 4px;
@@ -79,11 +70,9 @@
 /* 공통 박스 스타일 */
 .recent-box,
 .scrap-box {
-  background: #FFFFFF;
-  border: 1px solid #FFFFFF;
-  border-radius: 6px;
+  background: #ffffff;
+  border: 300px solid #dfdadaff;
   padding: 14px 16px;
-  margin-bottom: 20px;
 }
 
 /* 제목 */

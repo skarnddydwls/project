@@ -49,7 +49,7 @@ const RecentNews = () => {
     }
 
     return(  
-        <div className="recent-box" style={{marginTop:'50px'}}>
+        <div className="recent-box">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <h4 className="recent-title" style={{ margin: 0 }}>최근 본 뉴스</h4>
                 <span 

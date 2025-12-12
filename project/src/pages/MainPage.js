@@ -112,20 +112,6 @@ export default function MainPage() {
         </div>
       </Col>
 
-      {/* <Col md={6} className="main-right-col">
-        <h2><b>오늘의 키워드 Top 5</b></h2>
-        <br/><br/>
-        {recommendList.map((news) => (
-          <div
-            key={news.articleId}
-            className="main-small-item"
-            onClick={() => handleClickArticle(news)}
-          >
-            <h4 className="main-small-title">{news.title}</h4>
-          </div>
-        ))}
-      </Col> */}
-
       {/* 오른쪽: 나머지 리스트 */}
       <Col md={6} className="main-right-col">
         <h2><b>오늘의 조회수 Top 5</b></h2>

@@ -1,58 +1,59 @@
-import '../../../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Nav, Navbar, Button, Form, InputGroup } from 'react-bootstrap';
-import { useNavigation } from "../hooks/useNavigation"
-import { useNavigate } from 'react-router-dom'
+import "../../../App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 
-
-const Navigation = () => {
-
-
-  const navigate = useNavigate();
+const MobNavigation = (props) => {
   const {
-    setKeyword, keyword,
-    setLoginUser, loginUser,
-    handleSearch,
-  } = useNavigation();
-  
+    navigate,
+    categories,
+    handleClickCategory,
+    loginUser,
+    setLoginUser,
+  } = props;
 
-  return(
-    <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
-      <Nav className='me-auto' style={{marginLeft:"50px", alignItems:'center'}}>
-        <Nav.Link style={{fontSize:'30px'}} onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/경제')}}>경제</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/과학')}}>과학</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/사회')}}>사회</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/세계')}}>세계</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/문화')}}>문화</Nav.Link>
+  const handleLogout = () => {
+    sessionStorage.removeItem("loginUser");
+    sessionStorage.removeItem("recent_news");
+    sessionStorage.removeItem("recent_word_meanings");
+
+    setLoginUser(null);
+    navigate("/");
+  };
+
+  return (
+    <Navbar bg="dark" data-bs-theme="dark" style={{ height: "60px", padding: "0 10px" }}>
+      <Nav className="me-auto" style={{ display: "flex", alignItems: "center" }}>
+        <Nav.Link style={{ fontSize: "18px" }} onClick={() => navigate("/")}>
+          뉴스모아
+        </Nav.Link>
+
+        <NavDropdown title="카테고리">
+          {categories.map((name) => (
+            <NavDropdown.Item
+              key={name}
+              onClick={() => handleClickCategory(name)}
+            >
+              {name}
+            </NavDropdown.Item>
+          ))}
+        </NavDropdown>
       </Nav>
-        <Form inline onSubmit={handleSearch} className="nav-search">
-          <InputGroup>
-            <Form.Control
-              placeholder="Search"
-              aria-label="Search"
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}/>
-            <Button type="submit" variant="secondary">🔍</Button>
-          </InputGroup>
-        </Form>
-      <Nav   className='ms-auto' style={{marginRight:'100px'}}>    
-        <Nav.Link onClick={()=> {
-          if(loginUser) {
-            sessionStorage.removeItem('loginUser');
-            setLoginUser(null);
-            navigate('/');
-          } else {
-            navigate('/Signin');
-          }
-          }}>{loginUser ? '로그아웃' : '로그인'}</Nav.Link>
-          <Nav.Link onClick={()=>{
-          if(!loginUser) {
-            navigate('/Signup')
-          }
-        }}>{loginUser ? loginUser.id : "회원가입"}</Nav.Link>
+
+      <Nav className="ms-auto">
+        <Nav.Link
+          onClick={() => {
+            if (loginUser) {
+              handleLogout();
+            } else {
+              navigate("/Signin");
+            }
+          }}
+        >
+          {loginUser ? "로그아웃" : "로그인"}
+        </Nav.Link>
       </Nav>
     </Navbar>
   );
 };
-export default Navigation;
+
+export default MobNavigation;

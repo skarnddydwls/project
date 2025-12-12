@@ -10,12 +10,11 @@ function App() {
   const { loginUser } = useNavigation();
 
   return (
-    <div className='d-flex flex-column min-vh-100'>
+    <div className='d-flex flex-column min-vh-100' >
       <Navigation/>
-      <Container className='flex-grow-1 mt-5'>
+      <Container className='flex-grow-1 mt-5 '>
         <Row>
-          <Col md={9}>
-            <br/>  
+          <Col md={9} className='left_box' style={{ marginTop:"30px", borderRadius: "30px",padding: "50px", borderBlockColor:"ffffffff", marginbottom: "20px",border: "2px solid #dfdadaff"}}>
             <Routes>
               <Route path="/" element={<MainPage/>}></Route>
               <Route path="/Signin" element={<Signin/>}></Route>
@@ -27,14 +26,14 @@ function App() {
             </Routes>
           </Col>
 
-          <Col md={3} className="news-recent-col">
+          <Col md={3} className="news-recent-col" >
           {/* 스크랩한 뉴스 */}
           { loginUser ? (
             <>
               <RecentNews/>
-              <hr/>
+              
               <Scrap/>
-              <hr/>
+              
               <RecentWords/>
             </>
               ) : null }
