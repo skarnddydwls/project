@@ -10,9 +10,9 @@ function App() {
   const { loginUser } = useNavigation();
 
   return (
-    <>
+    <div className='d-flex flex-column min-vh-100'>
       <Navigation/>
-      <Container>
+      <Container className='flex-grow-1 mt-5'>
         <Row>
           <Col md={9}>
             <br/>  
@@ -42,7 +42,7 @@ function App() {
         </Row>
       </Container>
       <Footer/>
-    </>
+    </div>
   );
 }
 
