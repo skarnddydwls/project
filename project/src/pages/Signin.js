@@ -2,7 +2,7 @@
   import { useState } from 'react';
   import axios from 'axios';
   import 'bootstrap/dist/css/bootstrap.min.css';
-  import {useNavigate, useParams} from 'react-router-dom'
+  import {useNavigate} from 'react-router-dom'
 
   const Signin = () => {
     let navigate = useNavigate();
@@ -23,7 +23,7 @@
     const handleSubmit = (e) => {
       e.preventDefault(); // 서버로 가는거 막아줌
 
-      if(form.id == 'admin' && form.password == '1234'){
+      if(form.id === 'admin' && form.password === '1234'){
         const pw = prompt("암호를 입력하세요")
         if(pw === '123456789'){
           return navigate('/admin');

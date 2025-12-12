@@ -147,7 +147,12 @@ const TextDrag = ({ text = "", articleId, section, news}) => {
       <p ref={textRef} className="text-drag-content">
         {text}
         <br/><br/><br/>
-        <a href={news.url} target="_blank"><button className="link-out">기사 원문 사이트로 이동<img src={linkOut} /></button></a>
+        <a href={news.url} target="_blank" rel="noopener noreferrer">
+          <button className="link-out">
+            기사 원문 사이트로 이동
+            <img src={linkOut} alt={news.url} />
+          </button>
+          </a>
       </p>
     </div>
   );
