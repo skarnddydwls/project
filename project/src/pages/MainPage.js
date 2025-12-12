@@ -15,7 +15,7 @@ const dummyList = [
   {
     articleId: 2,
     category: "사회",
-    title: "더미 뉴스 2: 사회적 이슈가 커지고 있습니다",
+    title: "사회적 이슈가 커지고 있습니다",
     img: "https://mimgnews.pstatic.net/image/origin/079/2025/12/11/4095095.jpg?type=nf220_150",
   },
   {
@@ -73,7 +73,7 @@ export default function MainPage() {
 
     const intervalId = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % recommendList.length);
-    }, 5000); // 10초
+    }, 900); // 10초
 
     return () => clearInterval(intervalId);
   }, [recommendList, isPaused]);

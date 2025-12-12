@@ -1,40 +1,28 @@
-// src/pages/Navigation/components/DesNavigation.jsx (혹은 Navigation.jsx)
 import "../../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  Nav,
-  Navbar,
-  Button,
-  Form,
-  InputGroup,
-  NavDropdown,
-} from "react-bootstrap";
+import { Nav, Navbar, Button, Form, InputGroup, NavDropdown } from "react-bootstrap";
 import { useEffect } from "react";
-import { useNavigation } from "../hooks/useNavigation";
 
-const Navigation = () => {
+const DesNavigation = (props) => {
   const {
-    // 네비 공통
     navigate,
-
-    // 카테고리 + 더보기
     categories,
     containerRef,
     buttonRefs,
     visibleCount,
     calculateVisible,
     handleClickCategory,
-
-    // 로그인/검색
     loginUser,
     setLoginUser,
     keyword,
     setKeyword,
     handleSearch,
-  } = useNavigation();
+  } = props;
 
   useEffect(() => {
     calculateVisible();
+    requestAnimationFrame(calculateVisible);
+
     window.addEventListener("resize", calculateVisible);
     return () => window.removeEventListener("resize", calculateVisible);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,17 +32,9 @@ const Navigation = () => {
   const overflow = categories.slice(visibleCount);
 
   return (
-    <Navbar
-      bg="dark"
-      data-bs-theme="dark"
-      style={{ height: "80px", padding: "0 20px" }}
-    >
+    <Navbar bg="dark" data-bs-theme="dark" style={{ height: "80px", padding: "0 20px" }}>
       {/* 왼쪽: 로고 + 카테고리 + 더보기 */}
-      <Nav
-        className="me-auto"
-        ref={containerRef}
-        style={{ display: "flex", alignItems: "center" }}
-      >
+      <Nav className="me-auto" ref={containerRef} style={{ display: "flex", alignItems: "center" }}>
         <Nav.Link
           style={{ fontSize: "24px", marginRight: "20px" }}
           onClick={() => navigate("/")}
@@ -79,10 +59,7 @@ const Navigation = () => {
         {overflow.length > 0 && (
           <NavDropdown title="더보기">
             {overflow.map((name) => (
-              <NavDropdown.Item
-                key={name}
-                onClick={() => handleClickCategory(name)}
-              >
+              <NavDropdown.Item key={name} onClick={() => handleClickCategory(name)}>
                 {name}
               </NavDropdown.Item>
             ))}
@@ -90,8 +67,8 @@ const Navigation = () => {
         )}
       </Nav>
 
-      {/* 가운데: 검색 */}
-      <Form inline="true" onSubmit={handleSearch} className="nav-search">
+      {/* 가운데: 검색 (데스크탑에서만 absolute 적용) */}
+      <Form onSubmit={handleSearch} className="nav-search nav-search--desktop">
         <InputGroup>
           <Form.Control
             placeholder="Search"
@@ -120,18 +97,17 @@ const Navigation = () => {
         >
           {loginUser ? "로그아웃" : "로그인"}
         </Nav.Link>
+
         <Nav.Link
           onClick={() => {
-            if (!loginUser) {
-              navigate("/Signup");
-            }
+            if (!loginUser) navigate("/Signup");
           }}
         >
-          {loginUser ? loginUser.id : "회원가입"}
+          {loginUser ? JSON.parse(loginUser).id : "회원가입"}
         </Nav.Link>
       </Nav>
     </Navbar>
   );
 };
 
-export default Navigation;
+export default DesNavigation;

@@ -14,7 +14,7 @@ function App() {
       <Navigation/>
       <Container className='flex-grow-1 mt-5'>
         <Row>
-          <Col md={9}>
+          <Col md={9} className=''>
             <br/>  
             <Routes>
               <Route path="/" element={<MainPage/>}></Route>

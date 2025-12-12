@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Footer = () => {
   return (
-    <footer className='d-flex align-items-center' style={{ background: '#21252b', padding: '20px 0', height:'150px',color:'white'}}>
+    <footer style={{ background: '#21252b', padding: '20px 0', marginTop: '170px' ,marginBottom:'0', height:'150px',color:'white'}}>
       <Container>
         <Row className="text-center">
           <Col>

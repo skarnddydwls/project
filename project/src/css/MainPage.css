@@ -42,8 +42,9 @@
 }
 
 .main-hero-image {
-  width: 100%;
-  height: auto;
+  width: 450px;
+  height: 300px;
+  
   display: block;
   object-fit: cover;
 }

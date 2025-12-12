@@ -6,11 +6,20 @@
     font-size: 24px;
     font-weight: bold;
 }
-.nav-search{
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30%;         /* 화면의 30% 정도 */
-  max-width: 500px;   /* 너무 커지지 않게 */
-  min-width: 220px;   /* 너무 작아지지 않게 */
+/* 기본: 태블릿/모바일에서는 검색 숨김 (혹시 렌더링돼도 안 보이게) */
+.nav-search {
+  display: none;
+}
+
+/* 데스크탑에서만 absolute 적용 + 표시 */
+@media (min-width: 1025px) {
+  .nav-search.nav-search--desktop {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    max-width: 500px;
+    min-width: 220px;
+  }
 }

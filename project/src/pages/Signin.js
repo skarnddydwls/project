@@ -55,7 +55,7 @@
           alert('로그인에 실패하였습니다'); 
         });
     };
-
+    
     return (
       <div style={style.container}>
         <h2 style={style.title}>로그인</h2>

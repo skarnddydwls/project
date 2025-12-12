@@ -1,64 +1,86 @@
-import '../../../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Nav, Navbar, Button, Form, InputGroup } from 'react-bootstrap';
-import { useNavigation } from "../hooks/useNavigation"
-import { useNavigate } from 'react-router-dom'
+import "../../../App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { useEffect } from "react";
 
-
-const Navigation = () => {
-
-
-  const navigate = useNavigate();
+const TabNavigation = (props) => {
   const {
-    setKeyword, keyword,
-    setLoginUser, loginUser,
-    handleSearch,
-  } = useNavigation();
-  
-  const categories = ["경제", "과학", "사회", "세계", "문화"];
-  const Categorylink = (name) => {
-    navigate(`/NewsCategory/${ categories[name] }`);
+    navigate,
+    categories,
+    containerRef,
+    buttonRefs,
+    visibleCount,
+    calculateVisible,
+    handleClickCategory,
+    loginUser,
+    setLoginUser,
+  } = props;
 
-  };
+  useEffect(() => {
+    calculateVisible();
+    requestAnimationFrame(calculateVisible);
 
-  return(
-    <Navbar bg="dark" data-bs-theme="dark" style={{height: '80px'}}>
-      <Nav className='me-auto' style={{marginLeft:"50px", alignItems:'center'}}>
-        <Nav.Link style={{fontSize:'30px'}} onClick={() => {navigate('/')}}>뉴스모아</Nav.Link>
-        <Nav.Link onClick={() => Categorylink}>경제</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/과학')}}>과학</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/사회')}}>사회</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/세계')}}>세계</Nav.Link>
-        <Nav.Link onClick={() => {navigate('/NewsCategory/문화')}}>문화</Nav.Link>
+    window.addEventListener("resize", calculateVisible);
+    return () => window.removeEventListener("resize", calculateVisible);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  const visible = categories.slice(0, visibleCount);
+  const overflow = categories.slice(visibleCount);
+
+  return (
+    <Navbar bg="dark" data-bs-theme="dark" style={{ height: "70px", padding: "0 12px" }}>
+      <Nav className="me-auto" ref={containerRef} style={{ display: "flex", alignItems: "center" }}>
+        <Nav.Link
+          style={{ fontSize: "20px", marginRight: "12px" }}
+          onClick={() => navigate("/")}
+        >
+          뉴스모아
+        </Nav.Link>
+
+        {categories.map((name, i) => (
+          <Nav.Link
+            key={name}
+            ref={(el) => (buttonRefs.current[i] = el)}
+            onClick={() => handleClickCategory(name)}
+            style={{
+              whiteSpace: "nowrap",
+              display: visible.includes(name) ? "block" : "none",
+            }}
+          >
+            {name}
+          </Nav.Link>
+        ))}
+
+        {overflow.length > 0 && (
+          <NavDropdown title="더보기">
+            {overflow.map((name) => (
+              <NavDropdown.Item key={name} onClick={() => handleClickCategory(name)}>
+                {name}
+              </NavDropdown.Item>
+            ))}
+          </NavDropdown>
+        )}
       </Nav>
-        <Form inline onSubmit={handleSearch} className="nav-search">
-          <InputGroup>
-            <Form.Control
-              placeholder="Search"
-              aria-label="Search"
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}/>
-            <Button type="submit" variant="secondary">🔍</Button>
-          </InputGroup>
-        </Form>
-      <Nav   className='ms-auto' style={{marginRight:'100px'}}>
-        
-        <Nav.Link onClick={()=> {
-          if(loginUser) {
-            sessionStorage.removeItem('loginUser');
-            setLoginUser(null);
-            navigate('/');
-          } else {
-            navigate('/Signin');
-          }
-          }}>{loginUser ? '로그아웃' : '로그인'}</Nav.Link>
-          <Nav.Link onClick={()=>{
-          if(!loginUser) {
-            navigate('/Signup')
-          }
-        }}>{loginUser ? loginUser.id : "회원가입"}</Nav.Link>
+
+      <Nav className="ms-auto">
+        <Nav.Link
+          onClick={() => {
+            if (loginUser) {
+              sessionStorage.removeItem("loginUser");
+              setLoginUser(null);
+              navigate("/");
+            } else {
+              navigate("/Signin");
+            }
+          }}
+        >
+          {loginUser ? "로그아웃" : "로그인"}
+        </Nav.Link>
       </Nav>
     </Navbar>
   );
 };
-export default Navigation;
+
+export default TabNavigation;
