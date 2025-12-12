@@ -37,7 +37,7 @@ const ScrapPage = () => {
     <>
         <Tabs id="fill-tab-example" activeKey={key} className="mb-3" onSelect={(k)=> setKey(k)} fill>
             <Tab eventKey="recent" title="최근 본 뉴스">
-                {recentList.map((news) => (
+                {recentList.slice(0,10).map((news) => (
                 <Row key={news.id} className="news-row">
                     <Col md={8} xs={3}>
                     <h3 onClick={()=> {navigate(`/${news.category}/News/${news.articleId}`)}} className="newsTitle">{news.title}</h3>
@@ -47,7 +47,7 @@ const ScrapPage = () => {
             </Tab>
 
             <Tab eventKey="scrap" title="스크랩 한 뉴스">
-                {scrapList.map((news) => (
+                {scrapList.slice(0,10).map((news) => (
                 <Row key={news.id} className="news-row">
                     <Col md={8} xs={3}>
                     <h3 onClick={()=> {navigate(`/${news.category}/News/${news.articleId}`)}} className="newsTitle">{news.title}</h3>
