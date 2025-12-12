@@ -6,6 +6,7 @@ import axios from 'axios';
 import fillScrap from '../img/fill-scrap.svg';
 import blankScrap from '../img/blank-scrap.svg';
 import TextDrag from "./textDrag/TextDrag.js";
+import Comment from './Comment.js';
 
 const News = () => {
   const {id} = useParams() ;
@@ -141,6 +142,8 @@ const News = () => {
           news={news}
         />
       </section>
+      <br/>
+      <Comment articleId={id}/>
   </div>
   )
 }
