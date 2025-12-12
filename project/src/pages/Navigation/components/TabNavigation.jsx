@@ -25,9 +25,17 @@ const TabNavigation = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   const visible = categories.slice(0, visibleCount);
   const overflow = categories.slice(visibleCount);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("loginUser");
+    sessionStorage.removeItem("recent_news");
+    sessionStorage.removeItem("recent_word_meanings");
+
+    setLoginUser(null);
+    navigate("/");
+  };
 
   return (
     <Navbar bg="dark" data-bs-theme="dark" style={{ height: "70px", padding: "0 12px" }}>
@@ -56,7 +64,10 @@ const TabNavigation = (props) => {
         {overflow.length > 0 && (
           <NavDropdown title="더보기">
             {overflow.map((name) => (
-              <NavDropdown.Item key={name} onClick={() => handleClickCategory(name)}>
+              <NavDropdown.Item
+                key={name}
+                onClick={() => handleClickCategory(name)}
+              >
                 {name}
               </NavDropdown.Item>
             ))}
@@ -68,9 +79,7 @@ const TabNavigation = (props) => {
         <Nav.Link
           onClick={() => {
             if (loginUser) {
-              sessionStorage.removeItem("loginUser");
-              setLoginUser(null);
-              navigate("/");
+              handleLogout();
             } else {
               navigate("/Signin");
             }

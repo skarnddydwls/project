@@ -2,9 +2,9 @@
 /* 최근 본 단어 뜻 전체 박스 */
 /* ----------------------------------------- */
 
-.recent-words-box {
+.recent-box {
   background: #ffffff;
-  border: 1px solid #ffffff;
+  border: 2px solid #dfdadaff;
   border-radius: 6px;
   padding: 14px 16px;
   margin-top: 30px;
@@ -39,6 +39,8 @@
 .recent-words-item {
   padding: 6px 0;
   border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
 }
 
 .recent-words-item:last-child {
@@ -61,12 +63,10 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  color: #2c6bed;
+  color: #000;
 }
 
-.recent-word-button:hover {
-  text-decoration: underline;
-}
+
 
 /* 삭제 버튼 (Scrap 스타일과 통일) */
 .scrap-delete-btn {
@@ -100,9 +100,10 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.12);
   border-radius: 8px;
   padding: 12px 14px;
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 14px;
   animation: fadeInBubble 0.15s ease-out;
+  position: static;      /* 또는 아예 position 속성 삭제 */
 }
 
 @keyframes fadeInBubble {

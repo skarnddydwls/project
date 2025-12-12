@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export const useNavigation = () => {
   const navigate = useNavigate();
+    
 
   // 카테고리 목록
   const categories = ["경제", "과학", "사회", "세계", "문화"];
@@ -46,8 +47,6 @@ export const useNavigation = () => {
 
   setVisibleCount(Math.max(1, count));
 };
-
-
   const [loginUser, setLoginUser] = useState(
     sessionStorage.getItem("loginUser")
   );

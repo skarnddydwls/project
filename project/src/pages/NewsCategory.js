@@ -30,7 +30,7 @@ const NewsCategory = () => {
 
                 {newsList.slice(0,limit).map((news) => (
                 <Row key={news.id} className="news-row">
-                    <Col md={6} xs={3}>
+                    <Col md={9} xs={3}>
                     <h3 onClick={()=> {navigate(`/${category}/News/${news.articleId}`)}} className="newsTitle">{news.title}</h3>
                     </Col>
                     <Col md={3} xs={4}>

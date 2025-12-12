@@ -54,11 +54,14 @@
         .catch(() => {
           alert('로그인에 실패하였습니다'); 
         });
-    };
+
+      
+      }
     
     return (
+  
       <div style={style.container}>
-        <h2 style={style.title}>로그인</h2>
+        <h1 style={style.title}>로그인</h1>
         <Form style={style.form} onSubmit={handleSubmit}>
           {/* ID */}
           <Form.Group as={Row} className="mb-3" controlId="id">
@@ -111,7 +114,7 @@
   const style = {
     container: {
       textAlign: 'center',
-      marginTop: '40px',
+      marginTop: '30px',
     },
     title: {
       textAlign: 'center',
@@ -120,6 +123,7 @@
     form: {
       margin: '0 auto',
       width: '80%',
+      marginTop: '100px',
     },
   };
   

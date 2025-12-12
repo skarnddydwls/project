@@ -11,6 +11,15 @@ const MobNavigation = (props) => {
     setLoginUser,
   } = props;
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("loginUser");
+    sessionStorage.removeItem("recent_news");
+    sessionStorage.removeItem("recent_word_meanings");
+
+    setLoginUser(null);
+    navigate("/");
+  };
+
   return (
     <Navbar bg="dark" data-bs-theme="dark" style={{ height: "60px", padding: "0 10px" }}>
       <Nav className="me-auto" style={{ display: "flex", alignItems: "center" }}>
@@ -20,7 +29,10 @@ const MobNavigation = (props) => {
 
         <NavDropdown title="카테고리">
           {categories.map((name) => (
-            <NavDropdown.Item key={name} onClick={() => handleClickCategory(name)}>
+            <NavDropdown.Item
+              key={name}
+              onClick={() => handleClickCategory(name)}
+            >
               {name}
             </NavDropdown.Item>
           ))}
@@ -31,9 +43,7 @@ const MobNavigation = (props) => {
         <Nav.Link
           onClick={() => {
             if (loginUser) {
-              sessionStorage.removeItem("loginUser");
-              setLoginUser(null);
-              navigate("/");
+              handleLogout();
             } else {
               navigate("/Signin");
             }
