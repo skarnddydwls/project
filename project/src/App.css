@@ -43,7 +43,7 @@
   transform: translateX(-50%);
   width: 30%;
   max-width: 500px;
-  min-width: 200px;
+  min-width: 170px;
 }
 
 /* 카테고리 줄바꿈 방지 */
@@ -62,3 +62,6 @@
   font-weight: 700;
   line-height: 1; /* 불필요한 위아래 여백 제거 */
 }
+/* @media  {} */
+
+.NAV-Menu{transform: translateX(20%);}

@@ -72,10 +72,10 @@ const DesNavigation = (props) => {
           {overflow.length > 0 && (
             <Dropdown align="end">
               <Dropdown.Toggle as={Nav.Link} className="nav-cat dropdown-toggle">
-                ...
+                
               </Dropdown.Toggle>
 
-              <Dropdown.Menu>
+              <Dropdown.Menu className="NAV-Menu">
                 {overflow.map((name) => (
                   <Dropdown.Item key={name} onClick={() => handleClickCategory(name)}>
                     {name}
