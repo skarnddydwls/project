@@ -9,7 +9,7 @@ const dummyList = [
   {
     articleId: 1,
     category: "경제",
-    title: "더미 뉴스 1: 환율이 크게 상승했습니다",
+    title: "더미 뉴스 1: 환율이 크게 상승했음",
     img: "https://mimgnews.pstatic.net/image/origin/214/2025/12/11/1467368.jpg?type=nf220_150",
   },
   {

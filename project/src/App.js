@@ -27,16 +27,9 @@ function App() {
           </Col>
 
           <Col md={3} className="news-recent-col" >
-          {/* 스크랩한 뉴스 */}
-          { loginUser ? (
-            <>
-              <RecentNews/>
-              
-              <Scrap/>
-              
-              <RecentWords/>
-            </>
-              ) : null }
+            <RecentNews/>
+            <Scrap/>
+            <RecentWords/>
           </Col>
         </Row>
       </Container>

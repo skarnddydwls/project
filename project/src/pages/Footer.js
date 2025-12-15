@@ -6,14 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Footer = () => {
   return (
-    <footer style={{ background: '#21252b', padding: '20px 0', marginTop: '170px' ,marginBottom:'0', height:'150px',color:'white'}}>
+    <footer style={{ background: '#21252b', padding: '20px 0', height:'150px',color:'white'}}>
       <Container>
         <Row className="text-center">
           <Col>
             <p style={{ margin: 0 }}>© 2025 뉴스모아. All rights reserved.</p>
           </Col>
         </Row>
-        
       </Container>
     </footer>
   );

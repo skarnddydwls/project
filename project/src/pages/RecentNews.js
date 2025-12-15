@@ -6,6 +6,7 @@ const RecentNews = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [recentNews, setRecentNews] = useState([]);
+    const [user, setUser] = useState(sessionStorage.getItem('loginUser'));
 
     const fetchRecentNews = useCallback(()=>{
         axios.get(`/api/mypage/recent`, { withCredentials: true })
@@ -48,6 +49,29 @@ const RecentNews = () => {
         navigate('/scrap', {state: {targetTab: 'recent'}})
     }
 
+    // 조건이 여러개일 경우는 함수로 이용하면 가독성이 좋아진다
+
+    const renderContent = () => {
+        // 조건1. 로그인
+        if(!user) {
+            return <p>로그인 후 이용가능합니다.</p>
+        }
+
+        if(recentNews.length === 0) {
+            return <p className="recent-empty">최근 본 뉴스가 없습니다.</p>
+        }
+
+        return(
+            <ul className="recent-list">
+            {recentNews.slice(0,5).map((item) => (
+                <li key={item.articleId} className="recent-item">
+                <span style={{cursor: 'pointer'}} className="recent-item-title" onClick={(e) => handleClickTitle(e, item)}>{item.title}</span>
+                </li>
+            ))}
+            </ul>
+        )
+    }
+
     return(  
         <div className="recent-box">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
@@ -59,17 +83,7 @@ const RecentNews = () => {
                     전체보기 &gt;
                 </span>
             </div>
-        {recentNews.length === 0 ? (
-            <p className="recent-empty">최근 본 뉴스가 없습니다.</p>
-        ) : (
-            <ul className="recent-list">
-            {recentNews.slice(0,5).map((item) => (
-                <li key={item.articleId} className="recent-item">
-                <span style={{cursor: 'pointer'}} className="recent-item-title" onClick={(e) => handleClickTitle(e, item)}>{item.title}</span>
-                </li>
-            ))}
-            </ul>
-        )}
+            {renderContent()}
         </div>
     )
 }

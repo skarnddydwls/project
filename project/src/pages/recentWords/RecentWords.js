@@ -5,6 +5,7 @@ import RecentWordItem from "./components/RecentWordItem";
 
 const RecentWords = () => {
   const { wordList, deleteByTimestamp } = useRecentWords();
+  const [user, setUser] = useState(sessionStorage.getItem('loginUser'));
 
   // 현재 열려 있는 단어의 timestamp
   const [activeTs, setActiveTs] = useState(null);
@@ -22,14 +23,17 @@ const RecentWords = () => {
     deleteByTimestamp(timestamp);
   };
 
-  return (
-    <div className="recent-box recent-words-box">
-      <h4 className="recent-title recent-words-title">최근 본 단어 뜻</h4>
+  const renderContent = () => {
+    if(!user) {
+      return <p>로그인 후 이용가능합니다.</p>
+    }
 
-      {wordList.length === 0 ? (
-        <p className="recent-words-empty">최근 본 단어가 없습니다.</p>
-      ) : (
-        <ul className="recent-list recent-words-list">
+    if(wordList.length === 0) {
+      return <p className="recent-words-empty">최근 본 단어가 없습니다.</p>
+    }
+
+    return(
+      <ul className="recent-list recent-words-list">
           {wordList.map((item) => (
             <RecentWordItem
               key={item.timestamp}
@@ -42,7 +46,14 @@ const RecentWords = () => {
             />
           ))}
         </ul>
-      )}
+    )
+  }
+
+  return (
+    <div className="recent-box recent-words-box">
+      <h4 className="recent-title recent-words-title">최근 본 단어</h4>
+
+        {renderContent()}
     </div>
   );
 };
