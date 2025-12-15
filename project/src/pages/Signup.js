@@ -66,7 +66,7 @@ const Signup = () => {
 
   return (
     <div style={style.container}>
-      <h2 style={style.title}>회원가입</h2>
+      <h1 style={style.title}>회원가입</h1>
       <Form style={style.form} onSubmit={handleSubmit}>
         {/* ID */}
         <Form.Group as={Row} className="mb-3">
@@ -125,18 +125,19 @@ const Signup = () => {
 };
 
 const style = {
-  container: {
-    textAlign: 'center',
-    marginTop: '40px',
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: '20px',
-  },
-  form: {
-    margin: '0 auto',
-    width: '80%',
-  },
-};
+    container: {
+      textAlign: 'center',
+      marginTop: '30px',
+    },
+    title: {
+      textAlign: 'center',
+      marginBottom: '20px',
+    },
+    form: {
+      margin: '0 auto',
+      width: '80%',
+      marginTop: '50px',
+    },
+  };
 
 export default Signup;
