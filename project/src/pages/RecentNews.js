@@ -8,7 +8,7 @@ const RecentNews = () => {
     const [recentNews, setRecentNews] = useState([]);
 
     const fetchRecentNews = useCallback(()=>{
-        axios.get(`/api/mypage/recent`, { withCredentials: true }) // { withCredentials: true }
+        axios.get(`/api/mypage/recent`, { withCredentials: true })
                 .then(result => {
                     if(result){
                         setRecentNews(result.data);
@@ -23,6 +23,7 @@ const RecentNews = () => {
     }, [])
     
     useEffect(() => {
+        fetchRecentNews();
         const handleView = () => {
             fetchRecentNews();
         };

@@ -1,123 +1,202 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Button, Card } from "react-bootstrap";
+import { useCallback, useEffect, useState } from 'react'; // 1. useState 필수!
+import { Button, Card, Form } from 'react-bootstrap';
+import axios from 'axios';
 
-const Comment = () => {
-    // const [comments, setComments] = useState([]);
-    // const [user, setUser] = useState();
+function Comment({ articleId }) {
+    // ====== State 관리 ======
+    const [replyId, setReplyId] = useState(null); // 현재 답글 달고 있는 댓글 ID
+    const [replyContent, setReplyContent] = useState(""); // 답글 내용
+    const [mainContent, setMainContent] = useState(""); // 메인 댓글 내용이 필요한 가?
+    const [comments, setComments] = useState([]);
+    const user = sessionStorage.getItem("loginUser");
 
-    const user = {
-        id: 'newsLover', 
-        name: '뉴스러버'
-        };
+    // ====== 댓글 불러오기 ======
+    const fetchComment = useCallback(async () => {
+        try {
+            const result = await axios.get('');
+            setComments(); // 댓글 넣기
+        } catch (error) {
+            console.log(`오류: ${error}`);
+        }
+    }, [articleId]);
 
-        // 2. 댓글 목록 데이터
-    const comments = [
-        {
-            id: 1,
-            author: 'economyKing', // 남이 쓴 댓글
-            date: '2025-05-12 14:30',
-            content: '이번 경제 정책은 정말 기대가 됩니다. 앞으로의 행보가 주목되네요.',
-        },
-        {
-            id: 2,
-            author: 'newsLover',   // ⭐ 내가 쓴 댓글 (삭제 버튼 보여야 함!)
-            date: '2025-05-12 15:00',
-            content: '좋은 기사 잘 보고 갑니다! 스크랩 해둘게요.',
-        },
-        {
-            id: 3,
-            author: 'dailyLife',   // 남이 쓴 댓글
-            date: '2025-05-12 16:10',
-            content: '내용이 조금 어렵긴 하지만 유익하네요. 2편도 기대하겠습니다.',
-        },
-        {
-            id: 4,
-            author: 'newsLover',   // ⭐ 내가 쓴 댓글 (삭제 버튼 보여야 함!)
-            date: '2025-05-12 17:45',
-            content: '혹시 이 부분에 대한 출처를 알 수 있을까요?',
-        },
+    useEffect(()=>{
+        fetchComment();
+    }, [fetchComment]);
+
+    // ====== 댓글/답글 입력하기 ======
+    const handleSend = async (parentId = null) => {
+        if (!user) {
+            alert("로그인이 필요한 서비스입니다.");
+            return;
+        }
+
+        const contentToSend = parentId ? replyContent : mainContent;
+        if(!contentToSend.trim()){
+            alert("내용을 입력해주세요.");
+            return;
+        }
+
+        try {
+            await axios.post('/api/comment', {
+
+            }, {withCredential: true}); // 쿠기 포함
+
+            alert("댓글이 등록되었습니다.");
+            if (parentId) {
+                setReplyId(null);
+                setReplyContent("");
+            } else {
+                setMainContent("");
+            }
+            fetchComment(); 
+        }
+        catch(error) {
+
+        }
+    }
+
+    // ====== 댓글 삭제하기 ======
+    const handleDelete = async (commentId) => {
+        if(!window.confirm("정말 삭제하시겠습니까?")) return;
+
+        try {
+            await axios.delete(``, {withCredentials: true})
+            alert("삭제되었습니다.");
+            fetchComment(); // 삭제 후 목록 갱신
+        } catch (error) {
+            alert("삭제에 실패했습니다.");
+        }
+    }
+
+    // 답글 창 토글 함수
+    const toggleReply = (id) => {
+        if (replyId === id) {
+            setReplyId(null); // 이미 열려있으면 닫기
+        } else {
+            setReplyId(id);   // 해당 댓글의 답글창 열기
+            setReplyContent(""); // 내용 초기화
+        }
+    };
+
+    comments = [
+        { id: 1, author: 'user1', content: '첫 번째 댓글입니다.', date: '...', parentId: null },
+        { id: 2, author: 'user2', content: '첫 번째 댓글의 답글입니다!', date: '...', parentId: 1 }, // 답글
+        { id: 3, author: 'user3', content: '독자적인 댓글입니다.', date: '...', parentId: null },
     ];
 
-    const getComment = async () => {
-        const result = await axios.get('');
-    }
-
-    useEffect(() => {
-        
-    },[])
-
-    const handleDelete = (id) => {
-
-    }
-
-    return(
+    return (
         <div>
-            <Card className="p-3 mb-3"> {/* p-3: 안쪽 여백, mb-3: 아래쪽 여백 */}
+            <Card className="p-3 mb-3">
+                {/* 메인 댓글 입력창 */}
                 <div className="d-flex align-items-center">
                     <textarea 
                         style={{ width: '750px', height: '100px', resize: 'none' }} 
-                        // resize: 'none'은 사용자가 크기 조절 못하게 막음
-                        className="form-control" // 부트스트랩 스타일 적용 (선택사항)
+                        className="form-control"
                     ></textarea>
-                    
                     <Button 
                         variant="dark" 
-                        style={{ marginLeft: '20px', width: '100px', height: '100px' }} // 높이를 textarea랑 맞추면 예쁨
+                        style={{ marginLeft: '20px', width: '100px', height: '100px' }}
                     >
                         등록
                     </Button>
                 </div>
                 <hr/>
+                
                 <div className="mt-4">
-                {comments.map((comment) => (
-                    <div key={comment.id} className="d-flex mb-3">
-                    
-                    {/* 1. 프로필 (작게) */}
-                    <div className="flex-shrink-0 me-2">
-                        <div 
-                        className="bg-dark text-white rounded-circle d-flex justify-content-center align-items-center" 
-                        style={{ width: '40px', height: '40px' }}
-                        >
-                        {comment.author.charAt(0)}
-                        </div>
-                    </div>
+                {comments?.map((comment) => (
+                    <div key={comment.id}>
+                        {/* ====================================================
+                           3. 댓글 아이템 (parentId가 있으면 오른쪽으로 밀기) 
+                           ==================================================== */}
+                        <div className={`d-flex mb-3 ${comment.parentId ? 'ms-5' : ''}`}>
+                            
+                            {/* 답글이면 화살표 아이콘 보여주기 (선택사항) */}
+                            {comment.parentId && <div className="me-2 text-muted">↳</div>}
 
-                    {/* 2. 말풍선 본문 (회색 배경) */}
-                    <div 
-                        className="bg-light p-3 rounded" 
-                        style={{ width: '100%', position: 'relative' }}
-                    >
-                        {/* 이름과 날짜 */}
-                        <div className="d-flex justify-content-between mb-2">
-                            <span className="fw-bold">{comment.author}</span>
-                            <small className="text-muted">{comment.date}</small>
-                        </div>
-                        
-                        {/* 내용 */}
-                        <div className="text-break">
-                            {comment.content}
-                        </div>
-
-                        {/* 삭제 버튼 (우측 하단에 배치) */}
-                        {user && user.id === comment.author && (
-                            <div className="text-end mt-2">
-                                <span 
-                                    className="text-secondary" 
-                                    style={{ cursor:'pointer', fontSize:'0.8rem' }}
-                                    onClick={() => handleDelete(comment.id)}
+                            {/* 프로필 이미지 */}
+                            <div className="flex-shrink-0 me-2">
+                                <div 
+                                    className="bg-dark text-white rounded-circle d-flex justify-content-center align-items-center" 
+                                    style={{ width: '40px', height: '40px' }}
                                 >
-                                    삭제 ✖
-                                </span>
+                                    {comment.author.charAt(0)}
+                                </div>
+                            </div>
+
+                            {/* 말풍선 본문 */}
+                            <div className="bg-light p-3 rounded" style={{ width: '100%', position: 'relative' }}>
+                                <div className="d-flex justify-content-between mb-2">
+                                    <div>
+                                        <span className="fw-bold me-2">{comment.author}</span>
+                                        <small className="text-muted">{comment.date}</small>
+                                    </div>
+                                </div>
+                                
+                                <div className="text-break">{comment.content}</div>
+
+                                {/* 하단 버튼 영역 (답글 / 삭제) */}
+                                <div className="text-end mt-2">
+                                    {/* 4. 답글 달기 버튼 추가 */}
+                                    <span 
+                                        className="text-primary me-3" 
+                                        style={{ cursor:'pointer', fontSize:'0.8rem', fontWeight:'bold' }}
+                                        onClick={() => toggleReply(comment.id)}
+                                    >
+                                        답글 달기
+                                    </span>
+
+                                    {/* 삭제 버튼 (본인일 때만) */}
+                                    {user && user.id === comment.author && (
+                                        <span 
+                                            className="text-secondary" 
+                                            style={{ cursor:'pointer', fontSize:'0.8rem' }}
+                                            onClick={() => handleDelete(comment.id)}
+                                        >
+                                            삭제 ✖
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ====================================================
+                           5. 답글 입력창 (조건부 렌더링)
+                           replyId가 현재 댓글 ID와 같을 때만 나타남
+                           ==================================================== */}
+                        {replyId === comment.id && (
+                            <div className="d-flex mb-4 ms-5"> {/* 답글 입력창도 들여쓰기 */}
+                                <div className="flex-grow-1">
+                                    <Form.Control 
+                                        as="textarea" 
+                                        rows={2} 
+                                        placeholder={`@${comment.author}님에게 답글 작성...`}
+                                        value={replyContent}
+                                        onChange={(e) => setReplyContent(e.target.value)}
+                                        style={{ resize: 'none' }}
+                                    />
+                                    <div className="d-flex justify-content-end mt-2">
+                                        <Button 
+                                            variant="outline-secondary" 
+                                            size="sm" 
+                                            className="me-2"
+                                            onClick={() => setReplyId(null)} // 취소 버튼
+                                        >
+                                            취소
+                                        </Button>
+                                        <Button variant="dark" size="sm" onClick={() => handleSend(comment.id)}>
+                                            답글 등록
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
                         )}
-                    </div>
                     </div>
                 ))}
                 </div>
             </Card>
         </div>
-    )
+    );
 }
 
 export default Comment;

@@ -15,7 +15,7 @@ const dummyList = [
   {
     articleId: 2,
     category: "사회",
-    title: "사회적 이슈가 커지고 있습니다",
+    title: "더미 뉴스 2: 사회적 이슈가 커짐",
     img: "https://mimgnews.pstatic.net/image/origin/079/2025/12/11/4095095.jpg?type=nf220_150",
   },
   {
@@ -114,7 +114,8 @@ export default function MainPage() {
 
       {/* 오른쪽: 나머지 리스트 */}
       <Col md={6} className="main-right-col">
-      <br/><br/><br/>
+        <h2><b>오늘의 조회수 Top 5</b></h2>
+        <br/><br/>
         {recommendList.map((news) => (
           <div
             key={news.articleId}
