@@ -25,7 +25,7 @@ const RecentWords = () => {
 
   const renderContent = () => {
     if(!user) {
-      return <p>로그인 후 이용가능합니다.</p>
+      return <p style={{color: 'gray'}}>로그인 후 이용가능합니다.</p>
     }
 
     if(wordList.length === 0) {

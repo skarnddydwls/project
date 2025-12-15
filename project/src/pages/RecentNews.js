@@ -54,7 +54,7 @@ const RecentNews = () => {
     const renderContent = () => {
         // 조건1. 로그인
         if(!user) {
-            return <p>로그인 후 이용가능합니다.</p>
+            return <p style={{color: 'gray'}}>로그인 후 이용가능합니다.</p>
         }
 
         if(recentNews.length === 0) {

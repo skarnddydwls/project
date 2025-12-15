@@ -67,7 +67,7 @@ const Scrap = () => {
 
   const renderContent = () =>{
     if(!storedUser) {
-       return <p>로그인 후 이용가능합니다.</p>
+       return <p style={{color: 'gray'}}>로그인 후 이용가능합니다.</p>
     }
 
     if(scrapList.length === 0) {
