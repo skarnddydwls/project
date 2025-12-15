@@ -1,18 +1,25 @@
 import "../../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Nav, Navbar, Button, Form, InputGroup, NavDropdown } from "react-bootstrap";
+import { Nav, Navbar, Button, Form, InputGroup, Dropdown } from "react-bootstrap";
 
 const DesNavigation = (props) => {
   const {
     navigate,
     categories,
-    containerRef,
+
+    navbarRef,
+    brandRef,
+    rightRef,
+    searchRef,
+
     measureBtnRefs,
     measureMoreRef,
     visibleCount,
+
     handleClickCategory,
     loginUser,
     handleLogout,
+
     keyword,
     setKeyword,
     handleSearch,
@@ -22,61 +29,89 @@ const DesNavigation = (props) => {
   const overflow = categories.slice(visibleCount);
 
   return (
-    <>
-      {/* 폭 측정 전용 DOM: 화면 밖에서 항상 5개 + 더보기 렌더 */}
-      <div className="nav-measure">
+    <div className="nav-root">
+      {/* 오프스크린 측정 DOM */}
+      <div className="nav-measure" aria-hidden="true">
         {categories.map((name, i) => (
-          <span key={name} ref={(el) => (measureBtnRefs.current[i] = el)} className="nav-measure-item">
+          <span
+            key={name}
+            ref={(el) => (measureBtnRefs.current[i] = el)}
+            className="nav-cat nav-measure-link"
+          >
             {name}
           </span>
         ))}
-        <span ref={measureMoreRef} className="nav-measure-item">더보기</span>
+
+        {/* 실제 토글과 최대한 동일한 스타일로 측정 */}
+        <button
+          ref={measureMoreRef}
+          type="button"
+          className="nav-cat nav-measure-link dropdown-toggle"
+        >
+          ...
+        </button>
       </div>
 
-      <Navbar bg="dark" data-bs-theme="dark" style={{ height: "80px", padding: "0 20px" }}>
-        <Nav className="me-auto" ref={containerRef} style={{ display: "flex", alignItems: "center" }}>
-          <Nav.Link style={{ fontSize: "24px", marginRight: "20px" }} onClick={() => navigate("/")}>
-            뉴스모아
+      <Navbar ref={navbarRef} bg="dark" data-bs-theme="dark" className="nav-bar">
+        {/* 좌측 */}
+        <Nav className="me-auto nav-left">
+          <Nav.Link ref={brandRef} className="nav-brand" onClick={() => navigate("/")}>
+            <b>뉴스모아</b>
           </Nav.Link>
 
           {visible.map((name) => (
-            <Nav.Link key={name} onClick={() => handleClickCategory(name)} style={{ whiteSpace: "nowrap" }}>
+            <Nav.Link
+              key={name}
+              onClick={() => handleClickCategory(name)}
+              className="nav-cat"
+            >
               {name}
             </Nav.Link>
           ))}
 
           {overflow.length > 0 && (
-            <NavDropdown title="더보기">
-              {overflow.map((name) => (
-                <NavDropdown.Item key={name} onClick={() => handleClickCategory(name)}>
-                  {name}
-                </NavDropdown.Item>
-              ))}
-            </NavDropdown>
+            <Dropdown align="end">
+              <Dropdown.Toggle as={Nav.Link} className="nav-cat dropdown-toggle">
+                ...
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {overflow.map((name) => (
+                  <Dropdown.Item key={name} onClick={() => handleClickCategory(name)}>
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
           )}
         </Nav>
 
-        <Form onSubmit={handleSearch} className="nav-search nav-search--desktop">
+        {/* 검색(absolute 유지) */}
+        <Form onSubmit={handleSearch} className="nav-search nav-search--desktop" ref={searchRef}>
           <InputGroup>
             <Form.Control
               placeholder="Search"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
-            <Button type="submit" variant="secondary">🔍</Button>
+            <Button type="submit" variant="secondary">
+              🔍
+            </Button>
           </InputGroup>
         </Form>
 
-        <Nav className="ms-auto" style={{ marginRight: "100px" }}>
+        {/* 우측 */}
+        <Nav ref={rightRef} className="ms-auto nav-right">
           <Nav.Link onClick={() => (loginUser ? handleLogout() : navigate("/Signin"))}>
             {loginUser ? "로그아웃" : "로그인"}
           </Nav.Link>
-          <Nav.Link onClick={() => (!loginUser ? navigate("/Signup") : null)}>
+
+          <Nav.Link onClick={() => (!loginUser ? navigate("/Signup") : navigate("/Mypage"))}>
             {loginUser ? "마이페이지" : "회원가입"}
           </Nav.Link>
         </Nav>
       </Navbar>
-    </>
+    </div>
   );
 };
 

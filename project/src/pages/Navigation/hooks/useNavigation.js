@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -6,13 +6,15 @@ const CATEGORIES = ["경제", "과학", "사회", "세계", "문화"];
 
 export const useNavigation = () => {
   const navigate = useNavigate();
+  const categories = CATEGORIES;
 
-  const categories = useMemo(() => CATEGORIES, []);
+  // 레이아웃 실측용 refs
+  const navbarRef = useRef(null);
+  const brandRef = useRef(null);
+  const rightRef = useRef(null);
+  const searchRef = useRef(null);
 
-  // 실제로 "보이는 영역" 폭을 재는 컨테이너
-  const containerRef = useRef(null);
-
-  // 폭 측정 전용(항상 5개 렌더) 버튼 refs
+  // 오프스크린 측정용 refs (항상 렌더)
   const measureBtnRefs = useRef([]);
   const measureMoreRef = useRef(null);
 
@@ -25,7 +27,7 @@ export const useNavigation = () => {
     try {
       await axios.post("/api/logout", {}, { withCredentials: true });
     } catch (e) {
-      console.error(e);
+      console.error("logout api error", e);
     } finally {
       sessionStorage.removeItem("loginUser");
       sessionStorage.removeItem("recent_news");
@@ -52,53 +54,72 @@ export const useNavigation = () => {
     [navigate]
   );
 
-  const calculateVisible = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
+const calculateVisible = useCallback(() => {
+  const brand = brandRef.current;
+  const right = rightRef.current;
+  const search = searchRef.current;
 
-    const containerWidth = container.getBoundingClientRect().width;
+  if (!brand || !right || !search) return;
 
-    const btnWidths = categories.map((_, i) => {
-      const el = measureBtnRefs.current[i];
-      if (!el) return 0;
-      return el.getBoundingClientRect().width;
-    });
+  const br = brand.getBoundingClientRect();
+  const rt = right.getBoundingClientRect();
+  const se = search.getBoundingClientRect();
 
-    const moreWidth = measureMoreRef.current
-      ? measureMoreRef.current.getBoundingClientRect().width
-      : 0;
+  // 카테고리가 실제로 시작하는 위치
+  const startX = br.right;
 
-    // 경계 흔들림 완충
-    const EPS = 2;
+  // 카테고리가 늘어날 수 있는 최대 오른쪽 한계(우측 메뉴 시작 전까지만)
+  const endX = rt.left;
 
-    // 5 -> 4 -> 3 ... 순으로 내려가며 "들어가는 최대치" 찾기
-    let best = 1;
+  // 검색창이 “막는” 시작점(왼쪽 경계)
+  const blockX = se.left;
 
-    for (let k = categories.length; k >= 1; k--) {
-      const sum = btnWidths.slice(0, k).reduce((a, b) => a + b, 0);
-      const needMore = k < categories.length ? moreWidth : 0;
+  // 카테고리는 startX부터 연속으로만 쌓이니까
+  // 실제로 쓸 수 있는 폭은 "startX ~ min(endX, blockX)" 뿐임
+  const hardStop = Math.min(endX, blockX);
 
-      if (sum + needMore <= containerWidth - EPS) {
-        best = k;
-        break;
-      }
+  const GAP = 0;   // 약간의 여유(패딩/캐럿/반올림)
+  const EPS = 0;   // 경계에서 가려지는 현상 방지용(2보다 크게)
+
+  const available = Math.max(0, hardStop - startX - GAP);
+
+  // 버튼 폭 측정(오프스크린)
+  const btnWidths = categories.map((_, i) => {
+    const el = measureBtnRefs.current[i];
+    return el ? el.getBoundingClientRect().width : 0;
+  });
+
+  const moreW = measureMoreRef.current
+    ? measureMoreRef.current.getBoundingClientRect().width
+    : 0;
+
+  let best = 0;
+  for (let k = categories.length; k >= 0; k--) {
+    const sum = btnWidths.slice(0, k).reduce((a, b) => a + b, 0);
+    const needMore = k < categories.length ? moreW : 0;
+    const need = sum + needMore;
+
+    if (need <= available - EPS) {
+      best = k;
+      break;
     }
+  }
 
-    setVisibleCount(best);
-  }, [categories]);
+  setVisibleCount(best);
+}, [categories]);
+
+
 
   useEffect(() => {
-    // 초기 렌더 직후 폰트/부트스트랩 적용 타이밍 때문에 2프레임 보정
     calculateVisible();
     const r1 = requestAnimationFrame(calculateVisible);
     const r2 = requestAnimationFrame(calculateVisible);
 
-    const el = containerRef.current;
     const ro = new ResizeObserver(() => {
       requestAnimationFrame(calculateVisible);
     });
 
-    if (el) ro.observe(el);
+    if (navbarRef.current) ro.observe(navbarRef.current);
     window.addEventListener("resize", calculateVisible);
 
     return () => {
@@ -113,7 +134,11 @@ export const useNavigation = () => {
     navigate,
     categories,
 
-    containerRef,
+    navbarRef,
+    brandRef,
+    rightRef,
+    searchRef,
+
     measureBtnRefs,
     measureMoreRef,
     visibleCount,

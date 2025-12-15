@@ -92,7 +92,7 @@ export default function MainPage() {
   return (
     <Row className="main-container">
       {/* 왼쪽: 메인 큰 카드 */}
-      <Col md={6} className="main-hero-col">
+      <Col className="main-hero-col">
         <div
           key={current.articleId} // 키 바뀔 때마다 페이드 애니메이션 재생
           className="main-hero-card fade-in"
@@ -113,8 +113,8 @@ export default function MainPage() {
       </Col>
 
       {/* 오른쪽: 나머지 리스트 */}
-      <Col md={6} className="main-right-col">
-        <h2><b>오늘의 조회수 Top 5</b></h2>
+      <Col className="main-right-col">
+        <h2><b>조회수 Top 5</b></h2>
         <br/><br/>
         {recommendList.map((news) => (
           <div

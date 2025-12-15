@@ -1,109 +1,156 @@
-.text-drag-wrapper {
-  position: relative;
+/* =========================
+   MainPage Layout
+   - 목표: 화면이 줄면 오른쪽 컬럼이 아래로 내려가고
+   - 이미지/리스트가 서로 겹치지 않게
+   ========================= */
+
+/* 메인 전체 컨테이너 */
+.main-container {
+  margin-top: 30px;
 }
 
-.text-drag-content {
-  white-space: pre-wrap;
-  line-height: 1.6;
-  cursor: text;
-}
+/* --------------------
+   왼쪽 메인 카드 영역
+   -------------------- */
 
-/* 작은 🔍 버튼 */
-.text-drag-start {
-  position: absolute;
-  z-index: 21;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: none;
-  background-color: #3a7afe;
-  color: #fff;
-  font-size: 16px;
+/* Col 자체는 bootstrap grid에 맡기고, 안에서만 정렬 */
+.main-hero-col {
+  padding-right: 24px;
+
+  /* 카드가 세로로 늘어나도록 */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+}
+
+/* 카드 전체 */
+.main-hero-card {
+  width: 100%;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  transition: transform 0.12s ease, box-shadow 0.12s ease,
-    background-color 0.12s ease;
-    
-  transform: translateY(-25px);
-  
 }
 
-.text-drag-start:hover {
-  background-color: #2f6ae0;
-  transform: translateY(-24px);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+/* 페이드 애니메이션 */
+.fade-in {
+  animation: mainHeroFadeIn 0.4s ease-in-out;
 }
 
-.text-drag-start:active {
-  background-color: #2558b8;
-  transform: translateY(-25px);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+@keyframes mainHeroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* 320px 말풍선 */
-.text-drag-bubble-floating {
-  position: absolute;
-  z-index: 20;
-  width: 320px;
-
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px 12px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  font-size: 13px;
-
-  transform: translate(-50%, -100%) translateY(-8px);
+/* 이미지 래퍼
+   - 고정 450px을 제거하고 반응형으로 바꾼다
+   - 종횡비는 height + object-fit으로 유지 */
+.main-hero-image-wrapper {
+  width: 100%;          /* ✅ Col 폭에 맞춰 줄어듦 */
+  max-width: 100%;
+  height: 300px;        /* 높이는 유지(원하면 clamp로 변경 가능) */
+  overflow: hidden;
+  margin-bottom: 12px;
+  border-radius: 8px;   /* 선택: 카드 느낌 */
 }
 
-/* 상태 텍스트들 */
-.text-drag-loading {
-  font-size: 13px;
-  color: #666;
+/* 이미지
+   - width를 100%로 바꾸면 화면 줄 때 절대 겹치지 않음 */
+.main-hero-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
-.text-drag-result {
-  font-size: 13px;
-  color: #111;
+/* 왼쪽 타이틀 */
+.main-hero-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 4px 0 0;
+
+  /* 긴 제목이 있을 때 줄바꿈 자연스럽게 */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
-.text-drag-error {
-  font-size: 13px;
-  color: #e54848;
+/* --------------------
+   오른쪽 리스트 영역
+   -------------------- */
+
+.main-right-col {
+  padding-left: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  /* 오른쪽도 내부가 줄어들 수 있게 */
+  min-width: 0;
 }
 
-.drag-selected {
-  background: #a8a8a8;
-}
-.recant-word-delete:hover {
-  opacity: 1;
-  transform: scale(1.1);
-  transition: 0.1s;
+/* 리스트 항목 */
+.main-small-item {
+  cursor: pointer;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
 }
 
-.link-out{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.main-small-item:last-child {
+  border-bottom: none;
+}
 
-  padding: 6px 14px;          /* 버튼 크기 */
-  border-radius: 999px;       /* 완전 동그란 느낌 (pill) */
-  border: 2px solid #000;     /* 검은색 줄 */
-  background-color: #fff;     /* 안쪽 흰색 */
-  color: #000;                /* 글자색 */
-
-  font-size: 14px;
+/* 리스트 제목 */
+.main-small-title {
+  font-size: 16px;
   font-weight: 500;
-  cursor: pointer;
+  line-height: 1.4;
+  margin: 0;
 
-  transition: background-color 0.15s ease, 
-              color 0.15s ease,
-              transform 0.1s ease;
+  /* 줄어들 때 겹치지 않게 줄바꿈 허용 */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
-.link-out:active {
-  transform: translateY(1px);
+/* --------------------
+   반응형 처리
+   - bootstrap 기준으로 md(<768)에서 이미 아래로 내려가지만
+   - 너는 md=6를 쓰고 있으니,
+     991.98px(bootstrap lg 경계)에서도 여백/크기만 조정
+   -------------------- */
+
+@media (max-width: 991.98px) {
+  /* 왼쪽 Col */
+  .main-hero-col {
+    padding-right: 0;
+    margin-bottom: 24px; /* 아래로 내려갔을 때 간격 */
+  }
+
+  /* 오른쪽 Col */
+  .main-right-col {
+    padding-left: 0;
+  }
+
+  /* 이미지 높이도 살짝 줄이면 모바일/태블릿에서 덜 답답함 */
+  .main-hero-image-wrapper {
+    height: 260px;
+  }
+
+  .main-hero-title {
+    font-size: 20px;
+  }
+
+  .main-small-title {
+    font-size: 14px;
+  }
+}
+
+/* 더 작은 화면(모바일)에서는 이미지 높이를 더 줄이기(선택) */
+@media (max-width: 575.98px) {
+  .main-hero-image-wrapper {
+    height: 220px;
+  }
 }

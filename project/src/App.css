@@ -1,30 +1,64 @@
-.nav-search {
-  display: none;
+.nav-root {
+  position: relative;
 }
 
-@media (min-width: 1025px) {
-  .nav-search.nav-search--desktop {
-    display: block;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30%;
-    max-width: 500px;
-    min-width: 220px;
-  }
-}
-
-/* 측정용 DOM: 화면 밖, 레이아웃 영향 0 */
+/* 측정 DOM: 절대 화면에 안 보이게 + 레이아웃 영향 0 */
 .nav-measure {
-  position: absolute;
-  left: -9999px;
-  top: -9999px;
+  position: fixed;
+  top: -10000px;
+  left: -10000px;
   visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: -1;
+}
+
+/* Nav.Link 느낌 맞추기 */
+.nav-measure-link {
+  display: inline-block;
+  padding: 8px 12px;   /* 실제 Nav.Link와 동일하게 */
+  font-size: 16px;     /* 동일하게 */
+  background: transparent;
+  border: 0;
+  color: inherit;
+}
+
+/* Nav.Link 기본 느낌과 최대한 비슷하게 */
+.nav-measure-item {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.nav-bar {
+  height: 80px;
+  padding: 0 20px;
+}
+
+/* 검색창: 너가 원한 그대로 absolute 가운데 고정 */
+.nav-search.nav-search--desktop {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  max-width: 500px;
+  min-width: 200px;
+}
+
+/* 카테고리 줄바꿈 방지 */
+.nav-left{
+  display: flex;
+  align-items: center; /* ⭐ 핵심 */
+
+}
+
+.nav-cat {
   white-space: nowrap;
 }
 
-.nav-measure-item {
-  display: inline-block;
-  padding: 8px 12px; /* Nav.Link랑 비슷하게 맞춰야 정확 */
-  font-size: 16px;   /* 필요하면 실제 네비 폰트랑 맞춰 */
+.nav-link.nav-brand {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1; /* 불필요한 위아래 여백 제거 */
 }
