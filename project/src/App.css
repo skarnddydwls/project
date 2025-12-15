@@ -1,17 +1,7 @@
-.App {
-  text-align: center;
-}
-
-.newstitle{
-    font-size: 24px;
-    font-weight: bold;
-}
-/* 기본: 태블릿/모바일에서는 검색 숨김 (혹시 렌더링돼도 안 보이게) */
 .nav-search {
   display: none;
 }
 
-/* 데스크탑에서만 absolute 적용 + 표시 */
 @media (min-width: 1025px) {
   .nav-search.nav-search--desktop {
     display: block;
@@ -24,6 +14,17 @@
   }
 }
 
-.left_box{
-  background-color:"#e6f4ff";
+/* 측정용 DOM: 화면 밖, 레이아웃 영향 0 */
+.nav-measure {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.nav-measure-item {
+  display: inline-block;
+  padding: 8px 12px; /* Nav.Link랑 비슷하게 맞춰야 정확 */
+  font-size: 16px;   /* 필요하면 실제 네비 폰트랑 맞춰 */
 }

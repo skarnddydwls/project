@@ -123,7 +123,7 @@
     form: {
       margin: '0 auto',
       width: '80%',
-      marginTop: '100px',
+      marginTop: '65px',
     },
   };
   

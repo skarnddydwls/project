@@ -3,22 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 const MobNavigation = (props) => {
-  const {
-    navigate,
-    categories,
-    handleClickCategory,
-    loginUser,
-    setLoginUser,
-  } = props;
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("loginUser");
-    sessionStorage.removeItem("recent_news");
-    sessionStorage.removeItem("recent_word_meanings");
-
-    setLoginUser(null);
-    navigate("/");
-  };
+  const { navigate, categories, handleClickCategory, loginUser, handleLogout } = props;
 
   return (
     <Navbar bg="dark" data-bs-theme="dark" style={{ height: "60px", padding: "0 10px" }}>
@@ -29,10 +14,7 @@ const MobNavigation = (props) => {
 
         <NavDropdown title="카테고리">
           {categories.map((name) => (
-            <NavDropdown.Item
-              key={name}
-              onClick={() => handleClickCategory(name)}
-            >
+            <NavDropdown.Item key={name} onClick={() => handleClickCategory(name)}>
               {name}
             </NavDropdown.Item>
           ))}
@@ -40,15 +22,7 @@ const MobNavigation = (props) => {
       </Nav>
 
       <Nav className="ms-auto">
-        <Nav.Link
-          onClick={() => {
-            if (loginUser) {
-              handleLogout();
-            } else {
-              navigate("/Signin");
-            }
-          }}
-        >
+        <Nav.Link onClick={() => (loginUser ? handleLogout() : navigate("/Signin"))}>
           {loginUser ? "로그아웃" : "로그인"}
         </Nav.Link>
       </Nav>
