@@ -52,7 +52,7 @@ function Comment({ articleId }) {
             fetchComment(); 
         }
         catch(error) {
-
+            console.log("axios error(.post /api/comment)");
         }
     }
 
