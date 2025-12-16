@@ -2,7 +2,7 @@
 /* 최근 본 단어 뜻 전체 박스 */
 /* ----------------------------------------- */
 
-.recent-box {
+.recent-words-box {
   background: #ffffff;
   border: 2px solid #dfdadaff;
   border-radius: 6px;
@@ -51,7 +51,7 @@
 .recent-word-header-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: left;
 }
 
 /* 단어 버튼 */
@@ -69,7 +69,7 @@
 
 
 /* 삭제 버튼 (Scrap 스타일과 통일) */
-.scrap-delete-btn {
+.word-delete-btn {
   background: none;
   border: none;
   padding: 0;
@@ -79,14 +79,14 @@
   align-items: center;
 }
 
-.scrap-delete-icon {
+.word-delete-icon {
   width: 18px;
   height: 18px;
   display: block;
   transition: transform 0.1s ease-in-out;
 }
 
-.scrap-delete-btn:hover .scrap-delete-icon {
+.word-delete-btn:hover .word-delete-icon {
   transform: scale(1.1);
 }
 

@@ -44,6 +44,61 @@
   }
 }
 
+/* 🔥 단어 요약 말풍선 */
+.text-drag-bubble-floating {
+  position: absolute;
+  z-index: 20;
+  width: 320px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+
+  transform: translate(-50%, -100%) translateY(-8px);
+}
+
+/* 🔍 돋보기 버튼도 같이 */
+.text-drag-start {
+  position: absolute;
+  z-index: 21;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background-color: #3a7afe;
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    background-color 0.12s ease;
+    
+  transform: translateY(-25px);
+  
+}
+.text-drag-start:hover {
+  background-color: #2f6ae0;
+  transform: translateY(-24px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.text-drag-start:active {
+  background-color: #2558b8;
+  transform: translateY(-25px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+/* wrapper 기준 잡기 */
+.text-drag-wrapper {
+  position: relative;
+}
+
 /* 이미지 래퍼
    - 고정 450px을 제거하고 반응형으로 바꾼다
    - 종횡비는 height + object-fit으로 유지 */
@@ -153,4 +208,23 @@
   .main-hero-image-wrapper {
     height: 220px;
   }
+}
+.link-out{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;          /* 버튼 크기 */
+  border-radius: 999px;       /* 완전 동그란 느낌 (pill) */
+  border: 2px solid #000;     /* 검은색 줄 */
+  background-color: #fff;     /* 안쪽 흰색 */
+  color: #000;                /* 글자색 */
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, 
+              color 0.15s ease,
+              transform 0.1s ease;
+}
+.link-out:active {
+  transform: translateY(1px);
 }

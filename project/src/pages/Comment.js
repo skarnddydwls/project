@@ -52,7 +52,7 @@ function Comment({ articleId }) {
             fetchComment(); 
         }
         catch(error) {
-            console.log("axios error(.post /api/comment)");
+
         }
     }
 
@@ -79,11 +79,11 @@ function Comment({ articleId }) {
         }
     };
 
-    comments = [
-        { id: 1, author: 'user1', content: '첫 번째 댓글입니다.', date: '...', parentId: null },
-        { id: 2, author: 'user2', content: '첫 번째 댓글의 답글입니다!', date: '...', parentId: 1 }, // 답글
-        { id: 3, author: 'user3', content: '독자적인 댓글입니다.', date: '...', parentId: null },
-    ];
+    // comments = [
+    //     { id: 1, author: 'user1', content: '첫 번째 댓글입니다.', date: '...', parentId: null },
+    //     { id: 2, author: 'user2', content: '첫 번째 댓글의 답글입니다!', date: '...', parentId: 1 }, // 답글
+    //     { id: 3, author: 'user3', content: '독자적인 댓글입니다.', date: '...', parentId: null },
+    // ];
 
     return (
         <div>
