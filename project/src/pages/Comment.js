@@ -22,7 +22,7 @@ function Comment({ articleId }) {
         try {
             const result = await axios.get(`/api/article/${articleId}/comment`)
             const sortedComments = sortComments(result.data);
-            console.log(result.data)
+
             setComments(sortedComments); // 댓글 넣기
         } catch (error) {
             console.log(`오류: ${error}`);
@@ -77,8 +77,14 @@ function Comment({ articleId }) {
         if(!window.confirm("정말 삭제하시겠습니까?")) return;
 
         try {
-            await axios.delete(`/api/article/${articleId}/comment`, {withCredentials: true})
-
+            await axios.delete(`/api/article/${articleId}/comment`, 
+                {
+                    params: {
+                        article_id: articleId,
+                        comment_id: commentId
+                    }
+                },
+                {withCredentials: true})
             alert("삭제되었습니다.");
             fetchComment(); // 삭제 후 목록 갱신
         } catch (error) {
@@ -195,7 +201,7 @@ function Comment({ articleId }) {
                                         style={{ cursor:'pointer', fontSize:'0.8rem', fontWeight:'bold' }}
                                         onClick={() => toggleReply(comment.commentId)}
                                     >
-                                        답글 달기
+                                        {!comment.parentCommentId ? "답글 달기" : null }
                                     </span>
 
                                     {/* 삭제 버튼: 로그인 유저와 작성자가 같을 때만 표시 */}
