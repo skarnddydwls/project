@@ -50,7 +50,7 @@ const RecentWords = () => {
   }
 
   return (
-    <div className="recent-box recent-words-box">
+    <div className="recent-words-box">
       <h4 className="recent-title recent-words-title">최근 본 단어</h4>
 
         {renderContent()}
