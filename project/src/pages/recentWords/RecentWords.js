@@ -17,15 +17,18 @@ const RecentWords = () => {
 
   // 삭제 시 열려 있던 항목이면 닫기
   const handleDelete = (timestamp) => {
-    if (activeTs === timestamp) {
-      setActiveTs(null);
+    const result = window.confirm("삭제하시겠습니까?");
+    if(result){
+      if (activeTs === timestamp) {
+        setActiveTs(null);
+      }
+      deleteByTimestamp(timestamp);
     }
-    deleteByTimestamp(timestamp);
   };
 
   const renderContent = () => {
     if(!user) {
-      return <p>로그인 후 이용가능합니다.</p>
+      return <p style={{color: 'gray'}}>로그인 후 이용가능합니다.</p>
     }
 
     if(wordList.length === 0) {

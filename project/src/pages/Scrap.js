@@ -40,20 +40,22 @@ const Scrap = () => {
 
   const handleDelete = async (e, articleId) => {
     e.stopPropagation(); // 제목 클릭 이벤트 막기 (부모 클릭 방지)
+    const result = window.confirm('삭제하시겠습니까?');
+    if(result){
+      try {
+        await axios.delete(`/api/mypage/scraped?article_id=${articleId}`, {
+          data: { userId: userId }
+        });
 
-    try {
-      await axios.delete(`/api/mypage/scraped?article_id=${articleId}`, {
-        data: { userId: userId }
-      });
+        setScrapList(prev => prev.filter((item) => 
+          String(item.articleId) !== String(articleId)
+        ));
 
-      setScrapList(prev => prev.filter((item) => 
-        String(item.articleId) !== String(articleId)
-      ));
+        window.dispatchEvent(new Event('scrapUpdated'));
 
-      window.dispatchEvent(new Event('scrapUpdated'));
-
-    } catch (err) {
-      
+      } catch (err) {
+        
+      }
     }
   };
 
@@ -67,7 +69,7 @@ const Scrap = () => {
 
   const renderContent = () =>{
     if(!storedUser) {
-       return <p>로그인 후 이용가능합니다.</p>
+       return <p style={{color: 'gray'}}>로그인 후 이용가능합니다.</p>
     }
 
     if(scrapList.length === 0) {
