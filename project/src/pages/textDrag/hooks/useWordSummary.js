@@ -12,7 +12,7 @@ export const useWordSummary = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.get("/util/word-meaning", {
+      const res = await axios.get("/api/util/word-meaning", {
         params: { word, sentence },
       });
       setBubbleText(res.data);

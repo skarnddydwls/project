@@ -19,6 +19,7 @@ const DesNavigation = (props) => {
     handleClickCategory,
     loginUser,
     handleLogout,
+    user,
 
     keyword,
     setKeyword,
@@ -102,12 +103,12 @@ const DesNavigation = (props) => {
 
         {/* 우측 */}
         <Nav ref={rightRef} className="ms-auto nav-right">
-          <Nav.Link onClick={() => (loginUser ? handleLogout() : navigate("/Signin"))}>
-            {loginUser ? "로그아웃" : "로그인"}
+          <Nav.Link onClick={() => (navigate("/Signup"))}>
+            {loginUser ? `${user.id}님` : "회원가입"}
           </Nav.Link>
 
-          <Nav.Link onClick={() => (!loginUser ? navigate("/Signup") : navigate("/Mypage"))}>
-            {loginUser ? "마이페이지" : "회원가입"}
+          <Nav.Link onClick={() => (loginUser ? handleLogout() : navigate("/Signin"))}>
+            {loginUser ? "로그아웃" : "로그인"}
           </Nav.Link>
         </Nav>
       </Navbar>
