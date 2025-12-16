@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../css/page.css';
+import '../css/Sidebar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import xIcon from '../img/x-icon.svg';
 import { Button } from 'react-bootstrap';

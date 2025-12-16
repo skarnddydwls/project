@@ -22,7 +22,7 @@ const RecentWordItem = ({
   });
 
   return (
-    <li ref={itemRef} className="recent-item recent-words-item">
+    <li ref={itemRef} className="recent-word-item">
       {/* 단어 헤더 */}
       <div className="recent-word-header-row">
         <span
@@ -33,8 +33,8 @@ const RecentWordItem = ({
         </span>
 
         <button type="button" className="scrap-delete-btn" onClick={() => onDelete(timestamp)}>
-  <img src={xIcon} alt="삭제" className="scrap-delete-icon" />
-</button>
+          <img src={xIcon} alt="삭제" className="scrap-delete-icon" />
+        </button>
       </div>
 
       {/* 요약 말풍선 */}
