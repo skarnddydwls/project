@@ -1,12 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Row, Col, Badge, Card, Tabs, Tab } from "react-bootstrap";
+import { Container, Row, Col, Card} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getOriginalImageUrl } from "./utils/getOriginalImageUrl";
-
-import RecentNews from "./RecentNews";
-import Scrap from "./Scrap";
-import RecentWords from "./recentWords/RecentWords";
 
 import "../css/MainPage.css";
 
@@ -17,8 +13,6 @@ const dummyList = [
   { articleId: 4, category: "세계", title: "더미: 해외 정책 변화가 있었습니다", img: "https://mimgnews.pstatic.net/image/origin/025/2025/12/11/3489154.jpg?type=nf220_150", summary: "요약 더미" },
   { articleId: 5, category: "문화", title: "더미: 문화 콘텐츠 트렌드 변화", img: "https://mimgnews.pstatic.net/image/origin/421/2025/12/11/8656598.jpg?type=nf220_150", summary: "요약 더미" },
 ];
-
-const CATEGORIES = ["경제", "과학", "사회", "세계", "문화"];
 
 function clampText(text = "", max = 110) {
   const t = String(text).replace(/\s+/g, " ").trim();
@@ -33,9 +27,7 @@ export default function MainPage() {
   const [recommendList, setRecommendList] = useState(dummyList);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [keyword, setKeyword] = useState("");
 
-  const loginUser = useMemo(() => sessionStorage.getItem("loginUser"), []);
 
   useEffect(() => {
     axios
@@ -67,16 +59,7 @@ export default function MainPage() {
   const current = recommendList[currentIndex] || dummyList[0];
 
 
-  const goSearch = (e) => {
-    e.preventDefault();
-    const q = keyword.trim();
-    if (!q) return;
-    navigate(`/search?keyword=${encodeURIComponent(q)}`);
-  };
-
-  const goCategory = (name) => {
-    navigate(`/NewsCategory/${encodeURIComponent(name)}`);
-  };
+  
   
   const goArticle = (a) => {
     const category = a?.category;
