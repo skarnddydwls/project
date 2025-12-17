@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Container, Row, Col, Card} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { getOriginalImageUrl } from "./utils/getOriginalImageUrl";
-
+import prevIcon from "../img/prevShift.svg";
+import nextIcon from "../img/nextShift.svg";
 import "../css/MainPage.css";
 
 const dummyList = [
@@ -27,6 +29,33 @@ export default function MainPage() {
   const [recommendList, setRecommendList] = useState(dummyList);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [todayPeople, setTodayPeople] = useState([
+    { personName: "홍길동", partyName: "더불어민주당" },
+    { personName: "김철수", partyName: "국민의힘" },
+    { personName: "이영희", partyName: "무소속" },
+    { personName: "김철수", partyName: "국민의힘" },
+    { personName: "이영희", partyName: "무소속" }
+  ]);
+  const [partyStats, setPartyStats] = useState([
+    { partyName: "더불어민주당", mentionCount: 380 },
+    { partyName: "국민의힘", mentionCount: 450 },
+    { partyName: "무소속", mentionCount: 120 }
+  ]);
+
+  // 정당별 색상 매핑
+  const getPartyColor = (partyName) => {
+    const colorMap = {
+      "더불어민주당": "#003B96",
+      "국민의힘": "#E61E2B", 
+      "조국혁신당": "#0073CF",
+      "개혁신당": "#FF7210",
+      "진보당": "#D6001C",
+      "기본소득당": "#00D2C3",
+      "사회민주당": "#F58400",
+      "무소속": "#808080"
+    };
+    return colorMap[partyName] || "#808080";
+  };
 
 
   useEffect(() => {
@@ -46,17 +75,49 @@ export default function MainPage() {
         setRecommendList(dummyList);
         setCurrentIndex(0);
       });
+
+
+    // 오늘의 인물 API (언급 순위)
+    axios
+      .get("/api/util/mentioned-rank")
+      .then((res) => {
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setTodayPeople(res.data);
+        }
+      })
+      .catch(() => {});
+
+    // 정당별 언급 통계 API
+    axios
+      .get("/api/party/stats")
+      .then((res) => {
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setPartyStats(res.data);
+        }
+      })
+      .catch(() => {});
+
   }, []);
+
+
 
   useEffect(() => {
     if (!recommendList.length || paused) return;
     const id = setInterval(() => {
       setCurrentIndex((p) => (p + 1) % recommendList.length);
-    }, 9000);
+    }, 1000);
     return () => clearInterval(id);
   }, [recommendList, paused]);
 
   const current = recommendList[currentIndex] || dummyList[0];
+
+  const goPrev = () => {
+    setCurrentIndex((p) => (p - 1 + recommendList.length) % recommendList.length);
+  };
+
+  const goNext = () => {
+    setCurrentIndex((p) => (p + 1) % recommendList.length);
+  };
 
 
   
@@ -68,10 +129,10 @@ export default function MainPage() {
     navigate(`/${encodeURIComponent(category)}/News/${id}`);
   };
 
-  const todayKeywords = ["환율", "금리", "AI", "물가", "반도체", "부동산"];
-
   return (
     <Container className="mp-wrap">
+
+      
       <div
         className="mp-hero"
         onMouseEnter={() => setPaused(true)}
@@ -82,9 +143,23 @@ export default function MainPage() {
       >
         <div className="mp-hero-media">
           <img className="mp-hero-img" src={getOriginalImageUrl(current.img)} alt={current.title} />
-          <div className="mp-hero-badges">
-          </div>
           <div className="mp-hero-gradient" />
+          <button
+            type="button"
+            className="mp-hero-arrow mp-hero-prev"
+            onClick={(e) => { e.stopPropagation(); goPrev(); }}
+            aria-label="이전"
+          >
+            <img src={prevIcon} alt="이전" />
+          </button>
+          <button
+            type="button"
+            className="mp-hero-arrow mp-hero-next"
+            onClick={(e) => { e.stopPropagation(); goNext(); }}
+            aria-label="다음"
+          >
+            <img src={nextIcon} alt="다음" />
+          </button>
         </div>
 
         <div className="mp-hero-body">
@@ -109,26 +184,7 @@ export default function MainPage() {
 
       <Row className="mp-bottom">
         <Col lg={6}>
-          <Card className="mp-card">
-            <Card.Body>
-              <div className="mp-card-title">오늘의 키워드</div>
-              <div className="mp-chips">
-                {todayKeywords.map((k) => (
-                  <button
-                    key={k}
-                    type="button"
-                    className="mp-kchip"
-                    onClick={() => navigate(`/search?keyword=${encodeURIComponent(k)}`)}
-                  >
-                    {k}
-                  </button>
-                ))}
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
 
-        <Col lg={6}>
           <Card className="mp-card">
             <Card.Body>
               <div className="mp-card-title">Top 5</div>
@@ -142,8 +198,67 @@ export default function MainPage() {
               </div>
             </Card.Body>
           </Card>
+
+          
+        </Col>
+
+        <Col lg={6}>
+          <Card className="mp-card">
+            <Card.Body>
+              <div className="mp-card-title">오늘의 인물</div>
+              <div className="mp-toplist">
+                {todayPeople.map((p, i) => (
+                  <div
+                    key={p.personName}
+                    className="mp-topitem"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => navigate(`/search?keyword=${encodeURIComponent(p.personName)}`)}
+                  >
+                    <div className="mp-rank">{i + 1}</div>
+                    <div className="mp-toptext">
+                      {p.personName} 
+                      <span style={{ color: '#64748B', fontSize: '12px' }}>&ensp;(언급수: {p.mentionCount})</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card.Body>
+          </Card>
+
+          
+
         </Col>
       </Row>
+                      <div style={{ height: '16px' }}></div>
+      <Card className="mp-card">
+            <Card.Body>
+              <div className="mp-card-title">정당별 언급 통계</div>
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={partyStats.map((p) => ({
+                      name: p.partyName,
+                      value: p.mentionCount
+                    }))}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={125}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {partyStats.map((p, index) => (
+                      <Cell key={`cell-${index}`} fill={getPartyColor(p.partyName)} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value, name) => [value, name]} />
+                </PieChart>
+              </ResponsiveContainer>
+            </Card.Body>
+          </Card>
+          <div style={{ height: '32px' }}></div>
     </Container>
   );
 }
