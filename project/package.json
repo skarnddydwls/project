@@ -18,7 +18,7 @@
     "react-use": "^17.6.0",
     "recharts": "^3.6.0",
     "web-vitals": "^2.1.4"
-  },
+  },  
   "proxy": "http://211.188.48.17:8080",
   "scripts": {
     "start": "react-scripts start",
