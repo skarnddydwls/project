@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col, Container } from 'react-bootstrap';
 import {useNavigate, useParams} from 'react-router-dom'
-import '../css/page.css';
+import '../css/NewsCategory.css';
 import Button from 'react-bootstrap/Button';
 
 

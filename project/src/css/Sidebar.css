@@ -1,0 +1,97 @@
+/* ----------------------------- */
+/* 오른쪽 사이드바 공통 스타일 */
+/* RecentNews, Scrap, RecentWords 공통 사용 */
+/* ----------------------------- */
+
+/* 사이드바 반응형 */
+.news-recent-col {
+  width: clamp(240px, 25%, 320px);
+  position: sticky;
+  top: 100px;
+}
+
+/* 공통 박스 스타일 */
+.recent-box,
+.scrap-box {
+  background: #ffffff;
+  border: 2px solid #dfdadaff;
+  border-radius: 20px;
+  padding: 14px 16px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* 제목 */
+.recent-title,
+.scrap-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* 리스트 */
+.recent-list,
+.scrap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 각 아이템 한 줄 레이아웃 */
+.recent-item,
+.scrap-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.recent-item:last-child,
+.scrap-item:last-child {
+  margin-bottom: 0;
+}
+
+/* 아이템 제목 (말줄임) */
+.recent-item-title,
+.scrap-item-title {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-item-title:hover,
+.scrap-item-title:hover {
+  color: #2c6bed;
+}
+
+/* 삭제 버튼 (X 아이콘) */
+.scrap-delete-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.scrap-delete-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  transform: scale(1.1);
+  transition: 0.1s;
+}
+
+.scrap-delete-btn:hover {
+  transform: scale(1.1);
+  transition: 0.1s;
+}
+
+.scrap-delete-btn:focus {
+  outline: none;
+}

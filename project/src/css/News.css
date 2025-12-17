@@ -1,0 +1,38 @@
+/* ----------------------------- */
+/* 기사 상세 페이지 (News.js) */
+/* ----------------------------- */
+
+/* 버튼 행 */
+.news-btn-row {
+  display: flex;
+  align-items: center;
+}
+
+/* 스크랩 버튼 (북마크 아이콘) */
+.scrap-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.scrap-btn img {
+  display: block;
+  transition: transform 0.12s ease-out;
+}
+
+.scrap-btn:focus {
+  outline: none;
+}
+
+.scrap-btn:hover img {
+  transform: scale(1.04);
+}
+
+.scrap-icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+}

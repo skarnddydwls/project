@@ -1,22 +1,7 @@
 /* ----------------------------------------- */
-/* 최근 본 단어 뜻 전체 박스 */
+/* 최근 본 단어 - RecentWords 전용 스타일 */
+/* (공통 스타일은 page.css의 .recent-box, .recent-title, .recent-list 사용) */
 /* ----------------------------------------- */
-
-.recent-box {
-  background: #ffffff;
-  border: 2px solid #dfdadaff;
-  border-radius: 6px;
-  padding: 14px 16px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-/* 제목 */
-.recent-words-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
 
 /* 비어 있을 때 */
 .recent-words-empty {
@@ -25,33 +10,21 @@
   margin-top: 4px;
 }
 
-/* 리스트 공통 */
-.recent-words-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
 /* ----------------------------------------- */
 /* 단어 한 줄 */
 /* ----------------------------------------- */
 
-.recent-words-item {
+.recent-word-item {
   padding: 6px 0;
-  border-bottom: 1px solid #eee;
   display: flex;
   flex-direction: column;
-}
-
-.recent-words-item:last-child {
-  border-bottom: none;
 }
 
 /* 단어 버튼 + 삭제 버튼을 한 줄로 */
 .recent-word-header-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: left;
 }
 
 /* 단어 버튼 */
@@ -61,33 +34,18 @@
   padding: 0;
   margin: 0;
   font-size: 15px;
-  font-weight: 600;
   cursor: pointer;
   color: #000;
+  
+  /* 말줄임 처리 */
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-
-
-/* 삭제 버튼 (Scrap 스타일과 통일) */
-.scrap-delete-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-left: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.scrap-delete-icon {
-  width: 18px;
-  height: 18px;
-  display: block;
-  transition: transform 0.1s ease-in-out;
-}
-
-.scrap-delete-btn:hover .scrap-delete-icon {
-  transform: scale(1.1);
+.recent-word-button:hover {
+  color: #2c6bed;
 }
 
 /* ----------------------------------------- */

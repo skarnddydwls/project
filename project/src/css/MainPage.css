@@ -1,47 +1,361 @@
-/* Row를 "내용 기반" flex 레이아웃으로 바꿈 */
-.main-container {
-  margin-top: 30px;
+/* ========================================
+   MainPage.css - 메인페이지 스타일
+   ======================================== */
 
-  display: flex;
-  flex-wrap: wrap;        /* ✅ 공간 부족하면 다음 줄로 */
-  align-items: flex-start;
-  gap: 24px;              /* 두 칼럼 사이 간격 */
+/* ----------------------------------------
+   Container
+   ---------------------------------------- */
+.mp-wrap {
+  padding: 0 0 0;
 }
 
-/* 왼쪽: 이미지 고정 폭(450) */
-.main-hero-col {
-  flex: 0 0 450px;        /* ✅ 무조건 450px */
-  max-width: 450px;
-  padding: 0;             /* bootstrap Col 패딩이 간섭하면 제거 */
-}
-
-/* 오른쪽: 남는 공간 먹다가, 부족하면 아래로 */
-.main-right-col {
-  flex: 1 1 320px;        /* ✅ 최소 320px은 필요, 그 아래면 wrap */
-  min-width: 320px;
-  padding: 0;
+/* ----------------------------------------
+   Top Bar & Search
+   ---------------------------------------- */
+.mp-topbar {
   display: flex;
-  flex-direction: column;
   gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
 }
 
-/* 왼쪽 카드 내부는 그대로 */
-.main-hero-card {
-  width: 100%;
+.mp-search {
+  display: flex;
+  gap: 8px;
+  flex: 1 1 360px;
+  min-width: 280px;
+}
+
+.mp-search-input {
+  flex: 1;
+  height: 44px;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 0 12px;
+  outline: none;
+  background: #fff;
+}
+
+.mp-search-input:focus {
+  border-color: #C7D2FE;
+}
+
+.mp-search-btn {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  background: #fff;
   cursor: pointer;
 }
 
-/* 이미지 고정 */
-.main-hero-image-wrapper {
-  width: 450px;
-  height: 300px;
-  overflow: hidden;
-  margin-bottom: 12px;
+/* ----------------------------------------
+   Category Chips
+   ---------------------------------------- */
+.mp-cats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.main-hero-image {
-  width: 450px;
-  height: 300px;
-  display: block;
+.mp-chip {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.mp-chip:hover {
+  background: #F1F5F9;
+}
+
+/* ----------------------------------------
+   Hero Section (메인 이미지 영역)
+   ---------------------------------------- */
+.mp-hero {
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.mp-hero-media {
+  position: relative;
+  height: 360px;
+}
+
+.mp-hero-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.mp-hero-badges {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.mp-hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0) 40%,
+    rgba(15, 23, 42, 0.55) 100%
+  );
+}
+
+.mp-hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  color: #0F172A;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+  z-index: 3;
+}
+
+.mp-hero:hover .mp-hero-arrow {
+  opacity: 1;
+}
+
+.mp-hero-arrow:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.mp-hero-prev {
+  left: 12px;
+}
+
+.mp-hero-next {
+  right: 12px;
+}
+
+.mp-hero-body {
+  padding: 14px 16px 16px;
+}
+
+.mp-hero-title {
+  font-size: 20px;
+  line-height: 1.35;
+  margin-bottom: 8px;
+  color: #0F172A;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.mp-hero-desc {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.55;
+  min-height: 44px;
+}
+
+/* ----------------------------------------
+   Dots (슬라이드 인디케이터)
+   ---------------------------------------- */
+.mp-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.mp-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  border: 0;
+  background: #E2E8F0;
+  cursor: pointer;
+}
+
+.mp-dot.is-on {
+  width: 18px;
+  background: #94A3B8;
+}
+
+/* ----------------------------------------
+   Grid & Cards
+   ---------------------------------------- */
+.mp-grid {
+  --bs-gutter-x: 16px;
+  --bs-gutter-y: 16px;
+  margin-top: 2px;
+}
+
+.mp-card {
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+}
+
+.mp-card-head {
+  margin-bottom: 10px;
+}
+
+.mp-card-title {
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #0F172A;
+}
+
+.mp-card-sub {
+  font-size: 13px;
+  color: #64748B;
+}
+
+/* ----------------------------------------
+   Tabs
+   ---------------------------------------- */
+.mp-tabs .nav-link {
+  color: #0F172A;
+}
+
+.mp-tab-body {
+  padding-top: 10px;
+}
+
+/* ----------------------------------------
+   Tiles
+   ---------------------------------------- */
+.mp-tiles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.mp-tile {
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.mp-tile:hover {
+  background: #F8FAFC;
+}
+
+.mp-tile-title {
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: #0F172A;
+}
+
+.mp-tile-desc {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.45;
+}
+
+/* ----------------------------------------
+   Bottom Section (키워드 & Top 5)
+   ---------------------------------------- */
+.mp-bottom {
+  --bs-gutter-x: 16px;
+  --bs-gutter-y: 16px;
+  margin-top: 16px;
+}
+
+.mp-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mp-kchip {
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid #E2E8F0;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.mp-kchip:hover {
+  background: #EEF2FF;
+  border-color: #C7D2FE;
+}
+
+/* ----------------------------------------
+   Top List (Top 5 리스트)
+   ---------------------------------------- */
+.mp-toplist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mp-topitem {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.mp-topitem:hover {
+  background: #F1F5F9;
+}
+
+.mp-rank {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: #EEF2FF;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  flex-shrink: 0;
+  color: #4F46E5;
+}
+
+.mp-toptext {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #0F172A;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* ----------------------------------------
+   Responsive
+   ---------------------------------------- */
+@media (max-width: 991.98px) {
+  .mp-hero-media {
+    height: 260px;
+  }
+  .mp-tiles {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .mp-tiles {
+    grid-template-columns: 1fr;
+  }
+}
+.news-top5{
+  overflow: hidden;            /* 넘치는 부분 숨김 */
+  text-overflow: ellipsis;     /* ... 처리 */
+  white-space: nowrap;        /* 한 줄로 */
 }
