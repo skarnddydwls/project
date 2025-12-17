@@ -65,11 +65,9 @@ export default function MainPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [todayPeople, setTodayPeople] = useState([]);
-  const [partyStats, setPartyStats] = useState([
-    { name: "더불어민주당", mentionCount: 380 },
-    { name: "국민의힘", mentionCount: 450 },
-    { name: "무소속", mentionCount: 120 }
-  ]);
+  const [partyStats, setPartyStats] = useState([]);
+  const storedUser = localStorage.getItem("loginUser");
+
 
   useEffect(() => {
     axios
@@ -157,7 +155,14 @@ export default function MainPage() {
         className="mp-hero"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
-        onClick={() => goArticle(current)}
+        onClick={() => {
+          if(storedUser){
+            goArticle(current)
+          } else {
+            alert("로그인 후 이용가능합니다.")
+            navigate('/Signin');
+          }
+          }}
         role="button"
         tabIndex={0}
       >
@@ -210,7 +215,14 @@ export default function MainPage() {
               <div className="mp-card-title">조회수 Top 5</div>
               <div className="mp-toplist news-top5">
                 {recommendList.slice(0, 5).map((a, i) => (
-                  <div key={a.articleId} className="mp-topitem" role="button" tabIndex={0} onClick={() => goArticle(a)}>
+                  <div key={a.articleId} className="mp-topitem" role="button" tabIndex={0} onClick={() => {
+                    if(storedUser){
+                      goArticle(a)
+                    } else {
+                      alert("로그인 후 이용가능합니다.")
+                      navigate('/Signin');
+                    }
+                    }}>
                     <div className="mp-rank">{i + 1}</div>
                     <div className="mp-toptext">{a.title}</div>
                   </div>
