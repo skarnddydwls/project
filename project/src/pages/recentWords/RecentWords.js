@@ -5,7 +5,7 @@ import RecentWordItem from "./components/RecentWordItem";
 
 const RecentWords = () => {
   const { wordList, deleteByTimestamp } = useRecentWords();
-  const [user, setUser] = useState(sessionStorage.getItem('loginUser'));
+  const storedUser = sessionStorage.getItem('loginUser');
 
   // 현재 열려 있는 단어의 timestamp
   const [activeTs, setActiveTs] = useState(null);
@@ -27,7 +27,7 @@ const RecentWords = () => {
   };
 
   const renderContent = () => {
-    if(!user) {
+    if(!storedUser) {
       return <p style={{color: 'gray'}}>로그인 후 이용가능합니다.</p>
     }
 

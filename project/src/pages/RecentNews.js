@@ -6,7 +6,7 @@ const RecentNews = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [recentNews, setRecentNews] = useState([]);
-    const [user, setUser] = useState(sessionStorage.getItem('loginUser'));
+    const storedUser = sessionStorage.getItem('loginUser');
 
     const fetchRecentNews = useCallback(()=>{
         axios.get(`/api/mypage/recent`, { withCredentials: true })
@@ -52,8 +52,7 @@ const RecentNews = () => {
     // 조건이 여러개일 경우는 함수로 이용하면 가독성이 좋아진다
 
     const renderContent = () => {
-        // 조건1. 로그인
-        if(!user) {
+        if(!storedUser) {
             return <p style={{color: 'gray'}}>로그인 후 이용가능합니다.</p>
         }
 
