@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../css/page.css';
+import '../css/Sidebar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import xIcon from '../img/x-icon.svg';
-import { Button } from 'react-bootstrap';
 
 const Scrap = () => {
   const navigate = useNavigate();
@@ -83,16 +82,17 @@ const Scrap = () => {
               key={article.articleId}
               className="recent-item"
               onClick={(e) => handleClickTitle(e, article)}
-            > <span className="recent-item-title">{article.title}</span>
+            > 
+              <span className="recent-item-title">{article.title}</span>
 
-            <Button 
-              className="scrap-delete-btn"
-              onClick={(e)=>{
-              handleDelete(e, article.articleId)
-            }}
-            >
-              <img src={xIcon} alt="delete" className="scrap-delete-icon" />
-            </Button>
+              <button 
+                className="scrap-delete-btn"
+                onClick={(e)=>{
+                handleDelete(e, article.articleId)
+              }}
+              >
+                <img src={xIcon} alt="delete" className="scrap-delete-icon" />
+              </button>
             </li>
           ))}
         </ul>

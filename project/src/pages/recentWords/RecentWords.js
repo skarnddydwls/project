@@ -36,7 +36,7 @@ const RecentWords = () => {
     }
 
     return(
-      <ul className="recent-list recent-words-list">
+      <ul className="recent-list">
           {wordList.map((item) => (
             <RecentWordItem
               key={item.timestamp}
@@ -53,8 +53,8 @@ const RecentWords = () => {
   }
 
   return (
-    <div className="recent-box recent-words-box">
-      <h4 className="recent-title recent-words-title">최근 본 단어</h4>
+    <div className="recent-box">
+      <h4 className="recent-title">최근 본 단어</h4>
 
         {renderContent()}
     </div>

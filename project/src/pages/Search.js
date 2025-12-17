@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col, Container, Spinner } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../css/page.css';
+import '../css/NewsCategory.css';
 
 
 const Search = () => {
