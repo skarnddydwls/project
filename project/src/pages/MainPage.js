@@ -8,25 +8,14 @@ import prevIcon from "../img/prevShift.svg";
 import nextIcon from "../img/nextShift.svg";
 import "../css/MainPage.css";
 
-const dummyList = [
-  { articleId: 1, category: "경제", title: "더미: 환율이 크게 상승했습니다", img: "https://mimgnews.pstatic.net/image/origin/214/2025/12/11/1467368.jpg?type=nf220_150", summary: "요약 더미" },
-  { articleId: 2, category: "사회", title: "더미: 사회적 이슈가 커지고 있습니다", img: "https://mimgnews.pstatic.net/image/origin/079/2025/12/11/4095095.jpg?type=nf220_150", summary: "요약 더미" },
-  { articleId: 3, category: "과학", title: "더미: 새로운 기술 발표 소식", img: "https://mimgnews.pstatic.net/image/origin/656/2025/12/11/159039.jpg?type=nf220_150", summary: "요약 더미" },
-  { articleId: 4, category: "세계", title: "더미: 해외 정책 변화가 있었습니다", img: "https://mimgnews.pstatic.net/image/origin/025/2025/12/11/3489154.jpg?type=nf220_150", summary: "요약 더미" },
-  { articleId: 5, category: "문화", title: "더미: 문화 콘텐츠 트렌드 변화", img: "https://mimgnews.pstatic.net/image/origin/421/2025/12/11/8656598.jpg?type=nf220_150", summary: "요약 더미" },
-];
-
 function clampText(text = "", max = 110) {
   const t = String(text).replace(/\s+/g, " ").trim();
   return t.length <= max ? t : t.slice(0, max) + "…";
 }
 
-
-
 export default function MainPage() {
   const navigate = useNavigate();
-
-  const [recommendList, setRecommendList] = useState(dummyList);
+  const [recommendList, setRecommendList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [todayPeople, setTodayPeople] = useState([]);
@@ -60,14 +49,10 @@ export default function MainPage() {
         if (Array.isArray(data) && data.length > 0) {
           setRecommendList(data);
           setCurrentIndex(0);
-        } else {
-          setRecommendList(dummyList);
-          setCurrentIndex(0);
         }
       })
       .catch(() => {
-        setRecommendList(dummyList);
-        setCurrentIndex(0);
+        console.error("추천 기사 불러오기 실패");
       });
 
 
@@ -103,7 +88,18 @@ export default function MainPage() {
     return () => clearInterval(id);
   }, [recommendList, paused]);
 
-  const current = recommendList[currentIndex] || dummyList[0];
+  const current = recommendList[currentIndex];
+
+  // 데이터 로딩 중
+  if (!current) {
+    return (
+      <Container className="mp-wrap">
+        <div style={{ textAlign: "center", padding: "100px 0", color: "#64748B" }}>
+          데이터를 불러오는 중입니다...
+        </div>
+      </Container>
+    );
+  }
 
   const goPrev = () => {
     setCurrentIndex((p) => (p - 1 + recommendList.length) % recommendList.length);
