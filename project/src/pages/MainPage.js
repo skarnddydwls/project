@@ -84,7 +84,7 @@ export default function MainPage() {
     if (!recommendList.length || paused) return;
     const id = setInterval(() => {
       setCurrentIndex((p) => (p + 1) % recommendList.length);
-    }, 1000);
+    }, 10000);
     return () => clearInterval(id);
   }, [recommendList, paused]);
 
