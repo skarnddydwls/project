@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { Container, Row, Col, Card} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -13,17 +13,9 @@ function clampText(text = "", max = 110) {
   return t.length <= max ? t : t.slice(0, max) + "…";
 }
 
-export default function MainPage() {
-  const navigate = useNavigate();
-  const [recommendList, setRecommendList] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [todayPeople, setTodayPeople] = useState([]);
-  const [partyStats, setPartyStats] = useState([
-    { partyName: "더불어민주당", mentionCount: 380 },
-    { partyName: "국민의힘", mentionCount: 450 },
-    { partyName: "무소속", mentionCount: 120 }
-  ]);
+const renderLabel = ({name, percent}) => {
+    return `${name} ${(percent * 100).toFixed(0)}%`;
+  };
 
   // 정당별 색상 매핑
   const getPartyColor = (partyName) => {
@@ -40,6 +32,44 @@ export default function MainPage() {
     return colorMap[partyName] || "#808080";
   };
 
+  const PartyPieChart = React.memo(({ partyStats }) => {
+    return (
+      <ResponsiveContainer width="100%" height={450}>
+        <PieChart>
+          <Pie
+            data={partyStats.map((p) => ({
+              name: p.partyName,
+              value: p.mentionCount
+            }))}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={renderLabel} // 밖에서 만든 함수 사용
+            outerRadius={160}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {partyStats.map((p, index) => (
+              <Cell key={`cell-${index}`} fill={getPartyColor(p.partyName)} />
+            ))}
+          </Pie>
+          <Tooltip formatter={(value, name) => [value, name]} />
+        </PieChart>
+      </ResponsiveContainer>
+    );
+  });
+
+export default function MainPage() {
+  const navigate = useNavigate();
+  const [recommendList, setRecommendList] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [todayPeople, setTodayPeople] = useState([]);
+  const [partyStats, setPartyStats] = useState([
+    { partyName: "더불어민주당", mentionCount: 380 },
+    { partyName: "국민의힘", mentionCount: 450 },
+    { partyName: "무소속", mentionCount: 120 }
+  ]);
 
   useEffect(() => {
     axios
@@ -219,36 +249,13 @@ export default function MainPage() {
             </Card.Body>
           </Card>
 
-          
-
         </Col>
       </Row>
-                      <div style={{ height: '16px' }}></div>
+      <div style={{ height: '16px' }}></div>
       <Card className="mp-card">
             <Card.Body>
               <div className="mp-card-title">정당별 언급 통계</div>
-              <ResponsiveContainer width="100%" height={250}>
-                <PieChart>
-                  <Pie
-                    data={partyStats.map((p) => ({
-                      name: p.partyName,
-                      value: p.mentionCount
-                    }))}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={125}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {partyStats.map((p, index) => (
-                      <Cell key={`cell-${index}`} fill={getPartyColor(p.partyName)} />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value, name) => [value, name]} />
-                </PieChart>
-              </ResponsiveContainer>
+              <PartyPieChart partyStats={partyStats} />
             </Card.Body>
           </Card>
           <div style={{ height: '32px' }}></div>
