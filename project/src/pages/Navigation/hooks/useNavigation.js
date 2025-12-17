@@ -21,6 +21,7 @@ export const useNavigation = () => {
   const [visibleCount, setVisibleCount] = useState(categories.length);
 
   const [loginUser, setLoginUser] = useState(sessionStorage.getItem("loginUser"));
+  const user = JSON.parse(loginUser);
   const [keyword, setKeyword] = useState("");
 
   const handleLogout = useCallback(async () => {
@@ -144,6 +145,7 @@ const calculateVisible = useCallback(() => {
     visibleCount,
 
     loginUser,
+    user,
     setLoginUser,
     handleLogout,
 

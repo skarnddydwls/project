@@ -5,7 +5,7 @@ import RecentWordItem from "./components/RecentWordItem";
 
 const RecentWords = () => {
   const { wordList, deleteByTimestamp } = useRecentWords();
-  const [user, setUser] = useState(sessionStorage.getItem('loginUser'));
+  const storedUser = sessionStorage.getItem('loginUser');
 
   // 현재 열려 있는 단어의 timestamp
   const [activeTs, setActiveTs] = useState(null);
@@ -17,14 +17,17 @@ const RecentWords = () => {
 
   // 삭제 시 열려 있던 항목이면 닫기
   const handleDelete = (timestamp) => {
-    if (activeTs === timestamp) {
-      setActiveTs(null);
+    const result = window.confirm("삭제하시겠습니까?");
+    if(result){
+      if (activeTs === timestamp) {
+        setActiveTs(null);
+      }
+      deleteByTimestamp(timestamp);
     }
-    deleteByTimestamp(timestamp);
   };
 
   const renderContent = () => {
-    if(!user) {
+    if(!storedUser) {
       return <p style={{color: 'gray'}}>로그인 후 이용가능합니다.</p>
     }
 
