@@ -199,11 +199,11 @@ export default function MainPage() {
               <div className="mp-toplist">
                 {todayPeople.map((p, i) => (
                   <div
-                    key={p.personName}
+                    key={p.name}
                     className="mp-topitem"
                     role="button"
                     tabIndex={0}
-                    onClick={() => navigate(`/search?keyword=${encodeURIComponent(p.personName)}`)}
+                    onClick={() => navigate(`/search?keyword=${encodeURIComponent(p.name)}`)}
                   >
                     <div className="mp-rank">
                       {todayPeople.filter((item, idx) => idx < i && item.mentionCount > p.mentionCount).length + 1}
