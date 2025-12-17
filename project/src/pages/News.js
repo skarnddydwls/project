@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/News.css';
 import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import '../css/News.css';
 import fillScrap from '../img/fill-scrap.svg';
 import blankScrap from '../img/blank-scrap.svg';
 import TextDrag from "./textDrag/TextDrag.js";

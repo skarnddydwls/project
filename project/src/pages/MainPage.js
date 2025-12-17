@@ -29,13 +29,7 @@ export default function MainPage() {
   const [recommendList, setRecommendList] = useState(dummyList);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [todayPeople, setTodayPeople] = useState([
-    { personName: "홍길동", partyName: "더불어민주당" },
-    { personName: "김철수", partyName: "국민의힘" },
-    { personName: "이영희", partyName: "무소속" },
-    { personName: "김철수", partyName: "국민의힘" },
-    { personName: "이영희", partyName: "무소속" }
-  ]);
+  const [todayPeople, setTodayPeople] = useState([]);
   const [partyStats, setPartyStats] = useState([
     { partyName: "더불어민주당", mentionCount: 380 },
     { partyName: "국민의힘", mentionCount: 450 },
@@ -60,7 +54,7 @@ export default function MainPage() {
 
   useEffect(() => {
     axios
-      .get("/api/article/recommend")
+      .get("/api/article/recommand")
       .then((res) => {
         const data = res.data;
         if (Array.isArray(data) && data.length > 0) {
@@ -79,7 +73,7 @@ export default function MainPage() {
 
     // 오늘의 인물 API (언급 순위)
     axios
-      .get("/api/util/mentioned-rank")
+      .get("/api/stat/ranked-person")
       .then((res) => {
         if (Array.isArray(res.data) && res.data.length > 0) {
           setTodayPeople(res.data);
@@ -89,7 +83,7 @@ export default function MainPage() {
 
     // 정당별 언급 통계 API
     axios
-      .get("/api/party/stats")
+      .get("/api/stat/party")
       .then((res) => {
         if (Array.isArray(res.data) && res.data.length > 0) {
           setPartyStats(res.data);
@@ -187,8 +181,8 @@ export default function MainPage() {
 
           <Card className="mp-card">
             <Card.Body>
-              <div className="mp-card-title">Top 5</div>
-              <div className="mp-toplist">
+              <div className="mp-card-title">조회수 Top 5</div>
+              <div className="mp-toplist news-top5">
                 {recommendList.slice(0, 5).map((a, i) => (
                   <div key={a.articleId} className="mp-topitem" role="button" tabIndex={0} onClick={() => goArticle(a)}>
                     <div className="mp-rank">{i + 1}</div>
@@ -215,10 +209,13 @@ export default function MainPage() {
                     tabIndex={0}
                     onClick={() => navigate(`/search?keyword=${encodeURIComponent(p.personName)}`)}
                   >
-                    <div className="mp-rank">{i + 1}</div>
+                    <div className="mp-rank">
+                      {todayPeople.filter((item, idx) => idx < i && item.mentionCount > p.mentionCount).length + 1}
+                    </div>
+
                     <div className="mp-toptext">
-                      {p.personName} 
-                      <span style={{ color: '#64748B', fontSize: '12px' }}>&ensp;(언급수: {p.mentionCount})</span>
+                      {p.name} 
+                      <span style={{ color: '#64748B', fontSize: '12px' }}>&ensp; {p.mentionCount}</span>
                     </div>
                   </div>
                 ))}
