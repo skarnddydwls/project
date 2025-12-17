@@ -65,10 +65,7 @@ export default function MainPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [todayPeople, setTodayPeople] = useState([]);
-  const [partyStats, setPartyStats] = useState([
-    { name: "더불어민주당", mentionCount: 380 },
-    { name: "국민의힘", mentionCount: 450 },
-    { name: "무소속", mentionCount: 120 }
+  const [partyStats, setPartyStats] = useState([  
   ]);
 
   useEffect(() => {
