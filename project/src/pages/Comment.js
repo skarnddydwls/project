@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'; // 1. useState 필수!
 import { Button, Card, Form } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 function Comment({ articleId }) {
@@ -8,8 +9,8 @@ function Comment({ articleId }) {
     const [replyContent, setReplyContent] = useState(""); // 답글 내용
     const [mainContent, setMainContent] = useState(""); // 메인 댓글 내용이 필요한 가?
     const [comments, setComments] = useState([]); // 댓글 목록
-    // const [likeCount, setLikeCount] = useState(); // 좋아요 개수
-    // const [likeState, setLikeState] = useState(); // 좋아요 상태
+    const [editId, setEditId] = useState(null);
+    const [editContent, setEditContent] = useState("");
 
     // 세션에서 유저 정보 가져오기 (JSON 파싱 필요)
     const storedUser = sessionStorage.getItem("loginUser");
@@ -92,6 +93,40 @@ function Comment({ articleId }) {
         }
     }
 
+    // ====== 댓글 수정하기 ======
+    const handleEditMode = (commentId, currentContent) => {
+        setEditId(commentId);
+        setEditContent(currentContent);
+    };
+
+    const handleCancelEdit = () => {
+        setEditId(null);
+        setEditContent("");
+    }
+
+    const handleUpdate = async (commentId) => {
+        if(!editContent.trim()) {
+            alert("수정할 내용을 입력해주세요.");
+            return;
+        }
+
+        try {
+            await axios.patch(`/api/article/${articleId}/comment`, editContent, 
+                {
+                    params: {comment_id: commentId, article_id: articleId},
+                    headers: {'Content-Type': 'text/plain; charset=utf-8'},
+                    withCredentials: true
+                }
+            );
+
+            alert("수정되었습니다.")
+            setEditId(null);
+            fetchComment();
+        } catch (error) {
+
+        }
+    }
+
     // 답글 창 토글 함수
     const toggleReply = (id) => {
         if (replyId === id) {
@@ -125,20 +160,9 @@ function Comment({ articleId }) {
         return result;
     }
 
-    // ====== 좋아요 함수 ======
-    // const handleLikeClick = (commentId) => {
-    //     if(!likeState) {
-    //         setLikeState(true);
-    //         setLikeCount(likeCount+1);
-    //         return;
-    //     }
+    const handleToggleLike = () => {
 
-    //     if(likeState){
-    //         setLikeState(false);
-    //         setLikeCount(likeCount-1);
-    //         return;
-    //     }
-    // }
+    }
 
     return (
         <div>
@@ -162,97 +186,159 @@ function Comment({ articleId }) {
                 </div>
                 <hr/>
                 
-                <div className="mt-4">
-                {/* comments가 없거나 비었을 때 안전하게 처리 */}
+            <div className="mt-4">
                 {comments && comments.length > 0 ? (
-                    comments.map((comment) => (
-                    <div key={comment.commentId}> {/* key는 고유 ID 사용 */}
-                        <div className={`d-flex mb-3 ${comment.parentCommentId ? 'ms-5' : ''}`}>
-                            
-                            {/* 답글 화살표 */}
-                            {comment.parentCommentId && <div className="me-2 text-muted">↳</div>} 
+                    // 1. 부모 댓글만 필터링
+                    comments.filter(c => !c.parentCommentId).map((parent) => {
+                        
+                        // 2. 자식 댓글(대댓글) 찾기
+                        const replies = comments.filter(c => c.parentCommentId === parent.commentId);
 
-                            {/* 프로필 이미지 */}
-                            <div className="flex-shrink-0 me-2">
-                                <div 
-                                    className="bg-dark text-white rounded-circle d-flex justify-content-center align-items-center" 
-                                    style={{ width: '40px', height: '40px' }}
-                                >
-                                    {/* 작성자 이름의 첫 글자 */}
-                                    {comment.userId ? comment.userId.charAt(0) : '?'}
-                                </div>
-                            </div>
-
-                            {/* 말풍선 본문 */}
-                            <div className="bg-light p-3 rounded" style={{ width: '100%', position: 'relative' }}>
-                                <div className="d-flex justify-content-between mb-2">
-                                    <div>
-                                        <span className="fw-bold me-2">{comment.userId}</span>
-                                        <small className="text-muted">{new Date(comment.createdAt).toLocaleString()}</small>
-                                    </div>
-                                </div>
+                        return (
+                            <div key={parent.commentId} className="mb-4">
                                 
-                                <div className="text-break">{comment.content}</div>
+                                {/* 회색 박스 시작 */}
+                                <div className="bg-light p-3 rounded shadow-sm" style={{ width: '100%', position: 'relative' }}>
+                                    
+                                    {/* [A] 부모 댓글 영역 */}
+                                    <div className="d-flex">
+                                        <div className="flex-shrink-0 me-2">
+                                            <div className="bg-dark text-white rounded-circle d-flex justify-content-center align-items-center" style={{ width: '40px', height: '40px' }}>
+                                                {parent.userId ? parent.userId.charAt(0) : '?'}
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex-grow-1">
+                                            <div className="d-flex justify-content-between mb-2">
+                                                <div>
+                                                    <span className="fw-bold me-2">{parent.userId}</span>
+                                                    <small className="text-muted">{new Date(parent.createdAt).toLocaleString()}</small>
+                                                </div>
+                                            </div>
 
-                                {/* 하단 버튼 영역 */}
-                                <div className="text-end mt-2">
-                                    <span 
-                                        className="text-primary me-3" 
-                                        style={{ cursor:'pointer', fontSize:'0.8rem', fontWeight:'bold' }}
-                                        onClick={() => toggleReply(comment.commentId)}
-                                    >
-                                        {!comment.parentCommentId ? "답글 달기" : null }
-                                    </span>
-
-                                    {/* 삭제 버튼: 로그인 유저와 작성자가 같을 때만 표시 */}
-                                    {user && user.id === comment.userId && (
-                                        <span 
-                                            className="text-secondary" 
-                                            style={{ cursor:'pointer', fontSize:'0.8rem' }}
-                                            onClick={() => handleDelete(comment.commentId)}
-                                        >
-                                            삭제 ✖
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* 답글 입력창 */}
-                        {replyId === comment.commentId && (
-                            <div className="d-flex mb-4 ms-5">
-                                <div className="flex-grow-1">
-                                    <Form.Control 
-                                        as="textarea" 
-                                        rows={2} 
-                                        placeholder={`@${comment.userId}님에게 답글 작성...`}
-                                        value={replyContent}
-                                        onChange={(e) => setReplyContent(e.target.value)}
-                                        style={{ resize: 'none' }}
-                                    />
-                                    <div className="d-flex justify-content-end mt-2">
-                                        <Button 
-                                            variant="outline-secondary" 
-                                            size="sm" 
-                                            className="me-2"
-                                            onClick={() => setReplyId(null)}
-                                        >
-                                            취소
-                                        </Button>
-                                        {/* 중요: 답글 등록 시 부모 댓글의 ID(commentId)를 넘김 */}
-                                        <Button variant="dark" size="sm" onClick={() => handleSend(comment.commentId)}>
-                                            답글 등록
-                                        </Button>
+                                            {/* 부모 본문 (수정 모드 vs 일반 모드) */}
+                                            {editId === parent.commentId ? (
+                                                <div>
+                                                    <Form.Control
+                                                        as="textarea" rows={3}
+                                                        value={editContent}
+                                                        onChange={(e) => setEditContent(e.target.value)}
+                                                        className="mb-2 bg-white"
+                                                        style={{ resize: 'none' }}
+                                                    />
+                                                    <div className="d-flex justify-content-end">
+                                                        <Button variant="outline-secondary" size="sm" className="me-2" onClick={handleCancelEdit}>취소</Button>
+                                                        <Button variant="dark" size="sm" onClick={() => handleUpdate(parent.commentId)}>저장</Button>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <div className="text-break">{parent.content}</div>
+                                                    
+                                                    {/* ⭐️ [수정됨] 부모 버튼 영역 
+                                                        - style={{ minHeight: '24px' }} 추가: 버튼이 없어도 이 높이만큼 공간 차지함
+                                                    */}
+                                                    <div className="d-flex justify-content-end mt-2" style={{ minHeight: '24px' }}>
+                                                        <span className="text-primary me-3 fw-bold" style={{ cursor:'pointer', fontSize:'0.8rem' }} onClick={() => toggleReply(parent.commentId)}>답글 달기</span>
+                                                        {user && user.id === parent.userId && (
+                                                            <>
+                                                                <span className="text-secondary" style={{ cursor:'pointer', fontSize:'0.8rem' }} onClick={() => handleEditMode(parent.commentId, parent.content)}>수정</span>
+                                                                <span className="text-secondary mx-2" style={{ fontSize: '0.8rem' }}>|</span>
+                                                                <span className="text-secondary" style={{ cursor:'pointer', fontSize:'0.8rem' }} onClick={() => handleDelete(parent.commentId)}>삭제</span>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
                                     </div>
+
+                                    {/* [B] 자식 댓글(답글) 목록 영역 */}
+                                    {replies.length > 0 && (
+                                        <div className="mt-3">
+                                            {replies.map(reply => (
+                                                <div key={reply.commentId} className="d-flex mt-3 ps-3">
+                                                    
+                                                    <div className="me-2 text-muted fs-4" style={{ lineHeight: '1' }}>↳</div>
+                                                    
+                                                    <div className="flex-shrink-0 me-2">
+                                                        <div className="bg-secondary text-white rounded-circle d-flex justify-content-center align-items-center" style={{ width: '35px', height: '35px', fontSize:'0.8rem' }}>
+                                                            {reply.userId ? reply.userId.charAt(0) : '?'}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="flex-grow-1">
+                                                        <div className="d-flex justify-content-between mb-1">
+                                                            <div>
+                                                                <span className="fw-bold me-2" style={{fontSize:'0.9rem'}}>{reply.userId}</span>
+                                                                <small className="text-muted" style={{fontSize:'0.8rem'}}>{new Date(reply.createdAt).toLocaleString()}</small>
+                                                            </div>
+                                                        </div>
+
+                                                        {editId === reply.commentId ? (
+                                                            <div>
+                                                                <Form.Control
+                                                                    as="textarea" rows={2}
+                                                                    value={editContent}
+                                                                    onChange={(e) => setEditContent(e.target.value)}
+                                                                    className="mb-2 bg-white"
+                                                                    style={{ resize: 'none' }}
+                                                                />
+                                                                <div className="d-flex justify-content-end">
+                                                                    <Button variant="outline-secondary" size="sm" className="me-2" onClick={handleCancelEdit}>취소</Button>
+                                                                    <Button variant="dark" size="sm" onClick={() => handleUpdate(reply.commentId)}>저장</Button>
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <>
+                                                                <div className="text-break small">{reply.content}</div>
+                                                                
+                                                                {/* ⭐️ [수정됨] 자식 버튼 영역 
+                                                                - 기존에는 조건문 안에 div가 있었으나, 
+                                                                - div를 밖으로 꺼내고 minHeight를 줘서 항상 공간을 차지하게 함
+                                                                */}
+                                                                <div className="d-flex justify-content-end mt-1" style={{ minHeight: '20px' }}>
+                                                                    {user && user.id === reply.userId && (
+                                                                        <>
+                                                                            <span className="text-secondary" style={{ cursor:'pointer', fontSize:'0.7rem' }} onClick={() => handleEditMode(reply.commentId, reply.content)}>수정</span>
+                                                                            <span className="text-secondary mx-1" style={{ fontSize: '0.7rem' }}>|</span>
+                                                                            <span className="text-secondary" style={{ cursor:'pointer', fontSize:'0.7rem' }} onClick={() => handleDelete(reply.commentId)}>삭제</span>
+                                                                        </>
+                                                                    )}
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {/* [C] 답글 입력창 영역 */}
+                                    {replyId === parent.commentId && (
+                                        <div className="mt-3">
+                                            <Form.Control 
+                                                as="textarea" rows={2} 
+                                                placeholder={`@${parent.userId}님에게 답글 작성`} 
+                                                value={replyContent}
+                                                onChange={(e) => setReplyContent(e.target.value)}
+                                                style={{ resize: 'none', backgroundColor: '#fff' }}
+                                            />
+                                            <div className="d-flex justify-content-end mt-2">
+                                                <Button variant="outline-secondary" size="sm" className="me-2" onClick={() => setReplyId(null)}>취소</Button>
+                                                <Button variant="dark" size="sm" onClick={() => handleSend(parent.commentId)}>답글 등록</Button>
+                                            </div>
+                                        </div>
+                                    )}
+
                                 </div>
                             </div>
-                        )}
-                    </div>
-                ))
+                        );
+                    })
                 ) : (
                     <p className="text-center text-muted">등록된 댓글이 없습니다.</p>
                 )}
-                </div>
+            </div>
             </Card>
         </div>
     );
