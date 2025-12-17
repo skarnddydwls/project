@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState} from "react";
 import axios from "axios";
 import { Container, Row, Col, Card} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -53,7 +53,7 @@ const renderLabel = ({name, percent}) => {
               <Cell key={`cell-${index}`} fill={getPartyColor(p.partyName)} />
             ))}
           </Pie>
-          <Tooltip formatter={(value, name) => [value, name]} />
+          <Tooltip formatter={(value, name) => [value, name]} isAnimationActive={false} />
         </PieChart>
       </ResponsiveContainer>
     );
