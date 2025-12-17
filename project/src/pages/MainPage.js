@@ -68,7 +68,6 @@ export default function MainPage() {
   const [partyStats, setPartyStats] = useState([]);
   const storedUser = localStorage.getItem("loginUser");
 
-
   useEffect(() => {
     axios
       .get("/api/article/recommand")
