@@ -38,7 +38,7 @@ const renderLabel = ({name, percent}) => {
         <PieChart>
           <Pie
             data={partyStats.map((p) => ({
-              name: p.partyName,
+              name: p.name,
               value: p.mentionCount
             }))}
             cx="50%"
@@ -50,7 +50,7 @@ const renderLabel = ({name, percent}) => {
             dataKey="value"
           >
             {partyStats.map((p, index) => (
-              <Cell key={`cell-${index}`} fill={getPartyColor(p.partyName)} />
+              <Cell key={`cell-${index}`} fill={getPartyColor(p.name)} />
             ))}
           </Pie>
           <Tooltip formatter={(value, name) => [value, name]} isAnimationActive={false} />
@@ -66,9 +66,9 @@ export default function MainPage() {
   const [paused, setPaused] = useState(false);
   const [todayPeople, setTodayPeople] = useState([]);
   const [partyStats, setPartyStats] = useState([
-    { partyName: "더불어민주당", mentionCount: 380 },
-    { partyName: "국민의힘", mentionCount: 450 },
-    { partyName: "무소속", mentionCount: 120 }
+    { name: "더불어민주당", mentionCount: 380 },
+    { name: "국민의힘", mentionCount: 450 },
+    { name: "무소속", mentionCount: 120 }
   ]);
 
   useEffect(() => {
