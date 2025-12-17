@@ -10,6 +10,7 @@ const NewsCategory = () => {
     const {category} = useParams();
     const [newsList, setNewsList] = useState([]);
     const [limit, setLimit] = useState(5);
+    const storedUser = sessionStorage.getItem("loginUser");
 
     let navigate = useNavigate();
 
@@ -31,7 +32,14 @@ const NewsCategory = () => {
                 {newsList.slice(0,limit).map((news) => (
                 <Row key={news.id} className="news-row">
                     <Col md={9} xs={3}>
-                    <h3 onClick={()=> {navigate(`/${category}/News/${news.articleId}`)}} className="newsTitle">{news.title}</h3>
+                    <h3 onClick={()=> {
+                        if(storedUser){
+                            navigate(`/${category}/News/${news.articleId}`)
+                        } else {
+                            alert("로그인 후 이용가능합니다");
+                            navigate(`/Signin`);
+                        }
+                        }} className="newsTitle">{news.title}</h3>
                     </Col>
                     <Col md={3} xs={4}>
                     <img
