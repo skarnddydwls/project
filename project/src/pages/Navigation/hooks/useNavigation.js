@@ -32,7 +32,7 @@ export const useNavigation = () => {
     } finally {
       sessionStorage.removeItem("loginUser");
       sessionStorage.removeItem("recent_news");
-      sessionStorage.removeItem("recent_word_meanings");
+      localStorage.removeItem("recent_word_meanings");
       setLoginUser(null);
       navigate("/");
     }
