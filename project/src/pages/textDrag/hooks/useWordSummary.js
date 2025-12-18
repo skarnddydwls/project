@@ -17,8 +17,11 @@ export const useWordSummary = () => {
       });
       setBubbleText(res.data);
     } catch (err) {
-      console.error(err);
-      setErrorMessage("요약을 불러오는 데 실패했습니다.");
+      if(err.response.status >= 500) {
+        setErrorMessage("관리자에게 문의하세요.")
+      }else {
+        setErrorMessage("요약을 불러오는 데 실패했습니다.");
+      }
     } finally {
         setIsLoading(false);
     }
