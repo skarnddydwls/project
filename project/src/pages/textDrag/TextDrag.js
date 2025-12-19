@@ -1,5 +1,5 @@
 // src/pages/textDrag/TextDrag.js
-import { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "../../css/TextDrag.css";
 import { useTextSelection } from "./hooks/useTextSelection";
 import { useWordSummary } from "./hooks/useWordSummary";
@@ -9,6 +9,11 @@ import linkOut from '../../img/link-out.svg';
 
 const RECENT_WORDS_KEY = "recent_word_meanings";
 const RECENT_WORDS_EVENT = "recent_words_updated"; 
+
+const MemoizedText = React.memo(({ text }) => {
+  const formattedText = text.replace(/\./g, '.<br><br>');
+  return <span dangerouslySetInnerHTML={{ __html: formattedText }} />;
+});
 
 const TextDrag = ({ text = "", articleId, section, news}) => {
   const {
@@ -37,8 +42,6 @@ const TextDrag = ({ text = "", articleId, section, news}) => {
     clearSummary();
     setShowBubble(false);
   }, [clearSelection, clearSummary]);
-
-  const formattedText = text.replace(/\./g, '.<br><br>');
 
   // 🔍 버튼 눌렀을 때 요약 요청
   const handleClickTrigger = () => {
@@ -147,7 +150,7 @@ const TextDrag = ({ text = "", articleId, section, news}) => {
 
       {/* 실제 기사 텍스트 */}
       <p ref={textRef} className="text-drag-content">
-        <span dangerouslySetInnerHTML={{ __html: formattedText }} />
+        <MemoizedText text={text} />
         <br/><br/><br/>
         <a href={news.url} target="_blank" rel="noopener noreferrer">
           <button className="link-out">
