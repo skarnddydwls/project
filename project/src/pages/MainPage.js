@@ -66,7 +66,7 @@ export default function MainPage() {
   const [paused, setPaused] = useState(false);
   const [todayPeople, setTodayPeople] = useState([]);
   const [partyStats, setPartyStats] = useState([]);
-  const storedUser = localStorage.getItem("loginUser");
+  const storedUser = sessionStorage.getItem("loginUser");
 
   useEffect(() => {
     axios
