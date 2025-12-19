@@ -38,6 +38,8 @@ const TextDrag = ({ text = "", articleId, section, news}) => {
     setShowBubble(false);
   }, [clearSelection, clearSummary]);
 
+  const formattedText = text.replace(/\./g, '.<br><br>');
+
   // 🔍 버튼 눌렀을 때 요약 요청
   const handleClickTrigger = () => {
     if (!selectedWord && !selectedSentence) return;
@@ -145,7 +147,7 @@ const TextDrag = ({ text = "", articleId, section, news}) => {
 
       {/* 실제 기사 텍스트 */}
       <p ref={textRef} className="text-drag-content">
-        {text}
+        <span dangerouslySetInnerHTML={{ __html: formattedText }} />
         <br/><br/><br/>
         <a href={news.url} target="_blank" rel="noopener noreferrer">
           <button className="link-out">
