@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import RecentWords from "../../recentWords/RecentWords";
 
 const CATEGORIES = ["경제", "과학", "사회", "세계", "문화"];
 
@@ -33,7 +34,9 @@ export const useNavigation = () => {
       sessionStorage.removeItem("loginUser");
       sessionStorage.removeItem("recent_news");
       localStorage.removeItem("recent_word_meanings");
+      RecentWords.wordList = [];
       setLoginUser(null);
+      window.dispatchEvent(new Event("logout"));
       navigate("/");
     }
   }, [navigate]);
