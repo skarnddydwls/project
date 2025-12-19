@@ -57,6 +57,13 @@
   position: relative;
 }
 
+/* 드래그로 선택된 텍스트 하이라이트 */
+.drag-selected {
+  background-color: #fff59d;  /* 노란색 형광펜 */
+  color: inherit;
+  padding: 2px 0;
+}
+
 /* 기사 원문 링크 버튼 */
 .link-out{
   display: inline-flex;

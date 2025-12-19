@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../css/RecentWords.css";
 import { useRecentWords } from "./hooks/useRecentWords";
 import RecentWordItem from "./components/RecentWordItem";
 
 const RecentWords = () => {
   const { wordList, deleteByTimestamp } = useRecentWords();
-  const storedUser = sessionStorage.getItem('loginUser');
+  const [storedUser, setStoredUser] = useState(sessionStorage.getItem('loginUser'));
 
   // 현재 열려 있는 단어의 timestamp
   const [activeTs, setActiveTs] = useState(null);
@@ -25,6 +25,18 @@ const RecentWords = () => {
       deleteByTimestamp(timestamp);
     }
   };
+
+  useEffect(() => {
+    const checkUserStatus = () => {
+      setStoredUser(sessionStorage.getItem('loginUser'));
+    };
+
+    window.addEventListener('logout', checkUserStatus);
+    
+    return () => {
+      window.removeEventListener('logout', checkUserStatus);
+    };
+  }, []);
 
   const renderContent = () => {
     if(!storedUser) {

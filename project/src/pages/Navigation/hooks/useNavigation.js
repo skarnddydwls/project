@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import RecentWords from "../../recentWords/RecentWords";
 
 const CATEGORIES = ["경제", "과학", "사회", "세계", "문화"];
 
@@ -34,12 +35,9 @@ export const useNavigation = () => {
       sessionStorage.removeItem("recent_news");
       sessionStorage.removeItem("recent_word_meanings");
       localStorage.removeItem("recent_word_meanings");
-      
-      // 이벤트 발생시켜서 컴포넌트들이 업데이트하도록
-      window.dispatchEvent(new Event('storage'));
-      window.dispatchEvent(new Event('recent_words_updated'));
-      
+      RecentWords.wordList = [];
       setLoginUser(null);
+      window.dispatchEvent(new Event("logout"));
       navigate("/");
     }
   }, [navigate]);
