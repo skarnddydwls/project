@@ -16,13 +16,8 @@
 
 .recent-word-item {
   padding: 6px 0;
-  border-bottom: 1px solid #eee;
   display: flex;
   flex-direction: column;
-}
-
-.recent-word-item:last-child {
-  border-bottom: none;
 }
 
 /* 단어 버튼 + 삭제 버튼을 한 줄로 */
@@ -39,9 +34,18 @@
   padding: 0;
   margin: 0;
   font-size: 15px;
-  font-weight: 600;
   cursor: pointer;
   color: #000;
+  
+  /* 말줄임 처리 */
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.recent-word-button:hover {
+  color: #2c6bed;
 }
 
 /* ----------------------------------------- */

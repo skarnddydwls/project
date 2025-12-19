@@ -15,7 +15,7 @@
 .scrap-box {
   background: #ffffff;
   border: 2px solid #dfdadaff;
-  border-radius: 6px;
+  border-radius: 20px;
   padding: 14px 16px;
   margin-top: 30px;
   margin-bottom: 30px;
@@ -52,11 +52,6 @@
   margin-bottom: 0;
 }
 
-.recent-item:hover,
-.scrap-item:hover {
-  text-decoration: underline;
-}
-
 /* 아이템 제목 (말줄임) */
 .recent-item-title,
 .scrap-item-title {
@@ -65,6 +60,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.recent-item-title:hover,
+.scrap-item-title:hover {
+  color: #2c6bed;
 }
 
 /* 삭제 버튼 (X 아이콘) */

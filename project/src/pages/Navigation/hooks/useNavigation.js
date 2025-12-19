@@ -33,6 +33,12 @@ export const useNavigation = () => {
       sessionStorage.removeItem("loginUser");
       sessionStorage.removeItem("recent_news");
       sessionStorage.removeItem("recent_word_meanings");
+      localStorage.removeItem("recent_word_meanings");
+      
+      // 이벤트 발생시켜서 컴포넌트들이 업데이트하도록
+      window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new Event('recent_words_updated'));
+      
       setLoginUser(null);
       navigate("/");
     }
